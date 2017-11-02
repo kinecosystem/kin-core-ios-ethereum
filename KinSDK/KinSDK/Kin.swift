@@ -73,7 +73,7 @@ public class KinAccount {
     fileprivate weak var accountStore: KinAccountStore?
 
     var publicAddress: String {
-        return ""
+        return gethAccount.getAddress().getHex()
     }
 
     init(gethAccount: GethAccount, accountStore: KinAccountStore) {

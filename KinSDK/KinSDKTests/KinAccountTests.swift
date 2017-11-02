@@ -39,4 +39,16 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
+
+    func test_publicAddress() {
+        do {
+            let account = try kinClient.createAccountIfNecessary(with: passphrase)
+            let publicAddress = account?.publicAddress
+
+            XCTAssertNotNil(publicAddress, "Unable to retrieve public address for account: \(String(describing: account))")
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
 }
