@@ -11,7 +11,6 @@
 		82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* Kin.swift */; };
 		82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
 		82140ECF1FA89CDE00FAF19B /* Geth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140ECE1FA89CDE00FAF19B /* Geth.framework */; };
-		8245393B1FA9B6CE009117B4 /* Geth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140ECE1FA89CDE00FAF19B /* Geth.framework */; };
 		8245393F1FA9B6FE009117B4 /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
 		824539401FA9B6FF009117B4 /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
@@ -86,7 +85,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */,
-				8245393B1FA9B6CE009117B4 /* Geth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
