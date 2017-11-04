@@ -36,31 +36,14 @@ class KinAccountStore {
         
     }
     
-    // Temporary, client with leonid's api keys
-    private var _client: GethEthereumClient? = nil
-    var client: GethEthereumClient {
-        let c = _client ?? {
-            let c: GethEthereumClient
-            switch networkId {
-            case 1:
-                c = GethNewEthereumClient("https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu", nil)
-            case 3:
-                c = GethNewEthereumClient("https://ropsten.infura.io/ciS27F9JQYk8MaJd8Fbu", nil)
-            default:
-                c = GethNewEthereumClient("https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu", nil)
-            }
-
-            _client = c
-
-            return c
-        }()
-
-        return c
-    }
+    lazy var client: GethEthereumClient = {
+        return GethNewEthereumClient(self.serviceUrl.path, nil)
+    }()
 
     
     fileprivate let keystore: GethKeyStore!
     let context = GethNewContext()
+    
     var accounts: GethAccounts {
         get {
             return keystore.getAccounts()
@@ -123,27 +106,6 @@ class KinAccountStore {
     func deleteKeystore() throws {
         try FileManager.default.removeItem(at: URL(fileURLWithPath: dataDir))
     }
-
-    func createTransactionETH(from account: GethAccount, amount: Int64, to: GethAddress) -> GethTransaction? {
-        guard keystore.hasAddress(account.getAddress()) else { return nil }
-        let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
-        defer {
-            _ = UnsafeMutablePointer<Int64>.deallocate(nonce)
-        }
-        if (try? client.getPendingNonce(at: context,
-                                             account: account.getAddress(),
-                                             nonce: nonce)) != nil {
-            let gasPrice = try! client.suggestGasPrice(context)
-            return GethNewTransaction(nonce.pointee, to, GethNewBigInt(amount), gasPrice, gasPrice, nil)
-        }
-        return nil
-    }
-    
-    func signTransactionETH(from account:GethAccount, transaction: GethTransaction, passphrase: String) -> GethTransaction? {
-        return try? keystore.signTxPassphrase(account, passphrase: passphrase, tx: transaction, chainID: GethNewBigInt(networkId))
-    }
-    
-    //func getBalance(address: GethAddress, )
     
     
 }

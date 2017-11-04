@@ -89,33 +89,6 @@ class KinAccountStoreTests: XCTestCase {
         }
     }
     
-    func testCreateTransaction() {
-        let toAddress = "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5"
-        let transaction = store.createTransactionETH(from: account, amount: 10,
-                                                  to: GethNewAddressFromHex(toAddress,
-                                                                            nil))
-        XCTAssertNotNil(transaction)
-    }
     
-    func testSignTransactionsETH() {
-        let toAddress = "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5"
-        var transaction = store.createTransactionETH(from: account, amount: 10,
-                                                  to: GethNewAddressFromHex(toAddress,
-                                                                            nil))
-        XCTAssertNotNil(transaction)
-        var signedTransaction = store.signTransactionETH(from: account,
-                                                      transaction: transaction!,
-                                                      passphrase: creationPass)
-        XCTAssertNotNil(signedTransaction, "Failed to sign a transaction")
-        
-        transaction = store.createTransactionETH(from: account, amount: 10,
-                                                  to: GethNewAddressFromHex(toAddress,
-                                                                            nil))
-        XCTAssertNotNil(transaction)
-        signedTransaction = store.signTransactionETH(from: account,
-                                                      transaction: transaction!,
-                                                      passphrase: "notThePassphrase")
-        XCTAssertNil(signedTransaction, "Somehow signed a transaction with wrong password")
-    }
     
 }

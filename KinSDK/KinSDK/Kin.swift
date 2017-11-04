@@ -40,9 +40,18 @@ public enum KinError: Error {
 }
 
 public final class KinClient {
-    private(set) var account: KinAccount?
+    
+    private(set) lazy var account: KinAccount? = {
+        if self.accountStore.accounts.size() > 0 {
+            if let account = try? self.accountStore.accounts.get(0) {
+                return KinAccount(gethAccount: account, accountStore: self.accountStore)
+            }
+        }
+        return nil
+    }()
 
     fileprivate let accountStore: KinAccountStore
+    fileprivate let queue = DispatchQueue(label: "com.kik.kin.account")
 
     public convenience init(provider: ServiceProvider) {
         self.init(with: provider.url, networkId: provider.networkId)
@@ -69,8 +78,16 @@ public typealias TransactionCallback = (TransactionId?, KinError?) -> ()
 public typealias BalanceCallback = (Balance?, KinError?) -> ()
 
 public class KinAccount {
+    
     fileprivate let gethAccount: GethAccount
-    fileprivate weak var accountStore: KinAccountStore?
+    fileprivate weak var accountStore: KinAccountStore!
+    
+    // TODO: move to own Contract implementation
+    fileprivate lazy var testTokenContract: GethBoundContract = {
+        return GethBindContract(KinResources.RopstenTestTokenContractAddress,
+                                KinResources.RopstenTestTokenAbi,
+                                self.accountStore.client, nil)
+    }()
 
     var publicAddress: String {
         return gethAccount.getAddress().getHex()
@@ -82,7 +99,7 @@ public class KinAccount {
     }
 
     func privateKey(with passphrase: String) throws -> String? {
-        guard let data = try accountStore?.export(account: gethAccount,
+        guard let data = try? accountStore.export(account: gethAccount,
                                             passphrase: passphrase,
                                             exportPassphrase: passphrase) else {
                                                 return nil
@@ -107,6 +124,29 @@ public class KinAccount {
     }
 
     public func balance() throws -> Balance {
+        
+//        let context = accountStore.context
+//        let client = accountStore.client
+//        let contract = testTokenContract
+//        let opts = GethNewCallOpts()!
+//        opts.setContext(context)
+//        opts.setGasLimit((try! client.suggestGasPrice(context).getInt64()))
+//        let args = GethNewInterfaces(1)!
+//        let outs = GethNewInterfaces(1)!
+//
+//        let arg = GethNewInterface()!
+//        arg.setAddress(gethAccount.getAddress())
+//        let result = GethNewInterface()
+//        result?.setDefaultBigInt()
+//        try! args.set(0, object: arg)
+//        try! outs.set(0, object: result)
+//
+//        do {
+//            try contract.call(opts, out_: outs, method: "balanceOf", args: args)
+//            return try! outs.get(0).getBigInt().getInt64()
+//        } catch let e {
+//            print(e)
+//        }
         return 0
     }
 
