@@ -28,6 +28,7 @@
 		E970C2721FAE2F7C0091181B /* KinResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2701FAE2F7C0091181B /* KinResources.swift */; };
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
 		E970C2751FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
+		E970C2771FAE61ED0091181B /* RopstenTTTAbi.json in Resources */ = {isa = PBXBuildFile; fileRef = E970C26E1FAB64270091181B /* RopstenTTTAbi.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -302,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8278353B1FA9B5F20006C3DF /* LaunchScreen.storyboard in Resources */,
+				E970C2771FAE61ED0091181B /* RopstenTTTAbi.json in Resources */,
 				827835381FA9B5F20006C3DF /* Assets.xcassets in Resources */,
 				827835361FA9B5F20006C3DF /* Main.storyboard in Resources */,
 			);

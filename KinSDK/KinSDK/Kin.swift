@@ -82,23 +82,7 @@ public class KinAccount {
     fileprivate let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     
-    // TODO: move to own Contract implementation
-    fileprivate var _contract: GethBoundContract? = nil
-    fileprivate var testTokenContract: GethBoundContract? {
-        if _contract != nil {
-            return _contract
-        }
-
-        guard let store = accountStore else {
-            return nil
-        }
-
-        _contract = GethBindContract(KinResources.RopstenTestTokenContractAddress,
-                                     KinResources.RopstenTestTokenAbi,
-                                     store.client, nil)
-
-        return _contract
-    }
+    fileprivate var contract: Contract!
 
     var publicAddress: String {
         return gethAccount.getAddress().getHex()
@@ -107,8 +91,20 @@ public class KinAccount {
     init(gethAccount: GethAccount, accountStore: KinAccountStore) {
         self.gethAccount = gethAccount
         self.accountStore = accountStore
+        self.contract = generateContract(for: accountStore)
     }
-
+    
+    fileprivate func generateContract(for store: KinAccountStore) -> Contract {
+        // Just test network for now
+        switch store.networkId {
+        default:
+            return Contract(with: KinResources.RopstenTestTokenContractAddress,
+                            abi: KinResources.RopstenTestTokenAbi,
+                            context: store.context,
+                            client: store.client)
+        }
+    }
+    
     func privateKey(with passphrase: String) throws -> String? {
         guard let store = accountStore else {
             return nil
@@ -135,34 +131,25 @@ public class KinAccount {
     }
 
     public func balance(callback: BalanceCallback) {
+        
         callback(nil, nil)
     }
 
     public func balance() throws -> Balance {
         
-//        let context = accountStore.context
-//        let client = accountStore.client
-//        let contract = testTokenContract
-//        let opts = GethNewCallOpts()!
-//        opts.setContext(context)
-//        opts.setGasLimit((try! client.suggestGasPrice(context).getInt64()))
-//        let args = GethNewInterfaces(1)!
-//        let outs = GethNewInterfaces(1)!
-//
-//        let arg = GethNewInterface()!
-//        arg.setAddress(gethAccount.getAddress())
-//        let result = GethNewInterface()
-//        result?.setDefaultBigInt()
-//        try! args.set(0, object: arg)
-//        try! outs.set(0, object: result)
-//
-//        do {
-//            try contract.call(opts, out_: outs, method: "balanceOf", args: args)
-//            return try! outs.get(0).getBigInt().getInt64()
-//        } catch let e {
-//            print(e)
-//        }
-        return 0
+        let arg = GethNewInterface()!
+        arg.setAddress(gethAccount.getAddress())
+        let result = GethNewInterface()!
+        result.setDefaultBigInt()
+        
+        do {
+            try contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+            // FIXME: get decimals - from contract or hard coded? (leonid)
+            return Double(result.getBigInt().getInt64())
+        } catch {
+            return 0
+        }
+        
     }
 
     public func pendingBalance(callback: BalanceCallback) {

@@ -51,4 +51,16 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
+    
+    func test_balance() {
+        do {
+            let account = try kinClient.createAccountIfNecessary(with: passphrase)
+            let balance = try account?.balance()
+            
+            XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
 }

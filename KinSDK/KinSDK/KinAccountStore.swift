@@ -36,21 +36,17 @@ class KinAccountStore {
         
     }
     
-    lazy var client: GethEthereumClient = {
-        return GethNewEthereumClient(self.serviceUrl.path, nil)
-    }()
-
+    let client: GethEthereumClient
     
     fileprivate let keystore: GethKeyStore!
-    let context = GethNewContext()
+    let context = GethNewContext()!
     
     var accounts: GethAccounts {
         get {
             return keystore.getAccounts()
         }
     }
-    fileprivate let networkId: Int64
-    fileprivate let serviceUrl: URL
+    let networkId: Int64
 
     fileprivate var dataDir: String {
         return [
@@ -63,7 +59,6 @@ class KinAccountStore {
     }
 
     init(url: URL, networkId: Int64) {
-        self.serviceUrl = url
         self.networkId = networkId
 
         let dataDir = [
@@ -75,6 +70,7 @@ class KinAccountStore {
             .joined(separator: "/")
 
         keystore = GethNewKeyStore(dataDir, GethLightScryptN, GethLightScryptP)
+        self.client = GethNewEthereumClient(url.absoluteString, nil)
     }
     
     func createAccount(passphrase: String) throws -> GethAccount {
