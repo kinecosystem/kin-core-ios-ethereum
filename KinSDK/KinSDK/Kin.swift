@@ -80,14 +80,25 @@ public typealias BalanceCallback = (Balance?, KinError?) -> ()
 public class KinAccount {
     
     fileprivate let gethAccount: GethAccount
-    fileprivate weak var accountStore: KinAccountStore!
+    fileprivate weak var accountStore: KinAccountStore?
     
     // TODO: move to own Contract implementation
-    fileprivate lazy var testTokenContract: GethBoundContract = {
-        return GethBindContract(KinResources.RopstenTestTokenContractAddress,
-                                KinResources.RopstenTestTokenAbi,
-                                self.accountStore.client, nil)
-    }()
+    fileprivate var _contract: GethBoundContract? = nil
+    fileprivate var testTokenContract: GethBoundContract? {
+        if _contract != nil {
+            return _contract
+        }
+
+        guard let store = accountStore else {
+            return nil
+        }
+
+        _contract = GethBindContract(KinResources.RopstenTestTokenContractAddress,
+                                     KinResources.RopstenTestTokenAbi,
+                                     store.client, nil)
+
+        return _contract
+    }
 
     var publicAddress: String {
         return gethAccount.getAddress().getHex()
@@ -99,10 +110,14 @@ public class KinAccount {
     }
 
     func privateKey(with passphrase: String) throws -> String? {
-        guard let data = try? accountStore.export(account: gethAccount,
-                                            passphrase: passphrase,
-                                            exportPassphrase: passphrase) else {
-                                                return nil
+        guard let store = accountStore else {
+            return nil
+        }
+
+        guard let data = try? store.export(account: gethAccount,
+                                           passphrase: passphrase,
+                                           exportPassphrase: passphrase) else {
+                                            return nil
         }
 
         return String(data: data, encoding: String.Encoding.utf8)
