@@ -136,20 +136,14 @@ public class KinAccount {
     }
 
     public func balance() throws -> Balance {
-        
         let arg = GethNewInterface()!
         arg.setAddress(gethAccount.getAddress())
         let result = GethNewInterface()!
         result.setDefaultBigInt()
         
-        do {
-            try contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
-            // FIXME: get decimals - from contract or hard coded? (leonid)
-            return Double(result.getBigInt().getInt64())
-        } catch {
-            return 0
-        }
-        
+        try contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+        // FIXME: get decimals - from contract or hard coded? (leonid)
+        return Double(result.getBigInt().getInt64())
     }
 
     public func pendingBalance(callback: BalanceCallback) {
