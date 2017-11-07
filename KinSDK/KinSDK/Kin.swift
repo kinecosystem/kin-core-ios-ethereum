@@ -40,12 +40,12 @@ public enum KinError: Error {
     case unsupportedNetwork
 }
 
-public let NetworkIdLive: Int64 = 1
+public let NetworkIdMain: Int64 = 1
 public let NetworkIdRopsten: Int64 = 3
 
 public final class KinClient {
     static private let supportedNetworks = [
-        NetworkIdLive,
+        NetworkIdMain,
         NetworkIdRopsten,
     ]
 
