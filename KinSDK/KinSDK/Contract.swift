@@ -14,17 +14,29 @@ enum ContractError: Error {
 
 class Contract {
     
-    fileprivate let boundContract: GethBoundContract
+    fileprivate var boundContract: GethBoundContract?
     fileprivate weak var context: GethContext?
     fileprivate weak var client: GethEthereumClient?
+    fileprivate let contractAddress = GethNewAddressFromHex("0xef2fcc998847db203dea15fc49d0872c7614910c", nil)
     
-    init(with address: GethAddress, abi: String, context: GethContext, client: GethEthereumClient) {
+    init(with context: GethContext, client: GethEthereumClient) {
         self.context = context
         self.client = client
-        boundContract = GethBindContract(address, abi, client, nil)
+        bindContractAbi()
     }
     
-    func call(method: String, inputs: [GethInterface], outputs: [GethInterface]) throws {
+    func bindContractAbi() {
+        do {
+            if let path = Bundle(for: Contract.self).path(forResource: "contractABI", ofType: "json") {
+                let abi = try String(contentsOfFile: path, encoding: .utf8)
+                boundContract = GethBindContract(contractAddress, abi, client, nil)
+            }
+        } catch {
+            fatalError("Unable to load contract abi: \(error)")
+        }
+    }
+    
+    func call(method: String, inputs: [GethInterface] = [], outputs: [GethInterface]) throws {
 
         guard   let context = context,
                 let client = client,
@@ -45,7 +57,7 @@ class Contract {
             try outs.set(i, object: output)
         }
         
-        try boundContract.call(opts, out_: outs, method: method, args: args)
+        try boundContract?.call(opts, out_: outs, method: method, args: args)
         
     }
     

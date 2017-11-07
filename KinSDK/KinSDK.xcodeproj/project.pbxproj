@@ -23,12 +23,10 @@
 		827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835451FA9B5F20006C3DF /* KinClientTests.swift */; };
 		8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */; };
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
-		E970C26F1FAB64270091181B /* RopstenTTTAbi.json in Resources */ = {isa = PBXBuildFile; fileRef = E970C26E1FAB64270091181B /* RopstenTTTAbi.json */; };
-		E970C2711FAE2F7C0091181B /* KinResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2701FAE2F7C0091181B /* KinResources.swift */; };
-		E970C2721FAE2F7C0091181B /* KinResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2701FAE2F7C0091181B /* KinResources.swift */; };
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
-		E970C2751FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
-		E970C2771FAE61ED0091181B /* RopstenTTTAbi.json in Resources */ = {isa = PBXBuildFile; fileRef = E970C26E1FAB64270091181B /* RopstenTTTAbi.json */; };
+		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
+		E98B43E31FB1F05700B00A3C /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
+		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,9 +65,8 @@
 		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E970C26E1FAB64270091181B /* RopstenTTTAbi.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RopstenTTTAbi.json; sourceTree = "<group>"; };
-		E970C2701FAE2F7C0091181B /* KinResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinResources.swift; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
+		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,8 +166,7 @@
 		E970C26D1FAB63600091181B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E970C26E1FAB64270091181B /* RopstenTTTAbi.json */,
-				E970C2701FAE2F7C0091181B /* KinResources.swift */,
+				E98B43E11FB1EFC600B00A3C /* contractABI.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -294,7 +290,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E970C26F1FAB64270091181B /* RopstenTTTAbi.json in Resources */,
+				E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,8 +299,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8278353B1FA9B5F20006C3DF /* LaunchScreen.storyboard in Resources */,
-				E970C2771FAE61ED0091181B /* RopstenTTTAbi.json in Resources */,
 				827835381FA9B5F20006C3DF /* Assets.xcassets in Resources */,
+				E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */,
 				827835361FA9B5F20006C3DF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,7 +319,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E970C2711FAE2F7C0091181B /* KinResources.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
@@ -337,6 +332,7 @@
 				827835331FA9B5F20006C3DF /* ViewController.swift in Sources */,
 				827835311FA9B5F20006C3DF /* AppDelegate.swift in Sources */,
 				8245393F1FA9B6FE009117B4 /* KinAccountStore.swift in Sources */,
+				E98B43E31FB1F05700B00A3C /* Contract.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,9 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */,
-				E970C2721FAE2F7C0091181B /* KinResources.swift in Sources */,
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
-				E970C2751FAE394D0091181B /* Contract.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
 				824539401FA9B6FF009117B4 /* KinAccountStore.swift in Sources */,
 			);

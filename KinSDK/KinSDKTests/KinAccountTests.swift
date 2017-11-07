@@ -52,12 +52,48 @@ class KinAccountTests: XCTestCase {
         }
     }
     
-    func test_balance() {
+    func test_balance_sync() {
+        
+        var account:KinAccount!
+        do {
+            account = try kinClient.createAccountIfNecessary(with: passphrase)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+        
+        account?.balance(queue: nil) { balance, error in
+            XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
+        }
+    }
+    
+    func test_balance_async() {
+        
+        var account:KinAccount!
+        do {
+            account = try kinClient.createAccountIfNecessary(with: passphrase)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+        
+        var balanceChecked: Balance? = nil
+        let expectation = self.expectation(description: "wait for callback")
+        account?.balance { balance, error in
+            balanceChecked = balance
+            expectation.fulfill()
+        }
+        XCTAssertNil(balanceChecked, "Operation did not perform async")
+        self.waitForExpectations(timeout: 5.0)
+        XCTAssertNotNil(balanceChecked, "Unable to retrieve balance for account: \(String(describing: account))")
+    }
+    
+    func test_decimals() {
         do {
             let account = try kinClient.createAccountIfNecessary(with: passphrase)
-            let balance = try account?.balance()
+            let decimals = try account?.decimals()
             
-            XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
+            XCTAssertNotNil(decimals, "Unable to retrieve decimals for account: \(String(describing: account))")
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
