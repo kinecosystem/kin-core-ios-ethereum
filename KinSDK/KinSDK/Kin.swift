@@ -93,7 +93,7 @@ public class KinAccount {
     fileprivate let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     fileprivate let contract: Contract
-    static let accountQueue = DispatchQueue(label: "com.kik.kin.account")
+    fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
 
     var publicAddress: String {
         return gethAccount.getAddress().getHex()
@@ -137,7 +137,7 @@ public class KinAccount {
         return ""
     }
 
-    public func balance(queue: DispatchQueue? = accountQueue, callback: @escaping BalanceCallback) {
+    public func balance(async: Bool = true, queue: DispatchQueue = DispatchQueue.main, callback: @escaping BalanceCallback) {
         
         var balance: Balance?
         
@@ -150,15 +150,15 @@ public class KinAccount {
             balance = Double(result.getBigInt().getInt64())
         }
         
-        if let dispatchQueue = queue {
-            dispatchQueue.async {
+        if async {
+            accountQueue.async {
                 do {
                     try block()
-                    DispatchQueue.main.async {
+                    queue.async {
                         callback(balance, nil)
                     }
                 } catch {
-                    DispatchQueue.main.async {
+                    queue.async {
                         callback(nil, error)
                     }
                 }

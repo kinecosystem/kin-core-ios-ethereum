@@ -62,7 +62,7 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
         
-        account?.balance(queue: nil) { balance, error in
+        account?.balance(async: false) { balance, error in
             XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
         }
     }
