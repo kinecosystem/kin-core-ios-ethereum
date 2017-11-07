@@ -18,7 +18,7 @@ class KinAccountTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        kinClient = KinClient(provider: provider)
+        kinClient = try! KinClient(provider: provider)
     }
 
     override func tearDown() {

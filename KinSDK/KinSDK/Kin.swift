@@ -37,10 +37,18 @@ public struct InfuraTestProvider: ServiceProvider {
 public enum KinError: Error {
     case unknown
     case invalidPassphrase
+    case unsupportedNetwork
 }
 
+public let NetworkIdMain: Int64 = 1
+public let NetworkIdRopsten: Int64 = 3
+
 public final class KinClient {
-    
+    static private let supportedNetworks = [
+        NetworkIdMain,
+        NetworkIdRopsten,
+    ]
+
     private(set) lazy var account: KinAccount? = {
         if self.accountStore.accounts.size() > 0 {
             if let account = try? self.accountStore.accounts.get(0) {
@@ -53,11 +61,15 @@ public final class KinClient {
     fileprivate let accountStore: KinAccountStore
     fileprivate let queue = DispatchQueue(label: "com.kik.kin.account")
 
-    public convenience init(provider: ServiceProvider) {
-        self.init(with: provider.url, networkId: provider.networkId)
+    public convenience init(provider: ServiceProvider) throws {
+        try self.init(with: provider.url, networkId: provider.networkId)
     }
 
-    public init(with nodeProviderUrl: URL, networkId: Int64) {
+    public init(with nodeProviderUrl: URL, networkId: Int64) throws {
+        if KinClient.supportedNetworks.contains(networkId) == false {
+            throw KinError.unsupportedNetwork
+        }
+
         self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
     }
 
