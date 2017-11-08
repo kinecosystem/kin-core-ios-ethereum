@@ -7,11 +7,7 @@
   "license": "",
   "main": "truffle.js",
   "scripts": {
-    "testrpc": "scripts/testrpc.sh",
-    "test": "scripts/test.sh",
-    "coverage": "scripts/coverage.sh",
-    "codecov": "scripts/codecov.sh",
-    "console": "scripts/console.sh"
+    "testrpc": "scripts/testrpc.sh"
   },
   "bugs": {
     "url": "https://github.com/kinfoundation/kin-sdk-core-ios/issues"
