@@ -1,1 +1,9 @@
-../kin-token/test/helpers/BasicTokenMock.sol
+pragma solidity ^0.4.15;
+
+import './BasicToken.sol';
+
+contract BasicTokenMock is BasicToken {
+    function assign(address _account, uint _balance) {
+        balances[_account] = _balance;
+    }
+}
