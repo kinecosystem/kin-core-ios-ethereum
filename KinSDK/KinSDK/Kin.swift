@@ -137,40 +137,27 @@ public class KinAccount {
         return ""
     }
 
-    public func balance(async: Bool = true, queue: DispatchQueue = DispatchQueue.main, callback: @escaping BalanceCallback) {
+    public func balance(callback: @escaping BalanceCallback) {
         
-        var balance: Balance?
-        
-        let block = { [weak self] in
-            let arg = GethNewInterface()!
-            arg.setAddress(self?.gethAccount.getAddress())
-            let result = GethNewInterface()!
-            result.setDefaultBigInt()
-            try self?.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
-            balance = Double(result.getBigInt().getInt64())
-        }
-        
-        if async {
-            accountQueue.async {
-                do {
-                    try block()
-                    queue.async {
-                        callback(balance, nil)
-                    }
-                } catch {
-                    queue.async {
-                        callback(nil, error)
-                    }
-                }
-            }
-        } else {
+        accountQueue.async {
             do {
-                try block()
+                let balance = try self.balance()
                 callback(balance, nil)
             } catch {
                 callback(nil, error)
             }
         }
+        
+    }
+    
+    public func balance() throws -> Balance {
+        
+        let arg = GethNewInterface()!
+        arg.setAddress(self.gethAccount.getAddress())
+        let result = GethNewInterface()!
+        result.setDefaultBigInt()
+        try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+        return Double(result.getBigInt().getInt64())
         
     }
 
