@@ -1,10 +1,10 @@
 {
-  "name": "kik-tokens",
+  "name": "kin-sdk-core-ios",
   "version": "0.0.1",
-  "description": "KIN Token Smart Contracts",
-  "repository": "git@github.com:kikinteractive/kik-tokens.git",
-  "author": "Kik Team",
-  "license": "GPL-3.0",
+  "description": "Kin SDK Core iOS",
+  "repository": "git@github.com:kinfoundation/kin-sdk-core-ios.git",
+  "author": "Kik",
+  "license": "",
   "main": "truffle.js",
   "scripts": {
     "testrpc": "scripts/testrpc.sh",
@@ -14,9 +14,9 @@
     "console": "scripts/console.sh"
   },
   "bugs": {
-    "url": "https://github.com/kikinteractive/kin/issues"
+    "url": "https://github.com/kinfoundation/kin-sdk-core-ios/issues"
   },
-  "homepage": "https://github.com/kikinteractive/kin",
+  "homepage": "https://github.com/kinfoundation/kin-sdk-core-ios",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
