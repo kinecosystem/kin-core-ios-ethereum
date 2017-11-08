@@ -59,7 +59,6 @@ public final class KinClient {
     }()
 
     fileprivate let accountStore: KinAccountStore
-    fileprivate let queue = DispatchQueue(label: "com.kik.kin.account")
 
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
@@ -87,14 +86,14 @@ public typealias Balance = Double
 public typealias TransactionId = String
 
 public typealias TransactionCallback = (TransactionId?, KinError?) -> ()
-public typealias BalanceCallback = (Balance?, KinError?) -> ()
+public typealias BalanceCallback = (Balance?, Error?) -> ()
 
 public class KinAccount {
     
     fileprivate let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
-    
-    fileprivate var contract: Contract!
+    fileprivate let contract: Contract
+    fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
 
     var publicAddress: String {
         return gethAccount.getAddress().getHex()
@@ -103,18 +102,14 @@ public class KinAccount {
     init(gethAccount: GethAccount, accountStore: KinAccountStore) {
         self.gethAccount = gethAccount
         self.accountStore = accountStore
-        self.contract = generateContract(for: accountStore)
+        self.contract = Contract(with: accountStore.context, client: accountStore.client)
     }
     
-    fileprivate func generateContract(for store: KinAccountStore) -> Contract {
-        // Just test network for now
-        switch store.networkId {
-        default:
-            return Contract(with: KinResources.RopstenTestTokenContractAddress,
-                            abi: KinResources.RopstenTestTokenAbi,
-                            context: store.context,
-                            client: store.client)
-        }
+    func decimals() throws -> UInt8 {
+        let result = GethNewInterface()!
+        result.setDefaultUint8()
+        try contract.call(method: "decimals", outputs: [result])
+        return UInt8(result.getUint8().getInt64())
     }
     
     func privateKey(with passphrase: String) throws -> String? {
@@ -142,20 +137,41 @@ public class KinAccount {
         return ""
     }
 
-    public func balance(callback: BalanceCallback) {
+    public func balance(async: Bool = true, queue: DispatchQueue = DispatchQueue.main, callback: @escaping BalanceCallback) {
         
-        callback(nil, nil)
-    }
-
-    public func balance() throws -> Balance {
-        let arg = GethNewInterface()!
-        arg.setAddress(gethAccount.getAddress())
-        let result = GethNewInterface()!
-        result.setDefaultBigInt()
+        var balance: Balance?
         
-        try contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
-        // FIXME: get decimals - from contract or hard coded? (leonid)
-        return Double(result.getBigInt().getInt64())
+        let block = { [weak self] in
+            let arg = GethNewInterface()!
+            arg.setAddress(self?.gethAccount.getAddress())
+            let result = GethNewInterface()!
+            result.setDefaultBigInt()
+            try self?.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+            balance = Double(result.getBigInt().getInt64())
+        }
+        
+        if async {
+            accountQueue.async {
+                do {
+                    try block()
+                    queue.async {
+                        callback(balance, nil)
+                    }
+                } catch {
+                    queue.async {
+                        callback(nil, error)
+                    }
+                }
+            }
+        } else {
+            do {
+                try block()
+                callback(balance, nil)
+            } catch {
+                callback(nil, error)
+            }
+        }
+        
     }
 
     public func pendingBalance(callback: BalanceCallback) {
