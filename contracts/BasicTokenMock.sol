@@ -1,0 +1,1 @@
+../kin-token/test/helpers/BasicTokenMock.sol
