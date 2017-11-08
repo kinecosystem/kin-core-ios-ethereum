@@ -73,10 +73,15 @@ class KinAccountStore {
         return try keystore.newAccount(passphrase)
     }
     
-    func importAccount(keystoreData:Data, passphrase: String,
+    func importAccount(keystoreData: Data, passphrase: String,
                        newPassphrase: String) -> GethAccount? {
         return try? keystore.importKey(keystoreData, passphrase: passphrase,
                                        newPassphrase: newPassphrase)
+    }
+    
+    func importAccount(with privateKey: String, passphrase: String) -> GethAccount? {
+        return try? keystore.importECDSAKey(privateKey.data(using: String.Encoding.utf8),
+                                            passphrase: passphrase)
     }
     
     func export(account: GethAccount, passphrase: String,

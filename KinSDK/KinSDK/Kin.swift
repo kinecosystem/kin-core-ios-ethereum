@@ -13,26 +13,6 @@ public protocol ServiceProvider {
     var networkId: UInt64 { get }
 }
 
-public struct InfuraProvider: ServiceProvider {
-    public let url: URL
-    public let networkId: UInt64
-
-    init(url: URL, networkId: UInt64, apiKey: String) {
-        self.url = URL(string: apiKey, relativeTo: url)!
-        self.networkId = networkId
-    }
-}
-
-public struct InfuraTestProvider: ServiceProvider {
-    public let url: URL
-    public let networkId: UInt64
-
-    public init(apiKey: String) {
-        self.url = URL(string: apiKey, relativeTo: URL(string: "https://ropsten.infura.io")!)!
-        self.networkId = 3
-    }
-}
-
 public enum KinError: Error {
     case unknown
     case invalidInput
@@ -43,11 +23,13 @@ public enum KinError: Error {
 
 public let NetworkIdMain: UInt64 = 1
 public let NetworkIdRopsten: UInt64 = 3
+public let NetworkIdTruffle: UInt64 = 9
 
 public final class KinClient {
     static private let supportedNetworks = [
         NetworkIdMain,
         NetworkIdRopsten,
+        NetworkIdTruffle
     ]
 
     private(set) lazy var account: KinAccount? = {
@@ -60,6 +42,16 @@ public final class KinClient {
     }()
 
     fileprivate let accountStore: KinAccountStore
+
+    func createAccountIfNecessary(with privateKey: String, passphrase: String) throws -> KinAccount? {
+        if accountStore.accounts.size() == 0 {
+            if let gAccount = accountStore.importAccount(with: privateKey, passphrase: passphrase) {
+                account =  KinAccount(gethAccount: gAccount,
+                                     accountStore: accountStore)
+            }
+        }
+        return account
+    }
 
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)

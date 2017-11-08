@@ -13,18 +13,18 @@ import XCTest
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let provider = InfuraTestProvider(apiKey: "ciS27F9JQYk8MaJd8Fbu")
+    let ropsten = NodeProvider(networkId: NetworkIdRopsten)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: provider)
+        kinClient = try! KinClient(provider: ropsten)
     }
 
     override func tearDown() {
         super.tearDown()
 
-        let accountStore = KinAccountStore(url: provider.url, networkId: provider.networkId)
+        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
         try? accountStore.deleteKeystore()
     }
 
@@ -50,7 +50,7 @@ class KinClientTests: XCTestCase {
         catch {
         }
 
-        let accountStore = KinAccountStore(url: provider.url, networkId: provider.networkId)
+        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
         let accountCount = accountStore.accounts.size()
 
         XCTAssertEqual(accountCount, 1)
