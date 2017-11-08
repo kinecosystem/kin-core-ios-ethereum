@@ -1,3 +1,6 @@
 .DS_Store
 KinSDK/KinSDK.xcodeproj/project.xcworkspace/xcuserdata
 KinSDK/KinSDK.xcodeproj/xcuserdata
+
+/node_modules
+/build
