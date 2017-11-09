@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Geth
 
 public protocol ServiceProvider {
     var url: URL { get }
@@ -28,7 +27,7 @@ public struct InfuraTestProvider: ServiceProvider {
     public let url: URL
     public let networkId: Int64
 
-    init(apiKey: String) {
+    public init(apiKey: String) {
         self.url = URL(string: apiKey, relativeTo: URL(string: "https://ropsten.infura.io")!)!
         self.networkId = 3
     }
@@ -89,13 +88,13 @@ public typealias TransactionCallback = (TransactionId?, KinError?) -> ()
 public typealias BalanceCallback = (Balance?, Error?) -> ()
 
 public class KinAccount {
-    
+
     fileprivate let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     fileprivate let contract: Contract
     fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
 
-    var publicAddress: String {
+    public var publicAddress: String {
         return gethAccount.getAddress().getHex()
     }
 
