@@ -84,13 +84,11 @@ public final class KinClient {
         guard let account = account else {
             return nil
         }
-        
-        guard let data = try? accountStore.export(account: account.gethAccount,
-                                                  passphrase: passphrase,
-                                                  exportPassphrase: passphrase) else {
-                                                    return nil
-        }
-        
+
+        let data = try accountStore.export(account: account.gethAccount,
+                                           passphrase: passphrase,
+                                           exportPassphrase: passphrase)
+
         return String(data: data, encoding: String.Encoding.utf8)
     }
 }
