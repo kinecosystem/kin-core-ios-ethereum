@@ -26,7 +26,8 @@ class Contract {
     
     func bindContractAbi() {
         do {
-            if let path = Bundle(for: Contract.self).path(forResource: "contractABI", ofType: "json") {
+            if let path = Bundle(for: Contract.self).path(forResource: "contractABI",
+                                                          ofType: "json") {
                 let abi = try String(contentsOfFile: path, encoding: .utf8)
                 boundContract = GethBindContract(contractAddress, abi, client, nil)
             }
@@ -35,16 +36,20 @@ class Contract {
         }
     }
     
-    func call(method: String, inputs: [GethInterface] = [], outputs: [GethInterface]) throws {
+    func call(method: String, inputs: [GethInterface] = [],
+              outputs: [GethInterface],
+              options: GethCallOpts = GethNewCallOpts()) throws {
 
         guard   let context = context,
-                let client = client,
-                let opts = GethNewCallOpts() else { throw ContractError.setup }
+                let client = client else {
+                    throw ContractError.setup
+                    
+        }
         
         let price = try client.suggestGasPrice(context).getInt64()
         
-        opts.setContext(context)
-        opts.setGasLimit(price)
+        options.setContext(context)
+        options.setGasLimit(price)
         
         let args = GethNewInterfaces(inputs.count)!
         let outs = GethNewInterfaces(outputs.count)!
@@ -56,7 +61,7 @@ class Contract {
             try outs.set(i, object: output)
         }
         
-        try boundContract?.call(opts, out_: outs, method: method, args: args)
+        try boundContract?.call(options, out_: outs, method: method, args: args)
         
     }
     

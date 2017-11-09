@@ -35,6 +35,7 @@ public struct InfuraTestProvider: ServiceProvider {
 
 public enum KinError: Error {
     case unknown
+    case setup
     case invalidPassphrase
     case unsupportedNetwork
 }
@@ -115,7 +116,7 @@ public class KinAccount {
         self.accountStore = accountStore
         self.contract = Contract(with: accountStore.context, client: accountStore.client)
     }
-    
+
     func decimals() throws -> UInt8 {
         let result = GethNewInterface()!
         result.setDefaultUint8()
@@ -140,7 +141,15 @@ public class KinAccount {
     }
 
     public func sendTransaction(to: String, amount: Double, passphrase: String) throws -> TransactionId {
-        return "MockTransactionId"
+
+        guard let store = accountStore else {
+            throw KinError.setup
+        }
+
+//        let toAddress = GethNewAddressFromHex(to, nil)
+//        let noncePointer: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
+//        let nonce = store.client.getPendingNonce(at: store.context, account: gethAccount.getAddress(), nonce: UnsafeMutablePointer<Int64>!)
+        return ""
     }
 
     public func balance(completion: @escaping BalanceCompletion) {
@@ -153,7 +162,7 @@ public class KinAccount {
             }
         }
     }
-    
+
     public func balance() throws -> Balance {
         let arg = GethNewInterface()!
         arg.setAddress(gethAccount.getAddress())
