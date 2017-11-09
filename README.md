@@ -1,5 +1,5 @@
-#  kinios
-### iOS Kin sdk
+#  Kin iOS SDK
+
 A library responsible for creating a new Kin account and managing balance and transactions in Kin.
 
 initial interface proposal

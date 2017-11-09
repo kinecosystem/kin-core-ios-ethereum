@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
     @IBAction func networkSelected(_ sender: UIButton) {
 //        let production = sender == mainNetButton
 
-        let kinClient = KinClient(provider: InfuraTestProvider(apiKey: "ciS27F9JQYk8MaJd8Fbu"))
+        let kinClient = try! KinClient(provider: InfuraTestProvider(apiKey: "ciS27F9JQYk8MaJd8Fbu"))
         let sampleViewController = KinSampleViewController.instantiate(with: kinClient)
 
         navigationController?.pushViewController(sampleViewController, animated: true)

@@ -25,7 +25,7 @@ class KinSampleViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

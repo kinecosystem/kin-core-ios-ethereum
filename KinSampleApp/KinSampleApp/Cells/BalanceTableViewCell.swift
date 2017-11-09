@@ -27,6 +27,8 @@ class BalanceTableViewCell: KinClientCell {
     @IBAction func refreshTapped(_ sender: UIButton) {
         let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
 
-        let balance = try? account.balance()
+        account.balance { balance, error in
+            print("Balance: \(balance ?? 0)")
+        }
     }
 }
