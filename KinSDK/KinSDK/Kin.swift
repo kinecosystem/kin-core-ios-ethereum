@@ -79,6 +79,18 @@ public final class KinClient {
 
         return account
     }
+
+    func keyStore(with passphrase: String) throws -> String? {
+        guard let account = account else {
+            return nil
+        }
+
+        let data = try accountStore.export(account: account.gethAccount,
+                                           passphrase: passphrase,
+                                           exportPassphrase: passphrase)
+
+        return String(data: data, encoding: String.Encoding.utf8)
+    }
 }
 
 public typealias Balance = Double
@@ -109,20 +121,6 @@ public class KinAccount {
         result.setDefaultUint8()
         try contract.call(method: "decimals", outputs: [result])
         return UInt8(result.getUint8().getInt64())
-    }
-    
-    func privateKey(with passphrase: String) throws -> String? {
-        guard let store = accountStore else {
-            return nil
-        }
-
-        guard let data = try? store.export(account: gethAccount,
-                                           passphrase: passphrase,
-                                           exportPassphrase: passphrase) else {
-                                            return nil
-        }
-
-        return String(data: data, encoding: String.Encoding.utf8)
     }
 
     public func sendTransaction(to: String,
