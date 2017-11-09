@@ -71,7 +71,7 @@ public final class KinClient {
         self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
     }
 
-    public func createAccountIfNecessary(with passphrase: String) throws -> KinAccount? {
+    public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount? {
         if accountStore.accounts.size() == 0 {
             account = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
                                      accountStore: accountStore)
@@ -96,8 +96,8 @@ public final class KinClient {
 public typealias Balance = Double
 public typealias TransactionId = String
 
-public typealias TransactionCallback = (TransactionId?, KinError?) -> ()
-public typealias BalanceCallback = (Balance?, Error?) -> ()
+public typealias TransactionCompletion = (TransactionId?, Error?) -> ()
+public typealias BalanceCompletion = (Balance?, Error?) -> ()
 
 public class KinAccount {
 
@@ -126,43 +126,56 @@ public class KinAccount {
     public func sendTransaction(to: String,
                                 amount: Double,
                                 passphrase: String,
-                                callback: TransactionCallback) {
-        callback(nil, nil)
+                                completion: @escaping TransactionCompletion) {
+        accountQueue.async {
+            do {
+                let transactionId = try self.sendTransaction(to: to,
+                                                             amount: amount,
+                                                             passphrase: passphrase)
+                completion(transactionId, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
     }
 
     public func sendTransaction(to: String, amount: Double, passphrase: String) throws -> TransactionId {
-        return ""
+        return "MockTransactionId"
     }
 
-    public func balance(callback: @escaping BalanceCallback) {
-        
+    public func balance(completion: @escaping BalanceCompletion) {
         accountQueue.async {
             do {
                 let balance = try self.balance()
-                callback(balance, nil)
+                completion(balance, nil)
             } catch {
-                callback(nil, error)
+                completion(nil, error)
             }
         }
-        
     }
     
     public func balance() throws -> Balance {
-        
         let arg = GethNewInterface()!
-        arg.setAddress(self.gethAccount.getAddress())
+        arg.setAddress(gethAccount.getAddress())
         let result = GethNewInterface()!
         result.setDefaultBigInt()
-        try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+        try contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+
         return Double(result.getBigInt().getInt64())
-        
     }
 
-    public func pendingBalance(callback: BalanceCallback) {
-        callback(nil, nil)
+    public func pendingBalance(completion: @escaping BalanceCompletion) {
+        accountQueue.async {
+            do {
+                let balance = try self.pendingBalance()
+                completion(balance, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }
     }
 
     public func pendingBalance() throws -> Balance {
-        return 0
+        return 20
     }
 }
