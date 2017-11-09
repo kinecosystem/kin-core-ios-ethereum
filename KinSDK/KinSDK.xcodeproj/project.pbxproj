@@ -10,8 +10,6 @@
 		82140EBA1FA88E5B00FAF19B /* KinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 82140EAC1FA88E5B00FAF19B /* KinSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* Kin.swift */; };
 		82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
-		8245393F1FA9B6FE009117B4 /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
-		824539401FA9B6FF009117B4 /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
 		8257BF511FB44CF9000FDD3F /* Geth.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4D1FB44CF9000FDD3F /* Geth.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,7 +28,6 @@
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
 		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
-		E98B43E31FB1F05700B00A3C /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
 		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 /* End PBXBuildFile section */
 
@@ -375,8 +372,6 @@
 			files = (
 				827835331FA9B5F20006C3DF /* ViewController.swift in Sources */,
 				827835311FA9B5F20006C3DF /* AppDelegate.swift in Sources */,
-				8245393F1FA9B6FE009117B4 /* KinAccountStore.swift in Sources */,
-				E98B43E31FB1F05700B00A3C /* Contract.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,7 +382,6 @@
 				8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */,
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
-				824539401FA9B6FF009117B4 /* KinAccountStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
