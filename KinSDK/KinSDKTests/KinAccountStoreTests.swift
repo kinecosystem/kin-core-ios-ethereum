@@ -7,7 +7,7 @@
 //
 
 import XCTest
-import Geth
+@testable import KinSDK
 
 // todo add to readme https://github.com/ethereum/go-ethereum/issues/14369#issuecomment-318823725
 class KinAccountStoreTests: XCTestCase {
