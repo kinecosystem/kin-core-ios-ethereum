@@ -70,8 +70,6 @@
 		82140EC81FA89A8600FAF19B /* KinAccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountStore.swift; sourceTree = "<group>"; };
 		824539421FAB0102009117B4 /* KinAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountTests.swift; sourceTree = "<group>"; };
 		8257BF411FB447C0000FDD3F /* Geth */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Geth; path = Geth.framework/Versions/A/Geth; sourceTree = "<group>"; };
-		8257BF471FB44A29000FDD3F /* Geth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Geth.a; path = Geth.framework/Versions/A/Geth.a; sourceTree = "<group>"; };
-		8257BF491FB44AC7000FDD3F /* libgeth.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libgeth.a; path = ../libgeth.a; sourceTree = "<group>"; };
 		8257BF4D1FB44CF9000FDD3F /* Geth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geth.h; path = Geth.framework/Versions/A/Headers/Geth.h; sourceTree = "<group>"; };
 		8257BF4E1FB44CF9000FDD3F /* Universe.objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Universe.objc.h; path = Geth.framework/Versions/A/Headers/Universe.objc.h; sourceTree = "<group>"; };
 		8257BF4F1FB44CF9000FDD3F /* ref.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ref.h; path = Geth.framework/Versions/A/Headers/ref.h; sourceTree = "<group>"; };
@@ -157,8 +155,6 @@
 		82140EC51FA89A6A00FAF19B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8257BF491FB44AC7000FDD3F /* libgeth.a */,
-				8257BF471FB44A29000FDD3F /* Geth.a */,
 				8257BF411FB447C0000FDD3F /* Geth */,
 			);
 			name = Frameworks;
