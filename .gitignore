@@ -2,5 +2,13 @@
 KinSDK/KinSDK.xcodeproj/project.xcworkspace/xcuserdata
 KinSDK/KinSDK.xcodeproj/xcuserdata
 
+# test related files (ethereum testrpc):
+
 /node_modules
 /build
+
+/testrpc.log
+/testrpc.pid
+
+/truffle.log
+/token-contract-address
