@@ -26,9 +26,9 @@ No activity can take place until an account is created. To do so, call `createAc
 
 ### `KinAccount`
 
-#### Public Address and Private Key
+#### Public Address and KeyStore
 - `var publicAddress: String`: returns the hex string of the account's public address.
-- `func keyStore(with passphrase: String) -> throws String`: returns the account's keystore file as JSON. Throws an error in case the passphrase is wrong.
+- `func keyStore(with passphrase: String) -> throws String`: returns the account's keystore file as JSON. Throws an error in case the passphrase is wrong .**Currently not implemnted yet - method name not final**
 
 #### *Note:*
 For the methods below, a sync and an async version are both available. The sync versions will block the current thread until a value is returned (so you should call them from the main thread). The async versions will call the completion block once finished, but **it is the developer's responsibility to dispatch to desired queue.**
