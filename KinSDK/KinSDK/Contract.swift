@@ -26,9 +26,18 @@ class Contract {
         self.context = context
         self.client = client
         var address: String
+        
         switch networkId {
         case NetworkIdMain:
             address = "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5"
+        case NetworkIdRopsten:
+            address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
+        case NetworkIdTruffle:
+            guard let contractAddress = ProcessInfo.processInfo.environment["TOKEN_CONTRACT_ADDRESS"] else {
+                fatalError("Seems like you are trying to run tests on the local network, but " +
+                           "the tests environment isn't correctly set up. Please see readme for more details")
+            }
+            address = contractAddress
         default:
             address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
         }

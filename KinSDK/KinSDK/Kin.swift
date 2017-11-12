@@ -43,9 +43,10 @@ public final class KinClient {
 
     fileprivate let accountStore: KinAccountStore
 
-    func createAccountIfNecessary(with privateKey: String, passphrase: String) throws -> KinAccount? {
+    func createAccountIfNeeded(with privateKey: String, passphrase: String) throws -> KinAccount? {
         if accountStore.accounts.size() == 0 {
-            if let gAccount = accountStore.importAccount(with: privateKey, passphrase: passphrase) {
+            let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
+            if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
                 account =  KinAccount(gethAccount: gAccount,
                                      accountStore: accountStore)
             }

@@ -10,6 +10,8 @@ import XCTest
 @testable import KinSDK
 import Geth
 
+#if TEST_RPC
+
 class KinTruffleTests: XCTestCase {
     
     var kinClient: KinClient!
@@ -18,26 +20,40 @@ class KinTruffleTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        //kinClient = try! KinClient(provider: provider)
+        let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
+        try? accountStore.deleteKeystore()
+        kinClient = try! KinClient(provider: truffle)
     }
     
     override func tearDown() {
-//        let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
-//        try? accountStore.deleteKeystore()
+        let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
+        try? accountStore.deleteKeystore()
         super.tearDown()
     }
-    /*
+    
     func test_create_account_from_private_key() {
+
         do {
-            if let key = ProcessInfo.processInfo.environment["wallet_a_private_key"] {
-                let account = try kinClient.createAccountIfNecessary(with: key, passphrase: passphrase)
+            if let key = ProcessInfo.processInfo.environment["ACCOUNT_0_PRIVATE_KEY"] {
+                
+                let account = try kinClient.createAccountIfNeeded(with: key, passphrase: passphrase)
+                
+                XCTAssertNotNil(account)
+                if let balance = try account?.balance() {
+                    XCTAssertEqual((balance as NSDecimalNumber).uint64Value, 100)
+                } else {
+                    XCTAssertTrue(false, "Couldn't get balance")
+                }
+                
             } else {
-                fatalError("Test rpc did not set up properly. check the build phases for testing")
+                XCTAssertTrue(false, "Test rpc did not set up properly. check the build phases for testing")
             }
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
-     */
 }
+
+#endif
+

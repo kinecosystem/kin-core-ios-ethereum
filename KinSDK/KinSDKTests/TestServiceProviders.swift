@@ -20,7 +20,7 @@ struct NodeProvider: ServiceProvider {
         case NetworkIdRopsten:
             self.url = URL(string: "https://ropsten.infura.io/ciS27F9JQYk8MaJd8Fbu")!
         case NetworkIdTruffle:
-            self.url = URL(string: "localhost://8545")!
+            self.url = URL(string: "http://localhost:8545")!
         default:
             fatalError("Unsupported network")
         }
