@@ -1,0 +1,476 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238731FB09E9000390BE5 /* AppDelegate.swift */; };
+		919238761FB09E9000390BE5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238751FB09E9000390BE5 /* HomeViewController.swift */; };
+		919238791FB09E9000390BE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 919238771FB09E9000390BE5 /* Main.storyboard */; };
+		9192387B1FB09E9000390BE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9192387A1FB09E9000390BE5 /* Assets.xcassets */; };
+		9192387E1FB09E9000390BE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9192387C1FB09E9000390BE5 /* LaunchScreen.storyboard */; };
+		919238861FB0A16100390BE5 /* UIKitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238851FB0A16100390BE5 /* UIKitExtensions.swift */; };
+		919238881FB0AA6A00390BE5 /* KinSampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */; };
+		9192388B1FB1BE1D00390BE5 /* BalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */; };
+		9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192389A1FB1C62800390BE5 /* KinClientCell.swift */; };
+		91ED610F1FB1CE6E006D9FCC /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 919238931FB1C40500390BE5 /* KinSDK.framework */; };
+		91ED61131FB212D5006D9FCC /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 919238931FB1C40500390BE5 /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		919238921FB1C40500390BE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 82140EA91FA88E5B00FAF19B;
+			remoteInfo = KinSDK;
+		};
+		919238941FB1C40500390BE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8278352E1FA9B5F20006C3DF;
+			remoteInfo = KinTestHost;
+		};
+		919238961FB1C40500390BE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 827835411FA9B5F20006C3DF;
+			remoteInfo = KinSDKTests;
+		};
+		91ED610D1FB1CAED006D9FCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 82140EA81FA88E5B00FAF19B;
+			remoteInfo = KinSDK;
+		};
+		91ED61141FB212D5006D9FCC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 82140EA81FA88E5B00FAF19B;
+			remoteInfo = KinSDK;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		91ED61161FB212D5006D9FCC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				91ED61131FB212D5006D9FCC /* KinSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		919238701FB09E9000390BE5 /* KinSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		919238731FB09E9000390BE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		919238751FB09E9000390BE5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		919238781FB09E9000390BE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9192387A1FB09E9000390BE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9192387D1FB09E9000390BE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9192387F1FB09E9000390BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		919238851FB0A16100390BE5 /* UIKitExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitExtensions.swift; sourceTree = "<group>"; };
+		919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinSampleViewController.swift; sourceTree = "<group>"; };
+		9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTableViewCell.swift; sourceTree = "<group>"; };
+		9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KinSDK.xcodeproj; path = ../KinSDK/KinSDK.xcodeproj; sourceTree = "<group>"; };
+		9192389A1FB1C62800390BE5 /* KinClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientCell.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9192386D1FB09E9000390BE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				91ED610F1FB1CE6E006D9FCC /* KinSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		919238671FB09E9000390BE5 = {
+			isa = PBXGroup;
+			children = (
+				9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */,
+				919238721FB09E9000390BE5 /* KinSampleApp */,
+				919238711FB09E9000390BE5 /* Products */,
+				91ED61061FB1C9F3006D9FCC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		919238711FB09E9000390BE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				919238701FB09E9000390BE5 /* KinSampleApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		919238721FB09E9000390BE5 /* KinSampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				919238891FB1BE0000390BE5 /* Cells */,
+				919238731FB09E9000390BE5 /* AppDelegate.swift */,
+				919238751FB09E9000390BE5 /* HomeViewController.swift */,
+				919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */,
+				919238771FB09E9000390BE5 /* Main.storyboard */,
+				9192387A1FB09E9000390BE5 /* Assets.xcassets */,
+				9192387C1FB09E9000390BE5 /* LaunchScreen.storyboard */,
+				9192387F1FB09E9000390BE5 /* Info.plist */,
+				919238851FB0A16100390BE5 /* UIKitExtensions.swift */,
+			);
+			path = KinSampleApp;
+			sourceTree = "<group>";
+		};
+		919238891FB1BE0000390BE5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				9192389A1FB1C62800390BE5 /* KinClientCell.swift */,
+				9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		9192388D1FB1C40500390BE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				919238931FB1C40500390BE5 /* KinSDK.framework */,
+				919238951FB1C40500390BE5 /* KinTestHost.app */,
+				919238971FB1C40500390BE5 /* KinSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		91ED61061FB1C9F3006D9FCC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9192386F1FB09E9000390BE5 /* KinSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 919238821FB09E9000390BE5 /* Build configuration list for PBXNativeTarget "KinSampleApp" */;
+			buildPhases = (
+				9192386C1FB09E9000390BE5 /* Sources */,
+				9192386D1FB09E9000390BE5 /* Frameworks */,
+				9192386E1FB09E9000390BE5 /* Resources */,
+				91ED61161FB212D5006D9FCC /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				91ED610E1FB1CAED006D9FCC /* PBXTargetDependency */,
+				91ED61151FB212D5006D9FCC /* PBXTargetDependency */,
+			);
+			name = KinSampleApp;
+			productName = KinSampleApp;
+			productReference = 919238701FB09E9000390BE5 /* KinSampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		919238681FB09E9000390BE5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0910;
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = "Kin Foundation";
+				TargetAttributes = {
+					9192386F1FB09E9000390BE5 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9192386B1FB09E9000390BE5 /* Build configuration list for PBXProject "KinSampleApp" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 919238671FB09E9000390BE5;
+			productRefGroup = 919238711FB09E9000390BE5 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9192388D1FB1C40500390BE5 /* Products */;
+					ProjectRef = 9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				9192386F1FB09E9000390BE5 /* KinSampleApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		919238931FB1C40500390BE5 /* KinSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = KinSDK.framework;
+			remoteRef = 919238921FB1C40500390BE5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		919238951FB1C40500390BE5 /* KinTestHost.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = KinTestHost.app;
+			remoteRef = 919238941FB1C40500390BE5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		919238971FB1C40500390BE5 /* KinSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KinSDKTests.xctest;
+			remoteRef = 919238961FB1C40500390BE5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9192386E1FB09E9000390BE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9192387E1FB09E9000390BE5 /* LaunchScreen.storyboard in Resources */,
+				9192387B1FB09E9000390BE5 /* Assets.xcassets in Resources */,
+				919238791FB09E9000390BE5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9192386C1FB09E9000390BE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				919238761FB09E9000390BE5 /* HomeViewController.swift in Sources */,
+				9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */,
+				919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */,
+				9192388B1FB1BE1D00390BE5 /* BalanceTableViewCell.swift in Sources */,
+				919238861FB0A16100390BE5 /* UIKitExtensions.swift in Sources */,
+				919238881FB0AA6A00390BE5 /* KinSampleViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		91ED610E1FB1CAED006D9FCC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KinSDK;
+			targetProxy = 91ED610D1FB1CAED006D9FCC /* PBXContainerItemProxy */;
+		};
+		91ED61151FB212D5006D9FCC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KinSDK;
+			targetProxy = 91ED61141FB212D5006D9FCC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		919238771FB09E9000390BE5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				919238781FB09E9000390BE5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9192387C1FB09E9000390BE5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9192387D1FB09E9000390BE5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		919238801FB09E9000390BE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		919238811FB09E9000390BE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		919238831FB09E9000390BE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9PCUN277DB;
+				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = KinSampleApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinfoundation.KinSampleApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		919238841FB09E9000390BE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9PCUN277DB;
+				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = KinSampleApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kinfoundation.KinSampleApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9192386B1FB09E9000390BE5 /* Build configuration list for PBXProject "KinSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				919238801FB09E9000390BE5 /* Debug */,
+				919238811FB09E9000390BE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		919238821FB09E9000390BE5 /* Build configuration list for PBXNativeTarget "KinSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				919238831FB09E9000390BE5 /* Debug */,
+				919238841FB09E9000390BE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 919238681FB09E9000390BE5 /* Project object */;
+}

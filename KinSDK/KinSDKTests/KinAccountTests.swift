@@ -28,21 +28,9 @@ class KinAccountTests: XCTestCase {
         try? accountStore.deleteKeystore()
     }
 
-    func test_private_key_export() {
-        do {
-            let account = try kinClient.createAccountIfNecessary(with: passphrase)
-            let privateKey = try account?.privateKey(with: passphrase)
-
-            XCTAssertNotNil(privateKey, "Unable to retrieve private key for account: \(String(describing: account))")
-        }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
-        }
-    }
-
     func test_publicAddress() {
         do {
-            let account = try kinClient.createAccountIfNecessary(with: passphrase)
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
             let publicAddress = account?.publicAddress
 
             XCTAssertNotNil(publicAddress, "Unable to retrieve public address for account: \(String(describing: account))")
@@ -56,7 +44,7 @@ class KinAccountTests: XCTestCase {
         
         var account:KinAccount!
         do {
-            account = try kinClient.createAccountIfNecessary(with: passphrase)
+            account = try kinClient.createAccountIfNeeded(with: passphrase)
             let balance = try account?.balance()
             XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
         }
@@ -70,7 +58,7 @@ class KinAccountTests: XCTestCase {
         
         var account:KinAccount!
         do {
-            account = try kinClient.createAccountIfNecessary(with: passphrase)
+            account = try kinClient.createAccountIfNeeded(with: passphrase)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -89,7 +77,7 @@ class KinAccountTests: XCTestCase {
     
     func test_decimals() {
         do {
-            let account = try kinClient.createAccountIfNecessary(with: passphrase)
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
             let decimals = try account?.decimals()
             
             XCTAssertNotNil(decimals, "Unable to retrieve decimals for account: \(String(describing: account))")

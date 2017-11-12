@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Geth
 
 class KinAccountStore {
     
@@ -38,7 +37,7 @@ class KinAccountStore {
     
     let client: GethEthereumClient
     
-    fileprivate let keystore: GethKeyStore!
+    let keystore: GethKeyStore!
     let context = GethNewContext()!
     
     var accounts: GethAccounts {
@@ -46,7 +45,7 @@ class KinAccountStore {
             return keystore.getAccounts()
         }
     }
-    let networkId: Int64
+    let networkId: UInt64
 
     fileprivate var dataDir: String {
         return [
@@ -58,7 +57,7 @@ class KinAccountStore {
             .joined(separator: "/")
     }
 
-    init(url: URL, networkId: Int64) {
+    init(url: URL, networkId: UInt64) {
         self.networkId = networkId
 
         let dataDir = [
