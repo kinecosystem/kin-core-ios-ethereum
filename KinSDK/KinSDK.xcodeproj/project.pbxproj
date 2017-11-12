@@ -29,6 +29,7 @@
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
 		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
+		E9D58CD11FB79B9C0035846D /* KinToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D58CD01FB79B9C0035846D /* KinToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
+		E9D58CD01FB79B9C0035846D /* KinToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
 				82140EAD1FA88E5B00FAF19B /* Info.plist */,
 				82140EC31FA88EAF00FAF19B /* Kin.swift */,
+				E9D58CD01FB79B9C0035846D /* KinToken.swift */,
 				82140EC81FA89A8600FAF19B /* KinAccountStore.swift */,
 				E970C2731FAE394D0091181B /* Contract.swift */,
 			);
@@ -360,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9D58CD11FB79B9C0035846D /* KinToken.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
