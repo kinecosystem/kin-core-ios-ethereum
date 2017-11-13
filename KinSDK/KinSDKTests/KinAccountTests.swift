@@ -41,10 +41,8 @@ class KinAccountTests: XCTestCase {
     }
     
     func test_balance_sync() {
-        
-        var account:KinAccount!
         do {
-            account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
             let balance = try account?.balance()
             XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
         }
@@ -55,8 +53,7 @@ class KinAccountTests: XCTestCase {
     }
     
     func test_balance_async() {
-        
-        var account:KinAccount!
+        var account: KinAccount? = nil
         do {
             account = try kinClient.createAccountIfNeeded(with: passphrase)
         }
@@ -70,11 +67,51 @@ class KinAccountTests: XCTestCase {
             balanceChecked = balance
             expectation.fulfill()
         }
-        XCTAssertNil(balanceChecked, "Operation did not perform async")
+
         self.waitForExpectations(timeout: 5.0)
         XCTAssertNotNil(balanceChecked, "Unable to retrieve balance for account: \(String(describing: account))")
     }
-    
+
+    func test_pending_balance() {
+        do {
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let pendingBalance = try account?.pendingBalance()
+
+            XCTAssertNotNil(pendingBalance, "Unable to retrieve pending balance for account: \(String(describing: account))")
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
+    func test_pending_balance_async() {
+        let expectation = self.expectation(description: "wait for callback")
+
+        do {
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+
+            account?.pendingBalance(completion: { balance, error in
+                let bothNil = balance == nil && error == nil
+                let bothNotNil = balance != nil && error != nil
+
+                let stringBalance = String(describing: balance)
+                let stringError = String(describing: error)
+
+                XCTAssertFalse(bothNil, "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
+                XCTAssertFalse(bothNotNil, "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
+
+                expectation.fulfill()
+            })
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+
+            expectation.fulfill()
+        }
+
+        self.waitForExpectations(timeout: 5.0)
+    }
+
     func test_decimals() {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)

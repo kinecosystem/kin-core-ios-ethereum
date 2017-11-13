@@ -12,7 +12,10 @@ enum ContractError: Error {
 }
 
 class Contract {
-    
+    private struct Constants {
+        static let SHA3_TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+    }
+
     fileprivate var boundContract: GethBoundContract?
     fileprivate weak var context: GethContext?
     fileprivate weak var client: GethEthereumClient?
@@ -70,7 +73,80 @@ class Contract {
         return try contract.transact(options, method: method,
                                     args: try parameters.interfaces())
     }
-    
+
+    func pendingTransactionLogs(from: String?, to: String?) throws -> GethLogs {
+        guard
+            let client = client,
+            let context = context else {
+                throw ContractError.internalInconsistancy
+        }
+
+        guard
+            let query = GethNewFilterQuery(),
+            let addresses = GethNewAddressesEmpty(),
+            let topics = GethNewTopicsEmpty() else {
+                throw ContractError.geth
+        }
+
+        addresses.append(contractAddress)
+        query.setAddresses(addresses)
+        query.setFromBlock(GethBigInt(Int64(GethLatestBlockNumber)))
+        query.setToBlock(GethBigInt(Int64(GethPendingBlockNumber)))
+
+        var error: NSError? = nil
+        let hash = GethNewHashFromHex(Constants.SHA3_TRANSFER, &error)
+
+        if error != nil {
+            throw ContractError.geth
+        }
+
+        if let hashes = GethNewHashesEmpty() {
+            hashes.append(hash)
+            topics.append(hashes)
+        }
+        else {
+            throw ContractError.geth
+        }
+
+        if let hashes = GethNewHashesEmpty() {
+            if let from = from {
+                hashes.append(try hexAddressToTopicHash(address: from))
+            }
+
+            topics.append(hashes)
+        }
+        else {
+            throw ContractError.geth
+        }
+
+        if let hashes = GethNewHashesEmpty() {
+            if let to = to {
+                hashes.append(try hexAddressToTopicHash(address: to))
+            }
+
+            topics.append(hashes)
+        }
+        else {
+            throw ContractError.geth
+        }
+
+        query.setTopics(topics)
+
+        return try client.filterLogs(context, query: query)
+    }
+
+    fileprivate func hexAddressToTopicHash(address: String) throws -> GethHash {
+        let topicAddress = "0x000000000000000000000000" + address.suffix(address.count - 2)
+
+        var error: NSError? = nil
+        let hash = GethNewHashFromHex(topicAddress, &error)
+
+        if error != nil {
+            throw ContractError.geth
+        }
+
+        return hash!
+    }
 }
 
 extension Array where Element == GethInterface {

@@ -141,7 +141,9 @@ public class KinAccount {
     init(gethAccount: GethAccount, accountStore: KinAccountStore) {
         self.gethAccount = gethAccount
         self.accountStore = accountStore
-        self.contract = Contract(with: accountStore.context, networkId: accountStore.networkId, client: accountStore.client)
+        self.contract = Contract(with: accountStore.context,
+                                 networkId: accountStore.networkId,
+                                 client: accountStore.client)
     }
 
     func decimals() throws -> UInt8 {
@@ -168,7 +170,6 @@ public class KinAccount {
     }
 
     public func sendTransaction(to: String, amount: UInt64, passphrase: String) throws -> TransactionId {
-
         guard let store = accountStore else {
             throw KinError.internalInconsistancy
         }
@@ -207,11 +208,9 @@ public class KinAccount {
                                                  parameters: [toAddress, value])
 
         return transaction.getHash().getHex()
-
     }
 
     public func balance(completion: @escaping BalanceCompletion) {
-
         accountQueue.async {
             do {
                 let balance = try self.balance()
@@ -229,7 +228,6 @@ public class KinAccount {
         result.setDefaultBigInt()
         try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
         return try KinToken(bigInt: result.getBigInt()).value
-
     }
 
     public func pendingBalance(completion: @escaping BalanceCompletion) {
@@ -244,7 +242,37 @@ public class KinAccount {
     }
 
     public func pendingBalance() throws -> Balance {
-        let bigInt = GethNewBigInt(0)! // temporary until implemented
-        return try KinToken(bigInt: bigInt).value // temporary until implemented
+        let balance = try self.balance()
+        let sent = try pendingSentBalance()
+        let earned = try pendingEarnedBalance()
+
+        return balance + earned - sent
+    }
+
+    fileprivate func pendingSentBalance() throws -> Balance {
+        let logs = try contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(), to: nil)
+
+        return try sumTransactionAmount(logs: logs)
+    }
+
+    fileprivate func pendingEarnedBalance() throws -> Balance {
+        let logs = try contract.pendingTransactionLogs(from: nil, to: gethAccount.getAddress().getHex())
+
+        return try sumTransactionAmount(logs: logs)
+    }
+
+    fileprivate func sumTransactionAmount(logs: GethLogs) throws -> Balance {
+        var total: Int64 = 0
+
+        for i in 0..<logs.size() {
+            if let log = try? logs.get(i), log.getTxHash().getHex() != nil {
+                let bigInt = GethBigInt()
+                bigInt.setBytes(log.getData())
+
+                total += bigInt.getInt64()
+            }
+        }
+
+        return try KinToken(bigInt: GethBigInt(total)).value
     }
 }
