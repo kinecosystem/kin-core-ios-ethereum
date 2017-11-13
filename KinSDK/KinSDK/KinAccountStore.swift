@@ -9,7 +9,6 @@
 import Foundation
 
 class KinAccountStore {
-    
     struct Directories {
         static let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                                    .userDomainMask,
@@ -20,7 +19,6 @@ class KinAccountStore {
     }
     
     enum EthereumNetworkId: Int64, CustomStringConvertible {
-        
         case main = 1       // Ethereum public main network
         case ropsten = 3    // Ethereum test network
         
@@ -32,7 +30,6 @@ class KinAccountStore {
                 return "ropsten"
             }
         }
-        
     }
     
     let client: GethEthereumClient
@@ -101,6 +98,4 @@ class KinAccountStore {
     func deleteKeystore() throws {
         try FileManager.default.removeItem(at: URL(fileURLWithPath: dataDir))
     }
-    
-    
 }

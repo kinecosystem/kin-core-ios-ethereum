@@ -1451,6 +1451,8 @@ data dump of the transaction for debugging purposes.
 - (long)size;
 @end
 
+FOUNDATION_EXPORT const long GethEarliestBlockNumber;
+FOUNDATION_EXPORT const long GethLatestBlockNumber;
 /**
  * LightScryptN is the N parameter of Scrypt encryption algorithm, using 4MB
 memory and taking approximately 100ms CPU time on a modern processor.
@@ -1461,6 +1463,7 @@ FOUNDATION_EXPORT const long GethLightScryptN;
 memory and taking approximately 100ms CPU time on a modern processor.
  */
 FOUNDATION_EXPORT const long GethLightScryptP;
+FOUNDATION_EXPORT const long GethPendingBlockNumber;
 /**
  * StandardScryptN is the N parameter of Scrypt encryption algorithm, using 256MB
 memory and taking approximately 1s CPU time on a modern processor.

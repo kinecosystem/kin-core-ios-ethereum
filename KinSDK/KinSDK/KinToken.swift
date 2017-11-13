@@ -8,36 +8,29 @@
 
 import Foundation
 
-public class KinToken {
-    
-    fileprivate let kinDecimal = Decimal(sign: .plus,
-                                            exponent: -18,
-                                            significand: Decimal(1))
-    
-    let value: Decimal
-    
-    init(string: String) throws {
+fileprivate let kinDecimal = Decimal(sign: .plus,
+                                     exponent: -18,
+                                     significand: Decimal(1))
+
+extension Decimal {
+    static func decimal(with string: String) throws -> Decimal {
         guard let decimal = Decimal(string: string) else {
             throw KinError.invalidInput
         }
         if (string.count > -kinDecimal.exponent) {
-            self.value = Decimal(sign: .plus,
+            return Decimal(sign: .plus,
                                  exponent: kinDecimal.exponent,
                                  significand: decimal)
         } else {
             guard let uint = UInt64(string) else {
                 throw KinError.invalidInput
             }
-            self.value = Decimal(sign: .plus, exponent: 0,
+            return Decimal(sign: .plus, exponent: 0,
                                  significand: Decimal(uint))
         }
     }
-    
-    convenience init(bigInt: GethBigInt) throws {
-        try self.init(string: bigInt.string())
-    }
-    
-    public init(value: UInt64) {
-        self.value = Decimal(sign: .plus, exponent: 0, significand: Decimal(value))
+
+    static func decimal(with bigInt: GethBigInt) throws -> Decimal {
+        return try self.decimal(with: bigInt.string())
     }
 }
