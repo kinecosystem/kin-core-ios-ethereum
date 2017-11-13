@@ -78,19 +78,19 @@ class KinClientTests: XCTestCase {
         let bigIntLongStringReminder = GethNewBigInt(0)!
         bigIntLongStringReminder.setString("100000000000000000001", base: 10)
 
-        guard let kin100FromUnder18CharsString = try? Decimal.decimal(with: "100") else {
+        guard let kin100FromUnder18CharsString = try? Decimal(kinString: "100") else {
             XCTAssertTrue(false, "Kin could not be created from short string")
             return
         }
-        guard   let kin100FromOver18CharsString = try? Decimal.decimal(with: "100000000000000000000"),
-                let kin100FromOver18CharsStringWithReminder = try? Decimal.decimal(with: "100000000000000000001") else {
+        guard   let kin100FromOver18CharsString = try? Decimal(kinString: "100000000000000000000"),
+                let kin100FromOver18CharsStringWithReminder = try? Decimal(kinString: "100000000000000000001") else {
             XCTAssertTrue(false, "Kin could not be created from long string")
             return
         }
-        guard   let KinFromBigIntWithInt = try? Decimal.decimal(with: GethNewBigInt(100)),
-                let KinFromBigIntWithShortString = try? Decimal.decimal(with: bigIntShortString),
-                let KinFromBigIntWithLongString = try? Decimal.decimal(with: bigIntLongString),
-                let KinFromBigIntWithLongStringRemoinder = try? Decimal.decimal(with: bigIntLongStringReminder) else {
+        guard   let KinFromBigIntWithInt = try? Decimal(bigInt: GethNewBigInt(100)),
+                let KinFromBigIntWithShortString = try? Decimal(bigInt: bigIntShortString),
+                let KinFromBigIntWithLongString = try? Decimal(bigInt: bigIntLongString),
+                let KinFromBigIntWithLongStringRemoinder = try? Decimal(bigInt: bigIntLongStringReminder) else {
             XCTAssertTrue(false, "Kin could not be created from GethBigInt")
             return
         }

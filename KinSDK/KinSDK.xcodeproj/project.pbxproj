@@ -12,6 +12,7 @@
 		82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
+		824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824CBAA21FB9932700B736AA /* Decimal+extensions.swift */; };
 		8257BF511FB44CF9000FDD3F /* Geth.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4D1FB44CF9000FDD3F /* Geth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8257BF521FB44CF9000FDD3F /* Universe.objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4E1FB44CF9000FDD3F /* Universe.objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8257BF531FB44CF9000FDD3F /* ref.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4F1FB44CF9000FDD3F /* ref.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,7 +30,6 @@
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
 		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
-		E9D58CD11FB79B9C0035846D /* KinToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D58CD01FB79B9C0035846D /* KinToken.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +70,7 @@
 		82140EC31FA88EAF00FAF19B /* Kin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kin.swift; sourceTree = "<group>"; };
 		82140EC81FA89A8600FAF19B /* KinAccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountStore.swift; sourceTree = "<group>"; };
 		824539421FAB0102009117B4 /* KinAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountTests.swift; sourceTree = "<group>"; };
+		824CBAA21FB9932700B736AA /* Decimal+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+extensions.swift"; sourceTree = "<group>"; };
 		8257BF411FB447C0000FDD3F /* Geth */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Geth; path = Geth.framework/Versions/A/Geth; sourceTree = "<group>"; };
 		8257BF4D1FB44CF9000FDD3F /* Geth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Geth.h; path = Geth.framework/Versions/A/Headers/Geth.h; sourceTree = "<group>"; };
 		8257BF4E1FB44CF9000FDD3F /* Universe.objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Universe.objc.h; path = Geth.framework/Versions/A/Headers/Universe.objc.h; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
-		E9D58CD01FB79B9C0035846D /* KinToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinToken.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,11 +144,11 @@
 		82140EAB1FA88E5B00FAF19B /* KinSDK */ = {
 			isa = PBXGroup;
 			children = (
+				824CBAA11FB9932700B736AA /* extensions */,
 				E970C26D1FAB63600091181B /* Resources */,
 				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
 				82140EAD1FA88E5B00FAF19B /* Info.plist */,
 				82140EC31FA88EAF00FAF19B /* Kin.swift */,
-				E9D58CD01FB79B9C0035846D /* KinToken.swift */,
 				82140EC81FA89A8600FAF19B /* KinAccountStore.swift */,
 				E970C2731FAE394D0091181B /* Contract.swift */,
 			);
@@ -161,6 +161,14 @@
 				8257BF411FB447C0000FDD3F /* Geth */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		824CBAA11FB9932700B736AA /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				824CBAA21FB9932700B736AA /* Decimal+extensions.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		8257BF4C1FB44CC0000FDD3F /* Geth */ = {
@@ -359,7 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9D58CD11FB79B9C0035846D /* KinToken.swift in Sources */,
+				824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
