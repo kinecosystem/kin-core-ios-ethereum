@@ -227,7 +227,7 @@ public class KinAccount {
         let result = GethNewInterface()!
         result.setDefaultBigInt()
         try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
-        return try KinToken(bigInt: result.getBigInt()).value
+        return try Decimal.decimal(with: result.getBigInt())
     }
 
     public func pendingBalance(completion: @escaping BalanceCompletion) {
@@ -269,7 +269,7 @@ public class KinAccount {
                 let bigInt = GethBigInt()
                 bigInt.setBytes(log.getData())
 
-                total += Decimal(bigInt.getInt64())
+                total += try Decimal.decimal(with: bigInt)
             }
         }
 
