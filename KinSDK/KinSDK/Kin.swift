@@ -262,17 +262,17 @@ public class KinAccount {
     }
 
     fileprivate func sumTransactionAmount(logs: GethLogs) throws -> Balance {
-        var total: Int64 = 0
+        var total: Decimal = 0
 
         for i in 0..<logs.size() {
             if let log = try? logs.get(i), log.getTxHash().getHex() != nil {
                 let bigInt = GethBigInt()
                 bigInt.setBytes(log.getData())
 
-                total += bigInt.getInt64()
+                total += Decimal(bigInt.getInt64())
             }
         }
 
-        return try KinToken(bigInt: GethBigInt(total)).value
+        return total
     }
 }
