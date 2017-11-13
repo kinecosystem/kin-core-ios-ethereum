@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */; };
+		910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA031FB8A60C00610D06 /* HelperExtensions.swift */; };
+		910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */; };
+		9176B8FC1FB84C9400AEDBDE /* KinAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9176B8FB1FB84C9400AEDBDE /* KinAccountTableViewCell.swift */; };
+		9176B9001FB8811A00AEDBDE /* TextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9176B8FF1FB8811A00AEDBDE /* TextViewController.swift */; };
 		919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238731FB09E9000390BE5 /* AppDelegate.swift */; };
 		919238761FB09E9000390BE5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238751FB09E9000390BE5 /* HomeViewController.swift */; };
 		919238791FB09E9000390BE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 919238771FB09E9000390BE5 /* Main.storyboard */; };
@@ -73,6 +78,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionViewController.swift; sourceTree = "<group>"; };
+		910EEA031FB8A60C00610D06 /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
+		910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionTableViewCell.swift; sourceTree = "<group>"; };
+		9176B8FB1FB84C9400AEDBDE /* KinAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountTableViewCell.swift; sourceTree = "<group>"; };
+		9176B8FF1FB8811A00AEDBDE /* TextViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewController.swift; sourceTree = "<group>"; };
 		919238701FB09E9000390BE5 /* KinSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		919238731FB09E9000390BE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		919238751FB09E9000390BE5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -124,11 +134,14 @@
 				919238731FB09E9000390BE5 /* AppDelegate.swift */,
 				919238751FB09E9000390BE5 /* HomeViewController.swift */,
 				919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */,
+				910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */,
+				9176B8FF1FB8811A00AEDBDE /* TextViewController.swift */,
 				919238771FB09E9000390BE5 /* Main.storyboard */,
 				9192387A1FB09E9000390BE5 /* Assets.xcassets */,
 				9192387C1FB09E9000390BE5 /* LaunchScreen.storyboard */,
 				9192387F1FB09E9000390BE5 /* Info.plist */,
 				919238851FB0A16100390BE5 /* UIKitExtensions.swift */,
+				910EEA031FB8A60C00610D06 /* HelperExtensions.swift */,
 			);
 			path = KinSampleApp;
 			sourceTree = "<group>";
@@ -137,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				9192389A1FB1C62800390BE5 /* KinClientCell.swift */,
+				9176B8FB1FB84C9400AEDBDE /* KinAccountTableViewCell.swift */,
+				910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */,
 				9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */,
 			);
 			path = Cells;
@@ -268,8 +283,13 @@
 				9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */,
 				919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */,
 				9192388B1FB1BE1D00390BE5 /* BalanceTableViewCell.swift in Sources */,
+				9176B8FC1FB84C9400AEDBDE /* KinAccountTableViewCell.swift in Sources */,
+				910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */,
 				919238861FB0A16100390BE5 /* UIKitExtensions.swift in Sources */,
+				910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */,
+				910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */,
 				919238881FB0AA6A00390BE5 /* KinSampleViewController.swift in Sources */,
+				9176B9001FB8811A00AEDBDE /* TextViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

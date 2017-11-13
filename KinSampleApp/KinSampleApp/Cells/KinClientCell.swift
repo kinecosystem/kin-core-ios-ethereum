@@ -9,7 +9,13 @@
 import UIKit
 import KinSDK
 
+protocol KinClientCellDelegate: class {
+    func revealKeyStore(keyStore: String)
+    func startSendTransaction()
+}
+
 class KinClientCell: UITableViewCell {
+    weak var kinClientCellDelegate: KinClientCellDelegate?
     var kinClient: KinClient!
 }
 

@@ -26,6 +26,7 @@ class KinSampleViewController: UITableViewController {
         super.viewDidLoad()
 
         navigationItem.largeTitleDisplayMode = .never
+        tableView.tableFooterView = UIView()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -33,10 +34,31 @@ class KinSampleViewController: UITableViewController {
 
         if let kCell = cell as? KinClientCell {
             kCell.kinClient = kinClient
+            kCell.kinClientCellDelegate = self
         }
         
         return cell
     }
+}
 
+extension KinSampleViewController: KinClientCellDelegate {
+    func revealKeyStore(keyStore: String) {
+        guard let textViewController = storyboard?.instantiateViewController(withIdentifier: "TextViewController") as? TextViewController else {
+            return
+        }
 
+        textViewController.text = keyStore
+        navigationController?.pushViewController(textViewController, animated: true)
+    }
+
+    func startSendTransaction() {
+        guard let txViewController = storyboard?.instantiateViewController(withIdentifier: "SendTransactionViewController") as? SendTransactionViewController else {
+            return
+        }
+
+        txViewController.view.tintColor = view.tintColor
+        txViewController.kinClient = kinClient
+
+        navigationController?.pushViewController(txViewController, animated: true)
+    }
 }
