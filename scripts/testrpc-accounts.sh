@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # create 10 accounts with balance 100 ETH each
-balance=100
+balance=100000000000000000000
 
 export ACCOUNT_0_PRIVATE_KEY=0x11c98b8fa69354b26b5db98148a5bc4ef2ebae8187f651b82409f6cefc9bb0b8
 export ACCOUNT_1_PRIVATE_KEY=0xc5db67b3865454f6d129ec83204e845a2822d9fe5338ff46fe4c126859e1357e

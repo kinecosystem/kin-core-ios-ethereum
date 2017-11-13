@@ -2,7 +2,8 @@
 .DEFAULT_GOAL: default
 default: ;
 
-
+export PATH := ./node_modules/.bin:$(PATH)
+ 
 test: truffle
 	./scripts/run-tests.sh
 .PHONY: test

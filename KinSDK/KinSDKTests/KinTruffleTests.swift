@@ -34,12 +34,12 @@ class KinTruffleTests: XCTestCase {
     func test_create_account_from_private_key() {
 
         do {
-            if let key = ProcessInfo.processInfo.environment["ACCOUNT_0_PRIVATE_KEY"] {
+            if  let key = ProcessInfo.processInfo.environment["ACCOUNT_0_PRIVATE_KEY"],
+                let account = try kinClient.createAccountIfNeeded(with: key, passphrase: passphrase) {
                 
-                let account = try kinClient.createAccountIfNeeded(with: key, passphrase: passphrase)
-                
+                print("created account \(account.publicAddress)")
                 XCTAssertNotNil(account)
-                if let balance = try account?.balance() {
+                if let balance = try? account.balance() {
                     XCTAssertEqual((balance as NSDecimalNumber).uint64Value, 100)
                 } else {
                     XCTAssertTrue(false, "Couldn't get balance")
