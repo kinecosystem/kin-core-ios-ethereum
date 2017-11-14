@@ -33,7 +33,7 @@ class Contract {
         case NetworkIdRopsten:
             address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
         case NetworkIdTruffle:
-            guard let contractAddress = ProcessInfo.processInfo.environment["TOKEN_CONTRACT_ADDRESS"] else {
+            guard let contractAddress = TestsConfiguration.config?["TOKEN_CONTRACT_ADDRESS"] as? String else {
                 fatalError("Seems like you are trying to run tests on the local network, but " +
                            "the tests environment isn't correctly set up. Please see readme for more details")
             }

@@ -1,4 +1,23 @@
 language: swift
 osx_image: xcode9.1
+node_js:
+  - "node"
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - rm -rf ~/.nvm
+  - git clone https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install 8.9.1
+  - node --version
+  - npm install
+
 script:
   - xcodebuild test -project KinSDK/KinSDK.xcodeproj -scheme KinTestHost -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=11.1'
+
+after_script:
+  - cat truffle.log
+  - cat testrpc.log

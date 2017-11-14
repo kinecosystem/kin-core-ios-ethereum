@@ -3,9 +3,9 @@
 default: ;
 
 export PATH := ./node_modules/.bin:$(PATH)
- 
-test: truffle
-	./scripts/run-tests.sh
+
+prepare-tests: truffle
+	./scripts/prepare-tests.sh
 .PHONY: test
 
 truffle: testrpc truffle-clean
