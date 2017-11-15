@@ -59,9 +59,9 @@ class KinClientTests: XCTestCase {
     func test_keystore_export() {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
-            let privateKey = try kinClient.keyStore(with: passphrase)
+            let keyStore = try kinClient.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
 
-            XCTAssertNotNil(privateKey, "Unable to retrieve private key for account: \(String(describing: account))")
+            XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")

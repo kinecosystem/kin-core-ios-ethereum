@@ -33,6 +33,9 @@
 		E9816BC11FBB33E400C84F1C /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
 		E9816BC21FBB33E700C84F1C /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
 		E9816BC31FBB342E00C84F1C /* TestsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */; };
+		E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */; };
+		E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCB1FBC736300C84F1C /* String+extensions.swift */; };
+		E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */; };
 		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E9A3820C1FBADF610085AB80 /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
@@ -96,6 +99,9 @@
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsConfiguration.swift; sourceTree = "<group>"; };
+		E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestServiceProviders.swift; sourceTree = "<group>"; };
+		E9816BCB1FBC736300C84F1C /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
 		E9A3820B1FBADF610085AB80 /* testConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testConfig.plist; sourceTree = "<group>"; };
 		E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTruffleTests.swift; sourceTree = "<group>"; };
@@ -177,6 +183,8 @@
 			isa = PBXGroup;
 			children = (
 				824CBAA21FB9932700B736AA /* Decimal+extensions.swift */,
+				E9816BCB1FBC736300C84F1C /* String+extensions.swift */,
+				E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -212,10 +220,10 @@
 				824539421FAB0102009117B4 /* KinAccountTests.swift */,
 				825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */,
 				827835471FA9B5F20006C3DF /* Info.plist */,
-				E9FCC7851FB3391900A5CE32 /* TestServiceProviders.swift */,
 				E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */,
 				E9A3820B1FBADF610085AB80 /* testConfig.plist */,
 				E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */,
+				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
 			);
 			path = KinSDKTests;
 			sourceTree = "<group>";
@@ -385,9 +393,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */,
+				E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */,
 				E9816BBF1FBB32BE00C84F1C /* TestsConfiguration.swift in Sources */,
+				E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */,
+				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

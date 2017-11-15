@@ -80,7 +80,7 @@ class KinAccountStore {
     }
 
     func importAccount(with privateKey: String, passphrase: String) -> GethAccount? {
-        return try? keystore.importECDSAKey(privateKey.hexadecimal(),
+        return try? keystore.importECDSAKey(privateKey.hexaBytes.data,
                                             passphrase: passphrase)
     }
 
