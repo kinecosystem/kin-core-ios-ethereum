@@ -9,7 +9,7 @@ test:
 	xcodebuild test -project KinSDK/KinSDK.xcodeproj \
 	-scheme KinTestHost \
 	-sdk iphonesimulator \
-	-destination 'platform=iOS Simulator,name=iPhone 6,OS=11.1'
+	-destination 'platform=iOS Simulator,name=iPhone 6'
 
 prepare-tests: truffle
 	./scripts/prepare-tests.sh
