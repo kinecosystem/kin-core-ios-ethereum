@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIColor {
+    static var kin = UIColor(red:0.00, green:0.80, blue:0.92, alpha:1.00)
     static var testNet = UIColor(red:0.00, green:0.75, blue:0.98, alpha:1.00)
     static var mainNet = UIColor(red:0.94, green:0.56, blue:0.21, alpha:1.00)
 }

@@ -50,8 +50,8 @@ extension KinSampleViewController: KinClientCellDelegate {
             return
         }
 
+        keyStoreViewController.view.tintColor = view.tintColor
         keyStoreViewController.kinClient = kinClient
-
         navigationController?.pushViewController(keyStoreViewController, animated: true)
     }
 
@@ -62,7 +62,6 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         txViewController.view.tintColor = view.tintColor
         txViewController.kinClient = kinClient
-
         navigationController?.pushViewController(txViewController, animated: true)
     }
 }

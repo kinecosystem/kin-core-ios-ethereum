@@ -12,7 +12,7 @@ import KinSDK
 class KeyStoreViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView?
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var exportButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
 
     var kinClient: KinClient!
 
@@ -23,14 +23,20 @@ class KeyStoreViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(showKeyStore), name: NSNotification.Name.UITextFieldTextDidChange, object: nil)
 
         textField.becomeFirstResponder()
-        exportButton.fill(with: view.tintColor)
+        saveButton.fill(with: view.tintColor)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        saveButton.fill(with: view.tintColor)
     }
 
    @objc func showKeyStore() {
         guard let exportPassphrase = textField.text,
             exportPassphrase.count > 0 else {
                 textView?.text = "Add a passphrase to encrypt the account"
-                exportButton.isEnabled = false
+                saveButton.isEnabled = false
                 return
         }
 
@@ -41,7 +47,7 @@ class KeyStoreViewController: UIViewController {
         }
 
         textView?.text = prettified
-        exportButton.isEnabled = true
+        saveButton.isEnabled = true
     }
 
     @IBAction func exportTapped() {
