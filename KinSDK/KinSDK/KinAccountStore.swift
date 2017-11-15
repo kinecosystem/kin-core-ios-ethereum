@@ -17,11 +17,11 @@ class KinAccountStore {
         static let keystore = "keystore"
         static let account = "account"
     }
-    
+
     enum EthereumNetworkId: Int64, CustomStringConvertible {
         case main = 1       // Ethereum public main network
         case ropsten = 3    // Ethereum test network
-        
+
         var description: String {
             switch self {
             case .main:
@@ -31,12 +31,12 @@ class KinAccountStore {
             }
         }
     }
-    
+
     let client: GethEthereumClient
-    
+
     let keystore: GethKeyStore!
     let context = GethNewContext()!
-    
+
     var accounts: GethAccounts {
         get {
             return keystore.getAccounts()
@@ -68,33 +68,38 @@ class KinAccountStore {
         keystore = GethNewKeyStore(dataDir, GethLightScryptN, GethLightScryptP)
         self.client = GethNewEthereumClient(url.absoluteString, nil)
     }
-    
+
     func createAccount(passphrase: String) throws -> GethAccount {
         return try keystore.newAccount(passphrase)
     }
-    
-    func importAccount(keystoreData:Data, passphrase: String,
+
+    func importAccount(keystoreData: Data, passphrase: String,
                        newPassphrase: String) -> GethAccount? {
         return try? keystore.importKey(keystoreData, passphrase: passphrase,
                                        newPassphrase: newPassphrase)
     }
-    
+
+    func importAccount(with privateKey: String, passphrase: String) -> GethAccount? {
+        return try? keystore.importECDSAKey(privateKey.hexaBytes.data,
+                                            passphrase: passphrase)
+    }
+
     func export(account: GethAccount, passphrase: String,
                         exportPassphrase: String) throws -> Data {
         return try keystore.exportKey(account, passphrase: passphrase,
                                       newPassphrase: exportPassphrase)
     }
-    
+
     func update(account: GethAccount, passphrase: String,
                        newPassphrase: String) -> Bool {
         return (try? keystore.update(account, passphrase: passphrase,
                                      newPassphrase: newPassphrase)) != nil
     }
-    
+
     func delete(account: GethAccount, passphrase: String) throws {
         try keystore.delete(account, passphrase: passphrase)
     }
-    
+
     func deleteKeystore() throws {
         try FileManager.default.removeItem(at: URL(fileURLWithPath: dataDir))
     }

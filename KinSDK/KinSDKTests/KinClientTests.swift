@@ -13,18 +13,18 @@ import XCTest
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let provider = InfuraTestProvider(apiKey: "ciS27F9JQYk8MaJd8Fbu")
+    let ropsten = NodeProvider(networkId: NetworkIdRopsten)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: provider)
+        kinClient = try! KinClient(provider: ropsten)
     }
 
     override func tearDown() {
         super.tearDown()
 
-        let accountStore = KinAccountStore(url: provider.url, networkId: provider.networkId)
+        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
         try? accountStore.deleteKeystore()
     }
 
@@ -50,7 +50,7 @@ class KinClientTests: XCTestCase {
         catch {
         }
 
-        let accountStore = KinAccountStore(url: provider.url, networkId: provider.networkId)
+        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
         let accountCount = accountStore.accounts.size()
 
         XCTAssertEqual(accountCount, 1)
@@ -59,9 +59,9 @@ class KinClientTests: XCTestCase {
     func test_keystore_export() {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
-            let privateKey = try kinClient.keyStore(with: passphrase)
+            let keyStore = try kinClient.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
 
-            XCTAssertNotNil(privateKey, "Unable to retrieve private key for account: \(String(describing: account))")
+            XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
