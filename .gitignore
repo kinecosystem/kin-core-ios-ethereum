@@ -2,6 +2,9 @@
 KinSDK/KinSDK.xcodeproj/project.xcworkspace/xcuserdata
 KinSDK/KinSDK.xcodeproj/xcuserdata
 
+KinSampleApp/KinSampleApp.xcodeproj/project.xcworkspace/xcuserdata
+KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
+
 # test related files (ethereum testrpc):
 
 /node_modules
