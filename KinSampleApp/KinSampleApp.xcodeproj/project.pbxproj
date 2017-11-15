@@ -444,6 +444,7 @@
 				DEVELOPMENT_TEAM = 9PCUN277DB;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = KinSampleApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kinfoundation.KinSampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -461,6 +462,7 @@
 				DEVELOPMENT_TEAM = 9PCUN277DB;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = KinSampleApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kinfoundation.KinSampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
