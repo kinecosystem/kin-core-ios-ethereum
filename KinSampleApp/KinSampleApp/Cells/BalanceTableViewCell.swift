@@ -25,7 +25,7 @@ class BalanceTableViewCell: KinClientCell {
     let numberFormatter: NumberFormatter = {
         let f = NumberFormatter()
         f.numberStyle = .currency
-        f.currencySymbol = nil
+        f.currencySymbol = ""
 
         return f
     }()

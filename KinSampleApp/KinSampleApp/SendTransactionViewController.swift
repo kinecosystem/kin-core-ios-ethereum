@@ -65,7 +65,8 @@ class SendTransactionViewController: UIViewController {
                     return
                 }
 
-                let alertController = UIAlertController(title: "Transaction Sent", message: "Transaction with ID \(transactionId) sent.", preferredStyle: .alert)
+                let message = "Transaction with ID \(transactionId) sent to \(address)"
+                let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
                     UIPasteboard.general.string = transactionId
                 }))
