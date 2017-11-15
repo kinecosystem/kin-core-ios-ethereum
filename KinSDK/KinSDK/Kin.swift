@@ -160,7 +160,7 @@ public class KinAccount {
         accountQueue.async {
             do {
                 let transactionId = try self.sendTransaction(to: to,
-                                                             amount: amount,
+                                                             kin: amount,
                                                              passphrase: passphrase)
                 completion(transactionId, nil)
             } catch {
@@ -169,7 +169,7 @@ public class KinAccount {
         }
     }
 
-    public func sendTransaction(to: String, amount: UInt64, passphrase: String) throws -> TransactionId {
+    public func sendTransaction(to: String, kin: UInt64, passphrase: String) throws -> TransactionId {
         guard let store = accountStore else {
             throw KinError.internalInconsistancy
         }
@@ -181,11 +181,13 @@ public class KinAccount {
 
         try store.client.getPendingNonce(at: store.context, account: gethAccount.getAddress(), nonce: nonce)
 
-        guard   let options = GethTransactOpts(),
-                let price = try? store.client.suggestGasPrice(store.context),
-                let toAddress = GethNewInterface(),
-                let value = GethNewInterface() else {
-            throw KinError.internalInconsistancy
+        guard
+            let wei = Decimal(kin).kinToWei().toBigInt(),
+            let options = GethTransactOpts(),
+            let price = try? store.client.suggestGasPrice(store.context),
+            let toAddress = GethNewInterface(),
+            let value = GethNewInterface() else {
+                throw KinError.internalInconsistancy
         }
 
         options.setContext(store.context)
@@ -201,7 +203,7 @@ public class KinAccount {
 
         options.setSigner(signer)
         toAddress.setAddress(GethNewAddressFromHex(to, nil))
-        value.setBigInt(GethNewBigInt(Int64(amount)))
+        value.setBigInt(wei)
 
         let transaction = try self.contract.transact(method: "transfer",
                                                  options: options,
@@ -227,7 +229,12 @@ public class KinAccount {
         let result = GethNewInterface()!
         result.setDefaultBigInt()
         try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
-        return try Decimal(bigInt: result.getBigInt())
+
+        guard let balance = Decimal(bigInt: result.getBigInt())?.weiToKin() else {
+            throw KinError.internalInconsistancy
+        }
+
+        return balance
     }
 
     public func pendingBalance(completion: @escaping BalanceCompletion) {
@@ -242,11 +249,11 @@ public class KinAccount {
     }
 
     public func pendingBalance() throws -> Balance {
-        let balance = try self.balance()
+        let balance = try self.balance().kinToWei()
         let sent = try pendingSentBalance()
         let earned = try pendingEarnedBalance()
 
-        return balance + earned - sent
+        return (balance + earned - sent).weiToKin()
     }
 
     fileprivate func pendingSentBalance() throws -> Balance {
@@ -265,11 +272,15 @@ public class KinAccount {
         var total: Decimal = 0
 
         for i in 0..<logs.size() {
-            if let log = try? logs.get(i), log.getTxHash().getHex() != nil {
-                let bigInt = GethBigInt()
-                bigInt.setBytes(log.getData())
+            if let log = try? logs.get(i),
+                log.getTxHash().getHex() != nil,
+                let logData = log.getData(),
+                let bigInt = GethNewBigInt(0) {
+                bigInt.setBytes(logData)
 
-                total += try Decimal(bigInt: bigInt)
+                if let b = Decimal(bigInt: bigInt) {
+                    total += b
+                }
             }
         }
 

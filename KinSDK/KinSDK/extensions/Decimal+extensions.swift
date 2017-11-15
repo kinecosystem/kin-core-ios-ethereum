@@ -13,24 +13,25 @@ fileprivate let kinDecimal = Decimal(sign: .plus,
                                      significand: Decimal(1))
 
 extension Decimal {
-    init(kinString: String) throws {
-        guard let decimal = Decimal(string: kinString) else {
-            throw KinError.invalidInput
-        }
-        if (kinString.count > -kinDecimal.exponent) {
-            self.init(sign: .plus,
-            exponent: kinDecimal.exponent,
-            significand: decimal)
-        } else {
-            guard let uint = UInt64(kinString) else {
-                throw KinError.invalidInput
-            }
-            self.init(sign: .plus, exponent: 0,
-            significand: Decimal(uint))
-        }
+    init?(bigInt: GethBigInt) {
+        self.init(string: bigInt.string())
     }
 
-    init(bigInt: GethBigInt) throws {
-        try self.init(kinString: bigInt.string())
+    func kinToWei() -> Decimal {
+        return self / kinDecimal
+    }
+
+    func weiToKin() -> Decimal {
+        return self * kinDecimal
+    }
+
+    func toBigInt() -> GethBigInt? {
+        guard let b = GethNewBigInt(0) else {
+            return nil
+        }
+
+        b.setString(self.description, base: 10)
+
+        return b
     }
 }
