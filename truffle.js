@@ -7,7 +7,7 @@ module.exports = {
             host: 'localhost',
             port: 8545,
             network_id: '*', // Match any network id
-            gas: 3500000
+            gas: 3500000 // Allow gas for initial transactions
         }
     }
 };

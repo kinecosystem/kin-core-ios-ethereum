@@ -33,9 +33,12 @@ class Contract {
         case NetworkIdRopsten:
             address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
         case NetworkIdTruffle:
-            guard let contractAddress = TestsConfiguration.config?["TOKEN_CONTRACT_ADDRESS"] as? String else {
-                fatalError("Seems like you are trying to run tests on the local network, but " +
-                           "the tests environment isn't correctly set up. Please see readme for more details")
+            guard let fileUrl = Bundle.main.url(forResource: "testConfig", withExtension: "plist"),
+                let data = try? Data(contentsOf: fileUrl),
+                let configDict = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
+                let contractAddress = configDict?["TOKEN_CONTRACT_ADDRESS"] as? String else {
+                    fatalError("Seems like you are trying to run tests on the local network, but " +
+                        "the tests environment isn't correctly set up. Please see readme for more details")
             }
             address = contractAddress
         default:

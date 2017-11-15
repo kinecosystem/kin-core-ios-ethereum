@@ -46,16 +46,23 @@ For the methods below, a sync and an async version are both available. The sync 
 We use [ethereumjs/testrpc](testrpc) and [Truffle framework](truffle) unit tests.
 
 For the SDK tests target, pre-actions and post-actions scripts in the KinTestHost scheme will setup truffle and testrpc running for the duration of the test.
-#### Requirements
+### Requirements
 
-Node.js and NPM. You can install these using brew:
-```
+Node.js and NPM. You can install these using homebrew:
+
+```bash
 $ brew install node
 ```
 Next, install specific npm packages using:
 
-```
+```bash
 $ npm install
+```
+
+To run the tests, use:
+
+```bash
+$ make test
 ```
 
 [testrpc]: https://github.com/ethereumjs/testrpc

@@ -2,7 +2,14 @@
 .DEFAULT_GOAL: default
 default: ;
 
+# add truffle and testrpc to $PATH
 export PATH := ./node_modules/.bin:$(PATH)
+
+test:
+	xcodebuild test -project KinSDK/KinSDK.xcodeproj \
+	-scheme KinTestHost \
+	-sdk iphonesimulator \
+	-destination 'platform=iOS Simulator,name=iPhone 6,OS=11.0'
 
 prepare-tests: truffle
 	./scripts/prepare-tests.sh

@@ -28,11 +28,8 @@
 		82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
-		E9816BBF1FBB32BE00C84F1C /* TestsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */; };
-		E9816BC01FBB339800C84F1C /* TestsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */; };
 		E9816BC11FBB33E400C84F1C /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
 		E9816BC21FBB33E700C84F1C /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
-		E9816BC31FBB342E00C84F1C /* TestsConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */; };
 		E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */; };
 		E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCB1FBC736300C84F1C /* String+extensions.swift */; };
 		E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */; };
@@ -98,7 +95,6 @@
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
-		E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestsConfiguration.swift; sourceTree = "<group>"; };
 		E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestServiceProviders.swift; sourceTree = "<group>"; };
 		E9816BCB1FBC736300C84F1C /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
@@ -222,7 +218,6 @@
 				827835471FA9B5F20006C3DF /* Info.plist */,
 				E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */,
 				E9A3820B1FBADF610085AB80 /* testConfig.plist */,
-				E9816BBD1FBB265D00C84F1C /* TestsConfiguration.swift */,
 				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
 			);
 			path = KinSDKTests;
@@ -396,7 +391,6 @@
 				E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				82140EC41FA88EAF00FAF19B /* Kin.swift in Sources */,
-				E9816BBF1FBB32BE00C84F1C /* TestsConfiguration.swift in Sources */,
 				E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */,
 				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
@@ -408,7 +402,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				827835331FA9B5F20006C3DF /* ViewController.swift in Sources */,
-				E9816BC01FBB339800C84F1C /* TestsConfiguration.swift in Sources */,
 				827835311FA9B5F20006C3DF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,7 +411,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */,
-				E9816BC31FBB342E00C84F1C /* TestsConfiguration.swift in Sources */,
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
 				E9FCC78B1FB33B0C00A5CE32 /* KinTruffleTests.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
