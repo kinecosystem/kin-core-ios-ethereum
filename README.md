@@ -28,7 +28,7 @@ No activity can take place until an account is created. To do so, call `createAc
 
 #### Public Address and Private Key
 - `var publicAddress: String`: returns the hex string of the account's public address.
-- `func keyStore(with passphrase: String) -> throws String`: returns the account's keystore file as JSON. Throws an error in case the passphrase is wrong.
+- `func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?`: returns the account's keystore file as JSON. The first parameter - `passphrase` - is the passphrase of the account, used in the other methods; and second parameter - `exportPassphrase` - is the password that the user should input to encrypt his account before exporting it as JSON. Throws an error in case the passphrase is wrong.
 
 #### *Note:*
 For the methods below, a sync and an async version are both available. The sync versions will block the current thread until a value is returned (so you should call them from the main thread). The async versions will call the completion block once finished, but **it is the developer's responsibility to dispatch to desired queue.**
@@ -36,12 +36,12 @@ For the methods below, a sync and an async version are both available. The sync 
 #### Checking Balance
 
 - `func balance() throws -> Balance`: returns the current balance of the account.
-- `func pendingBalance() throws -> Balance`: returns the pending balance of the account that is waiting for confirmation. **Currently returns a hardcoded value of 20**
+- `func pendingBalance() throws -> Balance`: returns the pending balance of the account that is waiting for confirmation.
 
 #### Sending transactions
-- `func sendTransaction(to: String, amount: Double, passphrase: String) throws -> TransactionId`: Sends a specific amount to an account's address, given the passphrase. Throws an error in case the passphrase is wrong. Returns the transaction ID. **Currently returns a hardcoded value of `MockTransactionId`**
+- `func sendTransaction(to: String, kin: Double, passphrase: String) throws -> TransactionId`: Sends a specific amount to an account's address, given the passphrase. Throws an error in case the passphrase is wrong. Returns the transaction ID. **Currently returns a hardcoded value of `MockTransactionId`**
 
-# Test
+## Testing
 
 We use [ethereumjs/testrpc](testrpc) and [Truffle framework](truffle) unit tests.
 You should install these first before running the tests:
