@@ -82,14 +82,14 @@ public final class KinClient {
         return account
     }
 
-    func keyStore(with passphrase: String) throws -> String? {
+    public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         guard let account = account else {
             return nil
         }
 
         let data = try accountStore.export(account: account.gethAccount,
                                            passphrase: passphrase,
-                                           exportPassphrase: passphrase)
+                                           exportPassphrase: exportPassphrase)
 
         return String(data: data, encoding: String.Encoding.utf8)
     }
@@ -154,13 +154,13 @@ public class KinAccount {
     }
 
     public func sendTransaction(to: String,
-                                amount: UInt64,
+                                kin: UInt64,
                                 passphrase: String,
                                 completion: @escaping TransactionCompletion) {
         accountQueue.async {
             do {
                 let transactionId = try self.sendTransaction(to: to,
-                                                             kin: amount,
+                                                             kin: kin,
                                                              passphrase: passphrase)
                 completion(transactionId, nil)
             } catch {
