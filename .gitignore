@@ -16,3 +16,6 @@ KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 /truffle.log
 /token-contract-address
 KinSDK/build
+
+go-ethereum
+KinSDK/Geth.framework
