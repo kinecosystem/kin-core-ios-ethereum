@@ -42,13 +42,14 @@ class KinSampleViewController: UITableViewController {
 }
 
 extension KinSampleViewController: KinClientCellDelegate {
-    func revealKeyStore(keyStore: String) {
-        guard let textViewController = storyboard?.instantiateViewController(withIdentifier: "TextViewController") as? TextViewController else {
+    func revealKeyStore() {
+        guard let keyStoreViewController = storyboard?.instantiateViewController(withIdentifier: "KeyStoreViewController") as? KeyStoreViewController else {
             return
         }
 
-        textViewController.text = keyStore
-        navigationController?.pushViewController(textViewController, animated: true)
+        keyStoreViewController.kinClient = kinClient
+
+        navigationController?.pushViewController(keyStoreViewController, animated: true)
     }
 
     func startSendTransaction() {

@@ -122,7 +122,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y1V-R0-iIj">
                                                             <rect key="frame" x="0.0" y="82" width="350" height="27.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="keyStore(with passphrase: String)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2K-4zh">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="999" text="Backup your account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2K-4zh">
                                                                     <rect key="frame" x="0.0" y="0.0" width="304" height="27.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
@@ -130,7 +130,7 @@
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="999" horizontalCompressionResistancePriority="1" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YB-3P-dyE">
                                                                     <rect key="frame" x="304" y="0.0" width="46" height="27.5"/>
-                                                                    <state key="normal" title="Reveal"/>
+                                                                    <state key="normal" title="Export"/>
                                                                     <connections>
                                                                         <action selector="revealKeyStore:" destination="Cvs-du-e5J" eventType="touchUpInside" id="uru-ee-S8E"/>
                                                                     </connections>
@@ -149,6 +149,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="addressLabel" destination="Itl-aM-Rhc" id="YAx-aU-QXd"/>
+                                            <outlet property="copyButton" destination="rWi-SS-Ebk" id="rK6-Ra-4qe"/>
+                                            <outlet property="exportButton" destination="7YB-3P-dyE" id="F1w-4K-4Qz"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BalanceCell" rowHeight="133" id="ZFX-Ha-Dwy" customClass="BalanceTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
@@ -267,7 +269,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abH-nb-2Xl">
+                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abH-nb-2Xl">
                                                     <rect key="frame" x="35" y="20" width="305" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="5Uz-IP-BdG"/>
@@ -387,32 +389,66 @@
             </objects>
             <point key="canvasLocation" x="1261.5999999999999" y="889.20539730134942"/>
         </scene>
-        <!--Text View Controller-->
+        <!--Key Store View Controller-->
         <scene sceneID="0eI-di-ux1">
             <objects>
-                <viewController storyboardIdentifier="TextViewController" id="uVy-d1-SIb" customClass="TextViewController" customModule="KinSampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KeyStoreViewController" id="uVy-d1-SIb" customClass="KeyStoreViewController" customModule="KinSampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="grv-dl-DJf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kY-6e-c9c">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cTv-B3-jTn">
+                                <rect key="frame" x="16" y="20" width="343" height="631"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passphrase" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVg-Gb-PxS">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xg3-T9-jBu">
+                                        <rect key="frame" x="0.0" y="30.5" width="343" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="31" id="jzj-9p-xvi"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="uVy-d1-SIb" id="BJV-aW-caF"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="STc-L0-T36">
+                                        <rect key="frame" x="0.0" y="71.5" width="343" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="J1Y-pD-tAq"/>
+                                        </constraints>
+                                        <state key="normal" title="Export"/>
+                                        <connections>
+                                            <action selector="exportTapped" destination="uVy-d1-SIb" eventType="touchUpInside" id="MFf-RV-ee6"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Add a passphrase to encrypt the account" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kY-6e-c9c">
+                                        <rect key="frame" x="0.0" y="125.5" width="343" height="505.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9kY-6e-c9c" firstAttribute="bottom" secondItem="gEu-jB-0Z9" secondAttribute="bottom" id="FzU-US-VCz"/>
-                            <constraint firstItem="9kY-6e-c9c" firstAttribute="top" secondItem="grv-dl-DJf" secondAttribute="top" id="RnL-fC-hn2"/>
-                            <constraint firstItem="9kY-6e-c9c" firstAttribute="leading" secondItem="gEu-jB-0Z9" secondAttribute="leading" id="efd-ax-fOX"/>
-                            <constraint firstItem="9kY-6e-c9c" firstAttribute="trailing" secondItem="gEu-jB-0Z9" secondAttribute="trailing" id="mnL-0M-rZX"/>
+                            <constraint firstItem="gEu-jB-0Z9" firstAttribute="trailing" secondItem="cTv-B3-jTn" secondAttribute="trailing" constant="16" id="OQ7-yK-CZx"/>
+                            <constraint firstItem="cTv-B3-jTn" firstAttribute="top" secondItem="gEu-jB-0Z9" secondAttribute="top" id="SpF-B9-3NZ"/>
+                            <constraint firstItem="gEu-jB-0Z9" firstAttribute="bottom" secondItem="cTv-B3-jTn" secondAttribute="bottom" constant="16" id="ZHA-pb-4pE"/>
+                            <constraint firstItem="cTv-B3-jTn" firstAttribute="leading" secondItem="gEu-jB-0Z9" secondAttribute="leading" constant="16" id="pcU-lh-gxr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gEu-jB-0Z9"/>
                     </view>
                     <connections>
+                        <outlet property="exportButton" destination="STc-L0-T36" id="56A-qk-fY5"/>
+                        <outlet property="textField" destination="Xg3-T9-jBu" id="veC-yN-UXW"/>
                         <outlet property="textView" destination="9kY-6e-c9c" id="MXG-wK-cWk"/>
                     </connections>
                 </viewController>

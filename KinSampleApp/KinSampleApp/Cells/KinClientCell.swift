@@ -10,7 +10,7 @@ import UIKit
 import KinSDK
 
 protocol KinClientCellDelegate: class {
-    func revealKeyStore(keyStore: String)
+    func revealKeyStore()
     func startSendTransaction()
 }
 

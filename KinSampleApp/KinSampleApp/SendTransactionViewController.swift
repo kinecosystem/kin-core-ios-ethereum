@@ -51,7 +51,7 @@ class SendTransactionViewController: UIViewController {
         let amount = UInt64(amountTextField.text ?? "0")!
         let address = addressTextField.text ?? ""
 
-        account.sendTransaction(to: address, amount: amount, passphrase: KinAccountPassphrase) { transactionId, error in
+        account.sendTransaction(to: address, kin: amount, passphrase: KinAccountPassphrase) { transactionId, error in
             DispatchQueue.main.async { [weak self] in
                 guard let aSelf = self else {
                     return

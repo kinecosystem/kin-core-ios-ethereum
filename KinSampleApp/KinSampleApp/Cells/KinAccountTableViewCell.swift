@@ -11,7 +11,10 @@ import KinSDK
 
 class KinAccountTableViewCell: KinClientCell {
     @IBOutlet weak var addressLabel: UILabel!
-    
+
+    @IBOutlet weak var copyButton: UIButton!
+    @IBOutlet weak var exportButton: UIButton!
+
     override var kinClient: KinClient! {
         didSet {
             showAddress()
@@ -19,13 +22,7 @@ class KinAccountTableViewCell: KinClientCell {
     }
 
     @IBAction func revealKeyStore(_ sender: Any) {
-        guard let keyStore = try? kinClient.keyStore(with: KinAccountPassphrase),
-            let unwrapped = keyStore,
-            let prettified = unwrapped.prettified() else {
-                return
-        }
-
-        kinClientCellDelegate?.revealKeyStore(keyStore: prettified)
+        kinClientCellDelegate?.revealKeyStore()
     }
 
     @IBAction func copyAddress(_ sender: Any) {
