@@ -6,6 +6,7 @@ cache:
     - node_modules
 
 before_install:
+  # install node (npm), truffle, testrpc
   - rm -rf ~/.nvm
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
@@ -17,5 +18,6 @@ script:
   - make test
   
 after_script:
+  # print truffle and testrpc logs
   - cat truffle.log
   - cat testrpc.log
