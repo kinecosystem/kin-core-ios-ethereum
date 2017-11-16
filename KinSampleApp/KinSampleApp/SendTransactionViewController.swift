@@ -32,7 +32,7 @@ class SendTransactionViewController: UIViewController {
     @IBAction func sendTapped(_ sender: Any) {
         let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
 
-        let amount = UInt64(amountTextField.text ?? "0")!
+        let amount = UInt64(amountTextField.text ?? "0") ?? 0
         let address = addressTextField.text ?? ""
 
         account.sendTransaction(to: address, kin: amount, passphrase: KinAccountPassphrase) { transactionId, error in
