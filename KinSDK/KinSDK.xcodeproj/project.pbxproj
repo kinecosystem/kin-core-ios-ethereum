@@ -25,6 +25,7 @@
 		8278353B1FA9B5F20006C3DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 827835391FA9B5F20006C3DF /* LaunchScreen.storyboard */; };
 		827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835451FA9B5F20006C3DF /* KinClientTests.swift */; };
 		8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */; };
+		82CC7BE51FBD8F8400B4C738 /* TruffleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC7BE41FBD8F8400B4C738 /* TruffleConfiguration.swift */; };
 		82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E970C26B1FAB4ADB0091181B /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		E970C2741FAE394D0091181B /* Contract.swift in Sources */ = {isa = PBXBuildFile; fileRef = E970C2731FAE394D0091181B /* Contract.swift */; };
@@ -94,6 +95,7 @@
 		827835411FA9B5F20006C3DF /* KinSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82CC7BE41FBD8F8400B4C738 /* TruffleConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruffleConfiguration.swift; sourceTree = "<group>"; };
 		E970C2731FAE394D0091181B /* Contract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contract.swift; sourceTree = "<group>"; };
 		E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestServiceProviders.swift; sourceTree = "<group>"; };
 		E9816BCB1FBC736300C84F1C /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
@@ -215,10 +217,11 @@
 				827835451FA9B5F20006C3DF /* KinClientTests.swift */,
 				824539421FAB0102009117B4 /* KinAccountTests.swift */,
 				825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */,
-				827835471FA9B5F20006C3DF /* Info.plist */,
 				E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */,
+				827835471FA9B5F20006C3DF /* Info.plist */,
 				E9A3820B1FBADF610085AB80 /* testConfig.plist */,
 				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
+				82CC7BE41FBD8F8400B4C738 /* TruffleConfiguration.swift */,
 			);
 			path = KinSDKTests;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */,
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
 				E9FCC78B1FB33B0C00A5CE32 /* KinTruffleTests.swift in Sources */,
+				82CC7BE51FBD8F8400B4C738 /* TruffleConfiguration.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,7 +34,7 @@ public final class KinClient {
         NetworkIdTruffle
     ]
 
-    private(set) lazy var account: KinAccount? = {
+    fileprivate(set) lazy var account: KinAccount? = {
         if self.accountStore.accounts.size() > 0 {
             if let account = try? self.accountStore.accounts.get(0) {
                 return KinAccount(gethAccount: account, accountStore: self.accountStore)
@@ -44,17 +44,6 @@ public final class KinClient {
     }()
 
     fileprivate let accountStore: KinAccountStore
-
-    func createAccountIfNeeded(with privateKey: String, passphrase: String) throws -> KinAccount? {
-        if accountStore.accounts.size() == 0 {
-            let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
-            if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
-                account =  KinAccount(gethAccount: gAccount,
-                                     accountStore: accountStore)
-            }
-        }
-        return account
-    }
 
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
@@ -87,6 +76,24 @@ public final class KinClient {
                                            exportPassphrase: exportPassphrase)
 
         return String(data: data, encoding: String.Encoding.utf8)
+    }
+}
+
+//MARK: - For testing only
+
+extension KinClient {
+    func deleteKeystore() {
+        try? accountStore.deleteKeystore()
+    }
+
+    func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
+        let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
+        if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
+            account =  KinAccount(gethAccount: gAccount,
+                                  accountStore: accountStore)
+        }
+
+        return account
     }
 }
 
