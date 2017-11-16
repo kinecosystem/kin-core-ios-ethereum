@@ -64,4 +64,38 @@ extension KinSampleViewController: KinClientCellDelegate {
         txViewController.kinClient = kinClient
         navigationController?.pushViewController(txViewController, animated: true)
     }
+
+    func getTestKin(cell: KinClientCell) {
+        guard
+            let account = try? kinClient.createAccountIfNeeded(with: KinAccountPassphrase),
+            let address = account?.publicAddress,
+            let getKinCell = cell as? GetKinTableViewCell else {
+            return
+        }
+
+        getKinCell.getKinButton.isEnabled = false
+
+        let urlString = "http://52.87.243.90:5000/send?public_address=\(address)"
+        URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
+            DispatchQueue.main.async {
+                guard let aSelf = self,
+                    error == nil else {
+                        getKinCell.getKinButton.isEnabled = true
+                        return
+                }
+
+                if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                    balanceCell.refreshBalance(aSelf)
+                }
+            }
+        }.resume()
+    }
+
+    func balanceDidUpdate(balance: Decimal, pendingBalance: Decimal) {
+        guard let getKinCell = tableView.visibleCells.flatMap({ $0 as? GetKinTableViewCell }).first else {
+            return
+        }
+
+        getKinCell.getKinButton.isEnabled = balance + pendingBalance == 0
+    }
 }
