@@ -1,3 +1,5 @@
+![Kin logo](.github/KINLogo.svg?sanitize=true)
+
 #  Kin iOS SDK
 
 #### A library responsible for creating a new Kin account and managing balance and transactions in Kin.
