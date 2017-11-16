@@ -20,6 +20,7 @@ public enum KinError: Error {
     case invalidPassphrase
     case unsupportedNetwork
     case invalidAddress
+    case invalidAmount
 }
 
 public let NetworkIdMain: UInt64 = 1
@@ -186,6 +187,10 @@ public class KinAccount {
 
         guard let addressFromHex = GethNewAddressFromHex(to, nil) else {
             throw KinError.invalidAddress
+        }
+
+        guard kin > 0 else {
+            throw KinError.invalidAmount
         }
 
         options.setContext(store.context)
