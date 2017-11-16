@@ -9,12 +9,20 @@
 import Foundation
 import KinSDKPrivate
 
+/**
+ `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
+ other accounts.
+ */
 public final class KinAccount {
     internal let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     fileprivate let contract: Contract
     fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
 
+    /**
+     The public address of this account. If the user wants to receive KIN by sending his address
+     manually to someone, or if you want to display the public address, use this property.
+     */
     public var publicAddress: String {
         return gethAccount.getAddress().getHex()
     }
@@ -27,6 +35,18 @@ public final class KinAccount {
                                  client: accountStore.client)
     }
 
+    /**
+     **Asynchronously** posts a Kin transfer to a specific address.
+
+     The completion block is called after the transaction is posted on the network, which is prior
+     to confirmation.
+
+     The completion block **is not dispatched on the main thread**.
+
+     - parameter recipient: The recipient's public address
+     - parameter kin: The amount of Kin to be sent
+     - parameter passphrase: The passphrase used to generate the `KinAccount`
+     */
     public func sendTransaction(to recipient: String,
                                 kin: UInt64,
                                 passphrase: String,
@@ -44,6 +64,22 @@ public final class KinAccount {
         }
     }
 
+    /**
+     **Synchronously** posts a Kin transfer to a specific address.
+
+     This function returns after the transaction is posted on the network, which is prior to
+     confirmation.
+
+     Don't call this method from the main thread.
+
+     - parameter recipient: The recipient's public address
+     - parameter kin: The amount of Kin to be sent
+     - parameter passphrase: The passphrase used to generate the `KinAccount`
+
+     - throws: An `Error` if the transaction fails to be generated or submitted
+
+     - returns: The `TransactionId` in case of success.
+     */
     public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
         guard kin > 0 else {
             throw KinError.invalidAmount
@@ -101,6 +137,13 @@ public final class KinAccount {
         return transaction.getHash().getHex()
     }
 
+    /**
+     **Asynchronously** gets the current Kin balance. **Does not** take into account
+     transactions pending confirmations. The completion block **is not dispatched on the main thread**.
+
+     - parameter completion: A callback block to be invoked once the balance is fetched, or fails to
+     be fetched.
+     */
     public func balance(completion: @escaping BalanceCompletion) {
         accountQueue.async {
             do {
@@ -113,6 +156,16 @@ public final class KinAccount {
         }
     }
 
+    /**
+     **Synchronously** gets the current Kin balance. **Does not** take into account
+     transactions pending confirmations.
+
+     **Do not** call this from the main thread.
+
+     - throws: An `Error` if balance cannot be fetched.
+
+     - returns: The `Balance` of the account.
+     */
     public func balance() throws -> Balance {
         let arg = GethNewInterface()!
         arg.setAddress(gethAccount.getAddress())

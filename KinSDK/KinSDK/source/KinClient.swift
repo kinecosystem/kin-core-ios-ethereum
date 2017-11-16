@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ `KinClient` is a factory class for creating and obtaining an instance of `KinAccount`.
+ */
 public final class KinClient {
     static private let supportedNetworks = [
         NetworkId.mainNet,
