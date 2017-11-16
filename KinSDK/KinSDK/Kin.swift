@@ -19,6 +19,7 @@ public enum KinError: Error {
     case internalInconsistancy
     case invalidPassphrase
     case unsupportedNetwork
+    case invalidAddress
 }
 
 public let NetworkIdMain: UInt64 = 1
@@ -183,6 +184,10 @@ public class KinAccount {
                 throw KinError.internalInconsistancy
         }
 
+        guard let addressFromHex = GethNewAddressFromHex(to, nil) else {
+            throw KinError.invalidAddress
+        }
+
         options.setContext(store.context)
         options.setGasLimit(Contract.defaultGasLimit)
         options.setGasPrice(price)
@@ -195,7 +200,7 @@ public class KinAccount {
                                        networkId: store.networkId)
 
         options.setSigner(signer)
-        toAddress.setAddress(GethNewAddressFromHex(to, nil))
+        toAddress.setAddress(addressFromHex)
         value.setBigInt(wei)
 
         let transaction = try self.contract.transact(method: "transfer",
