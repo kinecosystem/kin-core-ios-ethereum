@@ -36,7 +36,7 @@
                                             <action selector="networkSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MG8-zq-wIX"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPW-um-FPJ">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPW-um-FPJ">
                                         <rect key="frame" x="0.0" y="455" width="343" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="aB3-3v-hdA"/>
@@ -293,26 +293,33 @@
                                             <outlet property="sendButton" destination="NYQ-Ky-ijI" id="C7n-8r-NXd"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetKinCell" rowHeight="85" id="loM-fb-yst">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetKinCell" rowHeight="85" id="loM-fb-yst" customClass="GetKinTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="348" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="loM-fb-yst" id="wAo-C0-Cyx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abH-nb-2Xl">
-                                                    <rect key="frame" x="35" y="20" width="305" height="44"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abH-nb-2Xl">
+                                                    <rect key="frame" x="16" y="20" width="343" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="5Uz-IP-BdG"/>
                                                     </constraints>
                                                     <state key="normal" title="Get Kin (Only in testnet, not part of the SDK)"/>
+                                                    <connections>
+                                                        <action selector="getKinTapped:" destination="loM-fb-yst" eventType="touchUpInside" id="DYn-JO-o04"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="abH-nb-2Xl" firstAttribute="centerX" secondItem="wAo-C0-Cyx" secondAttribute="centerX" id="Weq-U9-hzV"/>
+                                                <constraint firstItem="abH-nb-2Xl" firstAttribute="leading" secondItem="wAo-C0-Cyx" secondAttribute="leadingMargin" id="B4o-2e-a4U"/>
                                                 <constraint firstItem="abH-nb-2Xl" firstAttribute="centerY" secondItem="wAo-C0-Cyx" secondAttribute="centerY" id="kdc-iB-8dD"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="abH-nb-2Xl" secondAttribute="trailing" id="s1h-n5-gWU"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="getKinButton" destination="abH-nb-2Xl" id="gti-gZ-7Sf"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

@@ -15,10 +15,15 @@ class BalanceTableViewCell: KinClientCell {
     @IBOutlet weak var balanceActivityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var pendingBalanceLabel: UILabel!
     @IBOutlet weak var pendingBalanceActivityIndicator: UIActivityIndicatorView!
+    var balance: Decimal = 0
+    var pendingBalance: Decimal = 0
 
     var ongoingRequests = 0 {
         didSet {
             self.refreshButton.isEnabled = ongoingRequests == 0
+            if ongoingRequests == 0 {
+                kinClientCellDelegate?.balanceDidUpdate(balance: balance, pendingBalance: pendingBalance)
+            }
         }
     }
 
@@ -44,7 +49,9 @@ class BalanceTableViewCell: KinClientCell {
         account.balance { [weak self] balance, error in
             DispatchQueue.main.async {
                 self?.balanceActivityIndicator.stopAnimating()
-                self?.ongoingRequests -= 1
+                defer {
+                    self?.ongoingRequests -= 1
+                }
 
                 guard let balance = balance,
                     error == nil else {
@@ -52,6 +59,7 @@ class BalanceTableViewCell: KinClientCell {
                         return
                 }
 
+                self?.balance = balance
                 if let formattedBalance = self?.numberFormatter.string(from: balance as NSDecimalNumber) {
                     self?.balanceLabel.text = "\(formattedBalance) KIN"
                 }
@@ -63,7 +71,9 @@ class BalanceTableViewCell: KinClientCell {
         account.pendingBalance { [weak self] pBalance, error in
             DispatchQueue.main.async {
                 self?.pendingBalanceActivityIndicator.stopAnimating()
-                self?.ongoingRequests -= 1
+                defer {
+                    self?.ongoingRequests -= 1
+                }
 
                 guard let pBalance = pBalance,
                     error == nil else {
@@ -71,6 +81,7 @@ class BalanceTableViewCell: KinClientCell {
                         return
                 }
 
+                self?.pendingBalance = pBalance
                 if let formattedPendingBalance = self?.numberFormatter.string(from: pBalance as NSDecimalNumber) {
                     self?.pendingBalanceLabel.text = "\(formattedPendingBalance) KIN"
                 }
