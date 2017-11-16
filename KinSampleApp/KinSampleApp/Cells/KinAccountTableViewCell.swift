@@ -13,7 +13,7 @@ class KinAccountTableViewCell: KinClientCell {
     @IBOutlet weak var addressLabel: UILabel!
 
     @IBOutlet weak var copyButton: UIButton!
-    @IBOutlet weak var exportButton: UIButton!
+    @IBOutlet weak var saveButton: UIButton!
 
     override var kinClient: KinClient! {
         didSet {

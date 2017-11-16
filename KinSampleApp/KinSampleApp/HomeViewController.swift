@@ -8,6 +8,7 @@
 
 import UIKit
 import KinSDK
+import SafariServices
 
 struct ParityProvider: ServiceProvider {
     public let url: URL
@@ -22,6 +23,7 @@ struct ParityProvider: ServiceProvider {
 class HomeViewController: UIViewController {
     @IBOutlet weak var testNetButton: UIButton!
     @IBOutlet weak var mainNetButton: UIButton!
+    @IBOutlet weak var githubInfoStackView: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,9 @@ class HomeViewController: UIViewController {
 
         testNetButton.fill(with: UIColor.testNet)
         mainNetButton.fill(with: UIColor.mainNet)
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(githubInfoTapped))
+        githubInfoStackView.addGestureRecognizer(tapRecognizer)
     }
 
     @IBAction func networkSelected(_ sender: UIButton) {
@@ -43,6 +48,11 @@ class HomeViewController: UIViewController {
         sampleViewController.view.tintColor = production ? .mainNet : .testNet
 
         navigationController?.pushViewController(sampleViewController, animated: true)
+    }
+
+    @objc func githubInfoTapped() {
+        let safariViewController = SFSafariViewController(url: URL(string: "https://github.com/kinfoundation")!)
+        present(safariViewController, animated: true, completion: nil)
     }
 }
 

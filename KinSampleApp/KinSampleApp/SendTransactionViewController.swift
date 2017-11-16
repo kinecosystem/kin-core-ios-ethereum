@@ -17,13 +17,6 @@ class SendTransactionViewController: UIViewController {
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(backgroundTapped))
-        view.addGestureRecognizer(tapGestureRecognizer)
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -36,16 +29,7 @@ class SendTransactionViewController: UIViewController {
         amountTextField.becomeFirstResponder()
     }
 
-    @objc func backgroundTapped() {
-        view.endEditing(true)
-    }
-
     @IBAction func sendTapped(_ sender: Any) {
-
-//        guard let fields = validatedFields() else {
-//            let alertController
-//        }
-
         let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
 
         let amount = UInt64(amountTextField.text ?? "0")!
@@ -79,8 +63,13 @@ class SendTransactionViewController: UIViewController {
     @IBAction func pasteTapped(_ sender: Any) {
         addressTextField.text = UIPasteboard.general.string
     }
+}
 
-    //    func validatedFields() -> (String, UInt64)? {
-//        return nil
-//    }
+extension SendTransactionViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let notDigitsSet = CharacterSet.decimalDigits.inverted
+        let containsNotADigit = string.unicodeScalars.contains(where: notDigitsSet.contains)
+
+        return !containsNotADigit
+    }
 }
