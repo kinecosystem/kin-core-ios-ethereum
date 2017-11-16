@@ -45,13 +45,16 @@ class KinTruffleTests: XCTestCase {
                 let account = try kinClient.createAccountIfNeeded(with: key, passphrase: passphrase) {
 
                 print("created account \(account.publicAddress)")
-                XCTAssertNotNil(account)
-                if let balance = try? account.balance() {
-                    XCTAssertEqual((balance as NSDecimalNumber).uint64Value, 1000)
-                } else {
-                    XCTAssertTrue(false, "Couldn't get balance")
-                }
 
+                XCTAssertNotNil(account)
+
+                do {
+                    let balance = try account.balance()
+                    XCTAssertEqual((balance as NSDecimalNumber).uint64Value, 1000)
+                }
+                catch {
+                    XCTAssertTrue(false, "Couldn't get balance: \(error)")
+                }
             } else {
                 XCTAssertTrue(false, "Test rpc did not set up properly. check the build phases for testing")
             }
