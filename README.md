@@ -45,7 +45,7 @@ For the methods below, a sync and an async version are both available. The sync 
 
 ## Testing
 
-We use [ethereumjs/testrpc](testrpc) and [Truffle framework](truffle) unit tests.
+We use [ethereumjs/testrpc](https://github.com/ethereumjs/testrpc) and [Truffle framework](https://github.com/trufflesuite/truffle) unit tests.
 
 For the SDK tests target, pre-actions and post-actions scripts in the KinTestHost scheme will setup truffle and testrpc running for the duration of the test.
 ### Requirements
