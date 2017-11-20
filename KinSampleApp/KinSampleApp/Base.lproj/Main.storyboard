@@ -36,7 +36,7 @@
                                             <action selector="networkSelected:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MG8-zq-wIX"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPW-um-FPJ">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPW-um-FPJ">
                                         <rect key="frame" x="0.0" y="455" width="343" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="aB3-3v-hdA"/>

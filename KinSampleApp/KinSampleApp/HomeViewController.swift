@@ -10,7 +10,7 @@ import UIKit
 import KinSDK
 import SafariServices
 
-struct ParityProvider: ServiceProvider {
+struct Provider: ServiceProvider {
     public let url: URL
     public let networkId: UInt64
 
@@ -19,6 +19,7 @@ struct ParityProvider: ServiceProvider {
         self.networkId = networkId
     }
 }
+
 
 class HomeViewController: UIViewController {
     @IBOutlet weak var testNetButton: UIButton!
@@ -41,12 +42,18 @@ class HomeViewController: UIViewController {
 
     @IBAction func networkSelected(_ sender: UIButton) {
         let production = sender == mainNetButton
-
-        let kinClient = try! KinClient(provider: ParityProvider(url: URL(string: "http://207.154.247.11:8545")!, networkId: 3))
-//        let kinClient = try! KinClient(provider: InfuraTestProvider(apiKey: "ciS27F9JQYk8MaJd8Fbu"))
+        
+        let provider: Provider
+        if production {
+            provider = Provider(url: URL(string: "https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu")!, networkId: NetworkIdMain)
+        } else {
+            provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: NetworkIdRopsten)
+        }
+        
+        let kinClient = try! KinClient(provider: provider)
+        
         let sampleViewController = KinSampleViewController.instantiate(with: kinClient)
         sampleViewController.view.tintColor = production ? .mainNet : .testNet
-
         navigationController?.pushViewController(sampleViewController, animated: true)
     }
 
