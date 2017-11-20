@@ -20,5 +20,5 @@ script:
 
 after_script:
   # print truffle and testrpc logs
-  - cat truffle.log
-  - cat testrpc.log
+  - cat truffle/truffle.log
+  - cat truffle/testrpc.log

@@ -15,6 +15,6 @@ if (nc -z localhost 8545); then
     echo "Using existing testrpc instance on port $(ps -fade | grep -e 'node.*testrpc' | head -n 1 | awk '{print $2}')"
 else
     echo -n "Starting testrpc instance on port $port "
-    testrpc -v ${accounts} -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 -p "$port" > testrpc.log 2>&1 & echo $! > testrpc.pid
+    testrpc ${accounts} -u 0 -u 1 -u 2 -u 3 -u 4 -u 5 -u 6 -u 7 -u 8 -u 9 -v -p "$port" > testrpc.log 2>&1 & echo $! > testrpc.pid
     echo $(cat testrpc.pid)
 fi
