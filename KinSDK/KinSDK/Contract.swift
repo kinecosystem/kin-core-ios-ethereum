@@ -20,7 +20,7 @@ class Contract {
     fileprivate weak var context: GethContext?
     fileprivate weak var client: GethEthereumClient?
     fileprivate let contractAddress: GethAddress
-    static let defaultGasLimit: Int64 = 4700000
+    static let defaultGasLimit: Int64 = 60000
     
     init(with context: GethContext, networkId: UInt64, client: GethEthereumClient) {
         self.context = context
