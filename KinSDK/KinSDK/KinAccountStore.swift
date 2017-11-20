@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KinSDKPrivate
 
 class KinAccountStore {
     struct Directories {
