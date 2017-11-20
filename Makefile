@@ -12,26 +12,26 @@ test:
 	-destination 'platform=iOS Simulator,name=iPhone 6'
 
 prepare-tests: truffle
-	./scripts/prepare-tests.sh
+	truffle/scripts/prepare-tests.sh
 .PHONY: test
 
 truffle: testrpc truffle-clean
-	./scripts/truffle.sh
+	truffle/scripts/truffle.sh
 .PHONY: truffle
 
 truffle-clean:
-	rm -f token-contract-address
+	rm -f truffle/token-contract-address
 
 testrpc: testrpc-run  # alias for testrpc-run
 .PHONY: testrpc
 testrpc-run: testrpc-kill
-	./scripts/testrpc-run.sh
+	truffle/scripts/testrpc-run.sh
 .PHONY: testrpc-run
 
 testrpc-kill:
-	./scripts/testrpc-kill.sh
+	truffle/scripts/testrpc-kill.sh
 .PHONY: testrpc-kill
 
 clean: truffle-clean testrpc-kill
-	rm -f truffle.log
-	rm -f testrpc.log
+	rm -f truffle/truffle.log
+	rm -f truffle/testrpc.log

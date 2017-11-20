@@ -7,13 +7,13 @@ KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 
 # test related files (ethereum testrpc):
 
-/node_modules
-/build
+node_modules
+build
 
-/testrpc.log
-/testrpc.pid
+testrpc.log
+testrpc.pid
 
-/truffle.log
-/token-contract-address
+truffle.log
+token-contract-address
 KinSDK/build
 npm-debug.log

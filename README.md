@@ -58,10 +58,11 @@ $ brew install node
 Next, install specific npm packages using:
 
 ```bash
+$ cd truffle
 $ npm install
 ```
 
-To run the tests, use:
+To run the tests, use (from the root directory):
 
 ```bash
 $ make test
