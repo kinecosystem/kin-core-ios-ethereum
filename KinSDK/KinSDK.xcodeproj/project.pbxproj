@@ -37,7 +37,6 @@
 		E98B43E21FB1EFCB00B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E98B43E41FB1F06700B00A3C /* contractABI.json in Resources */ = {isa = PBXBuildFile; fileRef = E98B43E11FB1EFC600B00A3C /* contractABI.json */; };
 		E9A3820C1FBADF610085AB80 /* testConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9A3820B1FBADF610085AB80 /* testConfig.plist */; };
-		E9FCC78B1FB33B0C00A5CE32 /* KinTruffleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +101,6 @@
 		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
 		E9A3820B1FBADF610085AB80 /* testConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testConfig.plist; sourceTree = "<group>"; };
-		E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTruffleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +215,6 @@
 				827835451FA9B5F20006C3DF /* KinClientTests.swift */,
 				824539421FAB0102009117B4 /* KinAccountTests.swift */,
 				825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */,
-				E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */,
 				827835471FA9B5F20006C3DF /* Info.plist */,
 				E9A3820B1FBADF610085AB80 /* testConfig.plist */,
 				E9816BC41FBC704D00C84F1C /* TestServiceProviders.swift */,
@@ -415,7 +412,6 @@
 			files = (
 				8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */,
 				827835461FA9B5F20006C3DF /* KinClientTests.swift in Sources */,
-				E9FCC78B1FB33B0C00A5CE32 /* KinTruffleTests.swift in Sources */,
 				82CC7BE51FBD8F8400B4C738 /* TruffleConfiguration.swift in Sources */,
 				824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */,
 			);
