@@ -10,8 +10,11 @@ module.exports = (deployer, network, accounts) => {
 
        // give tokens to the testing account
        let numTokens = 1000;
-       ok = await contract.assign(accounts[0], web3.toWei(numTokens, "ether"));
-       assert.ok(ok);
+       let ok;
+       for (let i = 0; i<10; i++) {
+           ok = await contract.assign(accounts[i], web3.toWei(numTokens, "ether"));
+           assert.ok(ok);
+       }
 
        // check resulting balance
        let balanceWei = (await contract.balanceOf(accounts[0])).toNumber();

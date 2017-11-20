@@ -13,24 +13,25 @@ import XCTest
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let ropsten = NodeProvider(networkId: NetworkIdRopsten)
+    let truffle = NodeProvider(networkId: NetworkIdTruffle)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: ropsten)
+        kinClient = try! KinClient(provider: truffle)
     }
 
     override func tearDown() {
         super.tearDown()
 
-        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
-        try? accountStore.deleteKeystore()
+        kinClient.deleteKeystore()
     }
 
     func test_account_creation() {
         var e: Error? = nil
         var account: KinAccount? = nil
+
+        XCTAssertNil(account, "There should not be an existing account!")
 
         do {
             account = try kinClient.createAccountIfNeeded(with: passphrase)
@@ -50,7 +51,7 @@ class KinClientTests: XCTestCase {
         catch {
         }
 
-        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
+        let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
         let accountCount = accountStore.accounts.size()
 
         XCTAssertEqual(accountCount, 1)

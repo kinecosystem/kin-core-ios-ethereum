@@ -33,7 +33,7 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "set -e&#10;exec &gt; /tmp/xcode_pre_test.log 2&gt;&amp;1&#10;cd ${PROJECT_DIR}/../&#10;find scripts -type f -exec chmod 755 {} \;&#10;make prepare-tests"
+               scriptText = "set -e&#10;exec &gt; /tmp/xcode_pre_test.log 2&gt;&amp;1&#10;cd ${PROJECT_DIR}/../&#10;find truffle/scripts -type f -exec chmod 755 {} \;&#10;make prepare-tests"
                shellToInvoke = "/bin/bash">
                <EnvironmentBuildable>
                   <BuildableReference

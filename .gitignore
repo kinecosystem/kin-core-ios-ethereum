@@ -5,15 +5,17 @@ KinSDK/KinSDK.xcodeproj/xcuserdata
 KinSampleApp/KinSampleApp.xcodeproj/project.xcworkspace/xcuserdata
 KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 
+KinSDK/build
+
 # test related files (ethereum testrpc):
 
-/node_modules
-/build
+truffle/node_modules
+truffle/build
 
-/testrpc.log
-/testrpc.pid
+truffle/testrpc.log
+truffle/testrpc.pid
 
-/truffle.log
-/token-contract-address
-KinSDK/build
+truffle/truffle.log
+truffle/token-contract-address
+
 npm-debug.log

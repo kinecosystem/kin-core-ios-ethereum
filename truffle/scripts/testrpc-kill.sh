@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd truffle
+
 if [ -f 'testrpc.pid' ]; then
     echo "killing testrpc on process id $(cat testrpc.pid)"
     # Don't fail if the process is already killed

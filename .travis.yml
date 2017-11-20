@@ -12,12 +12,14 @@ before_install:
   - source ~/.nvm/nvm.sh
   - nvm install 8.9.1
   - node --version
+  - cd truffle
   - npm install
+  - cd ../
 
 script:
   - make test
-  
+
 after_script:
   # print truffle and testrpc logs
-  - cat truffle.log
-  - cat testrpc.log
+  - cat truffle/truffle.log
+  - cat truffle/testrpc.log

@@ -11,30 +11,33 @@ import XCTest
 import Geth
 
 class KinAccountTests: XCTestCase {
-    
+
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let ropsten = NodeProvider(networkId: NetworkIdRopsten)
+    let truffle = NodeProvider(networkId: NetworkIdTruffle)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: ropsten)
+        kinClient = try! KinClient(provider: truffle)
     }
 
     override func tearDown() {
         super.tearDown()
 
-        let accountStore = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
-        try? accountStore.deleteKeystore()
+        kinClient.deleteKeystore()
     }
 
     func test_publicAddress() {
+        let expectedPublicAddress = "0x8B455Ab06C6F7ffaD9fDbA11776E2115f1DE14BD"
+
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let key = TruffleConfiguration.privateKey(at: 0)
+            let account = try kinClient.createAccount(with: key, passphrase: passphrase)
+
             let publicAddress = account?.publicAddress
 
-            XCTAssertNotNil(publicAddress, "Unable to retrieve public address for account: \(String(describing: account))")
+            XCTAssertEqual(publicAddress, expectedPublicAddress)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -43,9 +46,12 @@ class KinAccountTests: XCTestCase {
     
     func test_balance_sync() {
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let key = TruffleConfiguration.privateKey(at: 0)
+            let account = try kinClient.createAccount(with: key, passphrase: passphrase)
+
             let balance = try account?.balance()
-            XCTAssertNotNil(balance, "Unable to retrieve balance for account: \(String(describing: account))")
+
+            XCTAssertEqual(balance, TruffleConfiguration.STARTING_BALANCE)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -56,7 +62,8 @@ class KinAccountTests: XCTestCase {
     func test_balance_async() {
         var account: KinAccount? = nil
         do {
-            account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let key = TruffleConfiguration.privateKey(at: 0)
+            account = try kinClient.createAccount(with: key, passphrase: passphrase)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -70,7 +77,7 @@ class KinAccountTests: XCTestCase {
         }
 
         self.waitForExpectations(timeout: 5.0)
-        XCTAssertNotNil(balanceChecked, "Unable to retrieve balance for account: \(String(describing: account))")
+        XCTAssertEqual(balanceChecked, TruffleConfiguration.STARTING_BALANCE)
     }
 
     func test_pending_balance() {
@@ -113,15 +120,49 @@ class KinAccountTests: XCTestCase {
         self.waitForExpectations(timeout: 5.0)
     }
 
-    func test_decimals() {
+    func test_send_transaction() {
+        let sendAmount: UInt64 = 5
+
+        let key0 = TruffleConfiguration.privateKey(at: 0)
+        let key1 = TruffleConfiguration.privateKey(at: 1)
+
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
-            let decimals = try account?.decimals()
-            
-            XCTAssertNotNil(decimals, "Unable to retrieve decimals for account: \(String(describing: account))")
+            guard
+                let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase),
+                let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase) else {
+                    XCTAssertTrue(false, "account creation failed")
+                    return
+            }
+
+            let startBalance0 = try account0.balance()
+            let startBalance1 = try account1.balance()
+
+            let txId = try account0.sendTransaction(to: account1.publicAddress,
+                                                     kin: sendAmount,
+                                                     passphrase: passphrase)
+
+            XCTAssertNotNil(txId)
+
+            let balance0 = try account0.balance()
+            let balance1 = try account1.balance()
+
+            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
+            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
+
+//    func test_decimals() {
+//        do {
+//            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+//            let decimals = try account?.decimals()
+//
+//            XCTAssertNotNil(decimals, "Unable to retrieve decimals for account: \(String(describing: account))")
+//        }
+//        catch {
+//            XCTAssertTrue(false, "Something went wrong: \(error)")
+//        }
+//    }
 }
