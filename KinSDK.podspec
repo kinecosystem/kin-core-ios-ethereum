@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Kin Foundation' => 'kin@kik.com' }
   s.source           = { :git => 'git@github.com:kinfoundation/kin-sdk-core-ios.git' }
 
-  s.ios.deployment_target = '8.1'
+  #s.ios.deployment_target = '8.1'
 
   s.source_files = 'KinSDK/KinSDK/**/*'
 
