@@ -122,27 +122,32 @@ class KinAccountTests: XCTestCase {
 
     func test_send_transaction() {
         let sendAmount: UInt64 = 5
-        let expectedRemainingBalance = TruffleConfiguration.STARTING_BALANCE - Decimal(sendAmount)
-        let expectedReceivedBalance = TruffleConfiguration.STARTING_BALANCE + Decimal(sendAmount)
 
         let key0 = TruffleConfiguration.privateKey(at: 0)
         let key1 = TruffleConfiguration.privateKey(at: 1)
 
         do {
-            let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase)
-            let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase)
+            guard
+                let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase),
+                let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase) else {
+                    XCTAssertTrue(false, "account creation failed")
+                    return
+            }
 
-            let txId = try account0!.sendTransaction(to: account1!.publicAddress,
+            let startBalance0 = try account0.balance()
+            let startBalance1 = try account1.balance()
+
+            let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                      kin: sendAmount,
                                                      passphrase: passphrase)
 
             XCTAssertNotNil(txId)
 
-            let balance0 = try account0?.balance()
-            let balance1 = try account1?.balance()
+            let balance0 = try account0.balance()
+            let balance1 = try account1.balance()
 
-            XCTAssertEqual(balance0, expectedRemainingBalance)
-            XCTAssertEqual(balance1, expectedReceivedBalance)
+            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
+            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
