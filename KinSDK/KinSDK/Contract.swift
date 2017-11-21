@@ -5,6 +5,7 @@
 //  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
+import KinSDKPrivate
 
 enum ContractError: Error {
     case geth
