@@ -32,15 +32,15 @@ class KinAccountStoreTests: XCTestCase {
         try? accountStore.deleteKeystore()
     }
     
-    func testKeyStoreCreated() {
+    func test_key_store_created() {
         XCTAssertNotNil(store)
     }
     
-    func testCreateAccount() {
+    func test_create_account() {
         XCTAssertTrue(account.isKind(of: GethAccount.self))
     }
     
-    func testDeleteWithBadPassFailes() {
+    func test_delete_with_bad_password_fails() {
         do {
             try store.delete(account: account, passphrase: "HiImWrongPass")
             XCTAssertTrue(false, "A delete should fail if using worng password")
@@ -50,7 +50,7 @@ class KinAccountStoreTests: XCTestCase {
         }
     }
     
-    func testUpdateAccoun() {
+    func test_update_account() {
         let newPass = UUID().uuidString
         var result = store.update(account: account, passphrase: creationPass,
                                   newPassphrase: newPass)
@@ -66,8 +66,7 @@ class KinAccountStoreTests: XCTestCase {
                          newPassphrase: creationPass)
     }
     
-    func testExportDeleteAndImportAccount() {
-        
+    func test_export_delete_and_import_account() {
         let numberOfStores = store.accounts.size()
         XCTAssertTrue(numberOfStores > 0, "Number of files at test's start should be at least 1, Check setup func.")
         let data = try? store.export(account: account,
@@ -87,7 +86,4 @@ class KinAccountStoreTests: XCTestCase {
             XCTAssertTrue(false, "Unable to delete account: \(error)")
         }
     }
-    
-    
-    
 }
