@@ -2,7 +2,7 @@
 //  Collection+extensions.swift
 //  KinSDK
 //
-//  Created by Elazar Yifrach on 15/11/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 

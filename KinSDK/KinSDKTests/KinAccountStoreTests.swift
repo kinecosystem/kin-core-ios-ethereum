@@ -2,7 +2,7 @@
 //  KinAccountStoreTests.swift
 //  KinWalletTests
 //
-//  Created by Elazar Yifrach on 19/10/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kik Interactive. All rights reserved.
 //
 

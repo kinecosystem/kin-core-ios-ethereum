@@ -2,7 +2,7 @@
 //  Decimal+extensions.swift
 //  KinSDK
 //
-//  Created by Elazar Yifrach on 11/11/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 

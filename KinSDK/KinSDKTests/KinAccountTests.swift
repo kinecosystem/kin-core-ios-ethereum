@@ -2,7 +2,7 @@
 //  KinAccountTests.swift
 //  KinTestHostTests
 //
-//  Created by Avi Shevin on 02/11/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 
