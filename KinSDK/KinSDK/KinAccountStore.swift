@@ -2,7 +2,7 @@
 //  KinAccountStore.swift
 //  KinWallet
 //
-//  Created by Elazar Yifrach on 18/10/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kik Interactive. All rights reserved.
 //
 

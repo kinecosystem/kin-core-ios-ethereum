@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  KinTestHost
 //
-//  Created by Avi Shevin on 01/11/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 

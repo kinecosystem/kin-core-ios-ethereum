@@ -2,7 +2,7 @@
 //  SendTransactionTableViewCell.swift
 //  KinSampleApp
 //
-//  Created by Natan Rolnik on 12/11/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 
