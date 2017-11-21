@@ -1,137 +1,15 @@
 //
-//  Kin.swift
+//  KinAccount.swift
 //  KinSDK
 //
-//  Created by Avi Shevin on 31/10/2017.
+//  Created by Kin Foundation
 //  Copyright © 2017 Kin Foundation. All rights reserved.
 //
 
 import Foundation
 
-public protocol ServiceProvider {
-    var url: URL { get }
-    var networkId: UInt64 { get }
-}
-
-public enum KinError: Error {
-    case unknown
-    case invalidInput
-    case internalInconsistancy
-    case invalidPassphrase
-    case unsupportedNetwork
-    case invalidAddress
-    case invalidAmount
-}
-
-public let NetworkIdMain: UInt64 = 1
-public let NetworkIdRopsten: UInt64 = 3
-public let NetworkIdTruffle: UInt64 = 9
-
-public final class KinClient {
-    static private let supportedNetworks = [
-        NetworkIdMain,
-        NetworkIdRopsten,
-        NetworkIdTruffle
-    ]
-
-    fileprivate(set) lazy var account: KinAccount? = {
-        if self.accountStore.accounts.size() > 0 {
-            if let account = try? self.accountStore.accounts.get(0) {
-                return KinAccount(gethAccount: account, accountStore: self.accountStore)
-            }
-        }
-        return nil
-    }()
-
-    fileprivate let accountStore: KinAccountStore
-
-    public convenience init(provider: ServiceProvider) throws {
-        try self.init(with: provider.url, networkId: provider.networkId)
-    }
-
-    public init(with nodeProviderUrl: URL, networkId: UInt64) throws {
-        if KinClient.supportedNetworks.contains(networkId) == false {
-            throw KinError.unsupportedNetwork
-        }
-
-        self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
-    }
-
-    public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount? {
-        if accountStore.accounts.size() == 0 {
-            account = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                                     accountStore: accountStore)
-        }
-
-        return account
-    }
-
-    public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
-        guard let account = account else {
-            return nil
-        }
-
-        let data = try accountStore.export(account: account.gethAccount,
-                                           passphrase: passphrase,
-                                           exportPassphrase: exportPassphrase)
-
-        return String(data: data, encoding: String.Encoding.utf8)
-    }
-}
-
-//MARK: - For testing only
-
-extension KinClient {
-    func deleteKeystore() {
-        try? accountStore.deleteKeystore()
-    }
-
-    func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
-        let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
-        if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
-            account =  KinAccount(gethAccount: gAccount,
-                                  accountStore: accountStore)
-        }
-
-        return account
-    }
-}
-
-public typealias Balance = Decimal
-public typealias TransactionId = String
-
-public typealias TransactionCompletion = (TransactionId?, Error?) -> ()
-public typealias BalanceCompletion = (Balance?, Error?) -> ()
-
-class TransactionSigner: NSObject, GethSignerProtocol {
-
-    fileprivate weak var keyStore: GethKeyStore?
-    fileprivate weak var account: GethAccount?
-    fileprivate var passphrase: String
-    fileprivate var networkId: UInt64
-
-    init(with keyStore: GethKeyStore, account: GethAccount, passphrase: String,  networkId: UInt64) {
-        self.keyStore = keyStore
-        self.account = account
-        self.networkId = networkId
-        self.passphrase = passphrase
-        super.init()
-    }
-
-    func sign(_ p0: GethAddress!, p1: GethTransaction!) throws -> GethTransaction {
-        guard   let keyStore = keyStore,
-                let account = account else {
-                    throw KinError.internalInconsistancy
-
-        }
-        return try keyStore.signTxPassphrase(account, passphrase: passphrase, tx: p1, chainID: GethNewBigInt(Int64(networkId)))
-    }
-
-}
-
 public class KinAccount {
-
-    fileprivate let gethAccount: GethAccount
+    internal let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     fileprivate let contract: Contract
     fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
@@ -216,8 +94,8 @@ public class KinAccount {
         value.setBigInt(wei)
 
         let transaction = try self.contract.transact(method: "transfer",
-                                                 options: options,
-                                                 parameters: [toAddress, value])
+                                                     options: options,
+                                                     parameters: [toAddress, value])
 
         return transaction.getHash().getHex()
     }
@@ -297,3 +175,4 @@ public class KinAccount {
         return total
     }
 }
+
