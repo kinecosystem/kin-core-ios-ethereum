@@ -103,7 +103,7 @@
 		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
 		E9A3820B1FBADF610085AB80 /* testConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testConfig.plist; sourceTree = "<group>"; };
-    E9D6B3081FC43D8A00D9F0F0 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		E9D6B3081FC43D8A00D9F0F0 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

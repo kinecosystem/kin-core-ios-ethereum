@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KinSDKPrivate
 
 class TransactionSigner: NSObject, GethSignerProtocol {
     fileprivate weak var keyStore: GethKeyStore?
