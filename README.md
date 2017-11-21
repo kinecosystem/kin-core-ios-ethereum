@@ -67,6 +67,12 @@ $ cd truffle
 $ npm install
 ```
 
+Next, initialize and update git submodules.  This will include `truffle/kin-token`.
+
+```bash
+$ git submodule init && git submodule update
+```
+
 To run the tests, use (from the root directory):
 
 ```bash
