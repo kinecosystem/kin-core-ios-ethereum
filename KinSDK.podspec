@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.1.7'
+  s.version          = '0.1.8'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
   s.preserve_paths = 'KinSDK/Module/module.modulemap', 'KinSDK/Geth.framework/**/*'
   s.vendored_libraries = 'KinSDK/Geth.framework/Versions/A/Geth'
   #s.vendored_frameworks = 'KinSDK/Geth.framework/Versions/A/Geth'
-  s.xcconfig = { 'LIBRARY_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK',
+  s.xcconfig = { 'LIBRARY_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK/Geth.framework/Versions/A/Geth',
                  'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/KinSDK/KinSDK/Module' }
 
   s.vendored_frameworks = 'KinSDK.framework'
