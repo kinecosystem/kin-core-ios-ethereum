@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KinSDKPrivate
 
 fileprivate let kinDecimal = Decimal(sign: .plus,
                                      exponent: -18,

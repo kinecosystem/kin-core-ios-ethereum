@@ -13,10 +13,6 @@
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
 		824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824CBAA21FB9932700B736AA /* Decimal+extensions.swift */; };
-		8257BF511FB44CF9000FDD3F /* Geth.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4D1FB44CF9000FDD3F /* Geth.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8257BF521FB44CF9000FDD3F /* Universe.objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4E1FB44CF9000FDD3F /* Universe.objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8257BF531FB44CF9000FDD3F /* ref.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF4F1FB44CF9000FDD3F /* ref.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8257BF541FB44CF9000FDD3F /* Geth.objc.h in Headers */ = {isa = PBXBuildFile; fileRef = 8257BF501FB44CF9000FDD3F /* Geth.objc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8257BF551FB45224000FDD3F /* Geth in Frameworks */ = {isa = PBXBuildFile; fileRef = 8257BF411FB447C0000FDD3F /* Geth */; };
 		827835311FA9B5F20006C3DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835301FA9B5F20006C3DF /* AppDelegate.swift */; };
 		827835331FA9B5F20006C3DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827835321FA9B5F20006C3DF /* ViewController.swift */; };
@@ -100,6 +96,7 @@
 		E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+extensions.swift"; sourceTree = "<group>"; };
 		E98B43E11FB1EFC600B00A3C /* contractABI.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = contractABI.json; sourceTree = "<group>"; };
 		E9A3820B1FBADF610085AB80 /* testConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = testConfig.plist; sourceTree = "<group>"; };
+		E9D6B3081FC43D8A00D9F0F0 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		E9FCC78A1FB33B0C00A5CE32 /* KinTruffleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTruffleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +153,7 @@
 		82140EAB1FA88E5B00FAF19B /* KinSDK */ = {
 			isa = PBXGroup;
 			children = (
+				E9D6B3071FC43D8A00D9F0F0 /* Module */,
 				824CBAA11FB9932700B736AA /* extensions */,
 				E970C26D1FAB63600091181B /* Resources */,
 				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
@@ -231,6 +229,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		E9D6B3071FC43D8A00D9F0F0 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				E9D6B3081FC43D8A00D9F0F0 /* module.modulemap */,
+			);
+			path = Module;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -238,10 +244,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8257BF541FB44CF9000FDD3F /* Geth.objc.h in Headers */,
-				8257BF531FB44CF9000FDD3F /* ref.h in Headers */,
-				8257BF521FB44CF9000FDD3F /* Universe.objc.h in Headers */,
-				8257BF511FB44CF9000FDD3F /* Geth.h in Headers */,
 				82140EBA1FA88E5B00FAF19B /* KinSDK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -597,6 +599,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Module";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -629,6 +632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/Module";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

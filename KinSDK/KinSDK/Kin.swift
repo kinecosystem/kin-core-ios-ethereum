@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KinSDKPrivate
 
 public protocol ServiceProvider {
     var url: URL { get }

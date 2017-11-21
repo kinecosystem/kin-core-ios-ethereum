@@ -1,0 +1,8 @@
+module KinSDKPrivate {
+    header "../Geth.framework/Headers/ref.h"
+    header "../Geth.framework/Headers/Geth.objc.h"
+    header "../Geth.framework/Headers/Geth.h"
+    header "../Geth.framework/Headers/Universe.objc.h"
+
+  export *
+}
