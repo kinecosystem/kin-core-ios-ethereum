@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import KinSDKPrivate
 @testable import KinSDK
 
 let ropsten = NodeProvider(networkId: NetworkIdRopsten)
