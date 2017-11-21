@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.1.6'
+  s.version          = '0.1.7'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   #s.public_header_files = 'KinSDK/KinSDK/KinSDK.h'
   #s.library = 'Geth'
-  s.preserve_path = 'KinSDK/Module/module.modulemap'
+  s.preserve_paths = 'KinSDK/Module/module.modulemap', 'KinSDK/Geth.framework/**/*'
   s.vendored_libraries = 'KinSDK/Geth.framework/Versions/A/Geth'
   #s.vendored_frameworks = 'KinSDK/Geth.framework/Versions/A/Geth'
   s.xcconfig = { 'LIBRARY_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK',
