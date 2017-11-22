@@ -11,13 +11,15 @@ import KinSDK
 
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!
+    private var kinAccount: KinAccount!
 
-    class func instantiate(with kinClient: KinClient) -> KinSampleViewController {
+    class func instantiate(with kinClient: KinClient, kinAccount: KinAccount) -> KinSampleViewController {
         guard let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "KinSampleViewController") as? KinSampleViewController else {
             fatalError("Couldn't load KinSampleViewController from Main.storyboard")
         }
 
         viewController.kinClient = kinClient
+        viewController.kinAccount = kinAccount
 
         return viewController
     }
@@ -37,6 +39,7 @@ class KinSampleViewController: UITableViewController {
 
         if let kCell = cell as? KinClientCell {
             kCell.kinClient = kinClient
+            kCell.kinAccount = kinAccount
             kCell.kinClientCellDelegate = self
         }
         
@@ -61,41 +64,36 @@ extension KinSampleViewController: KinClientCellDelegate {
         }
 
         txViewController.view.tintColor = view.tintColor
-        txViewController.kinClient = kinClient
+        txViewController.kinAccount = kinAccount
         navigationController?.pushViewController(txViewController, animated: true)
     }
 
     func getTestKin(cell: KinClientCell) {
-        guard
-            let account = try? kinClient.createAccountIfNeeded(with: KinAccountPassphrase),
-            let address = account?.publicAddress,
-            let getKinCell = cell as? GetKinTableViewCell else {
+        guard let getKinCell = cell as? GetKinTableViewCell else {
             return
         }
 
         getKinCell.getKinButton.isEnabled = false
 
-        let urlString = "http://52.87.243.90:5000/send?public_address=\(address)"
+        let urlString = "http://kin-faucet.rkik.prod/send?public_address=\(kinAccount.publicAddress)"
         URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
             DispatchQueue.main.async {
-                guard let aSelf = self,
-                    error == nil else {
-                        getKinCell.getKinButton.isEnabled = true
-                        return
+                guard let aSelf = self else {
+                    return
                 }
+
+                if let error = error {
+                    getKinCell.getKinButton.isEnabled = true
+                    print("Not able to get test Kin. \(error)")
+                    return
+                }
+
+                UserDefaults.standard.set(true, forKey: GetKinSucceededOnce)
 
                 if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
                     balanceCell.refreshBalance(aSelf)
                 }
             }
         }.resume()
-    }
-
-    func balanceDidUpdate(balance: Decimal, pendingBalance: Decimal) {
-        guard let getKinCell = tableView.visibleCells.flatMap({ $0 as? GetKinTableViewCell }).first else {
-            return
-        }
-
-        getKinCell.getKinButton.isEnabled = balance + pendingBalance == 0
     }
 }

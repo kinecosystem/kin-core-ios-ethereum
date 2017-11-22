@@ -21,9 +21,6 @@ class BalanceTableViewCell: KinClientCell {
     var ongoingRequests = 0 {
         didSet {
             self.refreshButton.isEnabled = ongoingRequests == 0
-            if ongoingRequests == 0 {
-                kinClientCellDelegate?.balanceDidUpdate(balance: balance, pendingBalance: pendingBalance)
-            }
         }
     }
 
@@ -35,18 +32,16 @@ class BalanceTableViewCell: KinClientCell {
         return f
     }()
 
-    override var kinClient: KinClient! {
+    override var kinAccount: KinAccount! {
         didSet {
             refreshBalance(self)
         }
     }
 
     @IBAction func refreshBalance(_ sender: Any) {
-        let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
-
         ongoingRequests += 1
         balanceActivityIndicator.startAnimating()
-        account.balance { [weak self] balance, error in
+        kinAccount.balance { [weak self] balance, error in
             DispatchQueue.main.async {
                 self?.balanceActivityIndicator.stopAnimating()
                 defer {
@@ -68,7 +63,7 @@ class BalanceTableViewCell: KinClientCell {
 
         ongoingRequests += 1
         pendingBalanceActivityIndicator.startAnimating()
-        account.pendingBalance { [weak self] pBalance, error in
+        kinAccount.pendingBalance { [weak self] pBalance, error in
             DispatchQueue.main.async {
                 self?.pendingBalanceActivityIndicator.stopAnimating()
                 defer {
