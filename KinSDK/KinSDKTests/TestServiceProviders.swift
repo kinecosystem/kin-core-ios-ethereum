@@ -11,15 +11,15 @@ import Foundation
 struct NodeProvider: ServiceProvider {
     let url: URL
     let networkId: UInt64
-    
+
     init(networkId: UInt64) {
         self.networkId = networkId
         switch networkId {
-        case NetworkIdMain:
+        case networkIdMain:
             self.url = URL(string: "https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu")!
-        case NetworkIdRopsten:
+        case networkIdRopsten:
             self.url = URL(string: "https://ropsten.infura.io/ciS27F9JQYk8MaJd8Fbu")!
-        case NetworkIdTruffle:
+        case networkIdTruffle:
             self.url = URL(string: "http://localhost:8545")!
         default:
             fatalError("Unsupported network")

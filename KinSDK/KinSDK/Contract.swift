@@ -14,7 +14,7 @@ enum ContractError: Error {
 
 class Contract {
     private struct Constants {
-        static let SHA3_TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
+        static let sha3Transfer = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
     }
 
     fileprivate var boundContract: GethBoundContract?
@@ -22,22 +22,24 @@ class Contract {
     fileprivate weak var client: GethEthereumClient?
     fileprivate let contractAddress: GethAddress
     static let defaultGasLimit: Int64 = 60000
-    
+
     init(with context: GethContext, networkId: UInt64, client: GethEthereumClient) {
         self.context = context
         self.client = client
         var address: String
-        
+
         switch networkId {
-        case NetworkIdMain:
+        case networkIdMain:
             address = "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5"
-        case NetworkIdRopsten:
+        case networkIdRopsten:
             address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
-        case NetworkIdTruffle:
+        case networkIdTruffle:
             guard
                 let fileUrl = Bundle.main.url(forResource: "testConfig", withExtension: "plist"),
                 let data = try? Data(contentsOf: fileUrl),
-                let configDict = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
+                let configDict = try? PropertyListSerialization.propertyList(from: data,
+                                                                             options: [],
+                                                                             format: nil) as? [String: Any],
                 let contractAddress = configDict?["TOKEN_CONTRACT_ADDRESS"] as? String,
                 contractAddress.isEmpty == false else {
                     fatalError("Seems like you are trying to run tests on the local network, but " +
@@ -55,7 +57,7 @@ class Contract {
         self.contractAddress = GethNewAddressFromHex(address, nil)
         bindContractAbi()
     }
-    
+
     func bindContractAbi() {
         do {
             if let path = Bundle(for: Contract.self).path(forResource: "contractABI",
@@ -67,25 +69,25 @@ class Contract {
             fatalError("Unable to load contract abi: \(error)")
         }
     }
-    
+
     func call(method: String, inputs: [GethInterface] = [],
               outputs: [GethInterface]) throws {
-        
+
         guard   let context = context,
                 let options = GethNewCallOpts(),
                 let contract = boundContract else {
                 throw ContractError.internalInconsistancy
         }
-        
+
         options.setContext(context)
-        
+
         try contract.call(options, out_: try outputs.interfaces(),
                                 method: method,
                                 args: try inputs.interfaces())
-        
+
     }
-    
-    func transact(method: String, options:GethTransactOpts,
+
+    func transact(method: String, options: GethTransactOpts,
                   parameters: [GethInterface]) throws -> GethTransaction {
         guard let contract = boundContract else {
             throw ContractError.internalInconsistancy
@@ -94,7 +96,7 @@ class Contract {
                                     args: try parameters.interfaces())
     }
 
-    func pendingTransactionLogs(from: String?, to: String?) throws -> GethLogs {
+    func pendingTransactionLogs(from: String?, to recipient: String?) throws -> GethLogs {
         guard
             let client = client,
             let context = context else {
@@ -114,7 +116,7 @@ class Contract {
         query.setToBlock(GethBigInt(Int64(GethPendingBlockNumber)))
 
         var error: NSError? = nil
-        let hash = GethNewHashFromHex(Constants.SHA3_TRANSFER, &error)
+        let hash = GethNewHashFromHex(Constants.sha3Transfer, &error)
 
         if error != nil {
             throw ContractError.geth
@@ -123,8 +125,7 @@ class Contract {
         if let hashes = GethNewHashesEmpty() {
             hashes.append(hash)
             topics.append(hashes)
-        }
-        else {
+        } else {
             throw ContractError.geth
         }
 
@@ -134,19 +135,17 @@ class Contract {
             }
 
             topics.append(hashes)
-        }
-        else {
+        } else {
             throw ContractError.geth
         }
 
         if let hashes = GethNewHashesEmpty() {
-            if let to = to {
-                hashes.append(try hexAddressToTopicHash(address: to))
+            if let recipient = recipient {
+                hashes.append(try hexAddressToTopicHash(address: recipient))
             }
 
             topics.append(hashes)
-        }
-        else {
+        } else {
             throw ContractError.geth
         }
 

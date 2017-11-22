@@ -18,7 +18,11 @@ class KinClientTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: truffle)
+        do {
+            kinClient = try KinClient(provider: truffle)
+        } catch {
+            XCTAssert(false, "Couldn't create kinClient")
+        }
     }
 
     override func tearDown() {
@@ -35,8 +39,7 @@ class KinClientTests: XCTestCase {
 
         do {
             account = try kinClient.createAccountIfNeeded(with: passphrase)
-        }
-        catch {
+        } catch {
             e = error
         }
 
@@ -47,8 +50,7 @@ class KinClientTests: XCTestCase {
         do {
             _ = try kinClient.createAccountIfNeeded(with: passphrase)
             _ = try kinClient.createAccountIfNeeded(with: passphrase)
-        }
-        catch {
+        } catch {
         }
 
         let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
@@ -63,8 +65,7 @@ class KinClientTests: XCTestCase {
             let keyStore = try kinClient.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
 
             XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")
-        }
-        catch {
+        } catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }

@@ -264,6 +264,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinSDK" */;
 			buildPhases = (
+				91EB959B1FC5D2E4000AE5B1 /* Lint with SwiftLint */,
 				82140EA41FA88E5B00FAF19B /* Sources */,
 				82140EA51FA88E5B00FAF19B /* Frameworks */,
 				82140EA61FA88E5B00FAF19B /* Headers */,
@@ -392,6 +393,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		91EB959B1FC5D2E4000AE5B1 /* Lint with SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Lint with SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed. Install it with `brew install swiftlint` or check more options at https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		82140EA41FA88E5B00FAF19B /* Sources */ = {

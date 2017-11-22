@@ -12,7 +12,8 @@ extension Collection where Iterator.Element == UInt8 {
     var data: Data {
         return Data(self)
     }
+
     var hexa: String {
-        return map{ String(format: "%02X", $0) }.joined()
+        return map { String(format: "%02X", $0) }.joined()
     }
 }
