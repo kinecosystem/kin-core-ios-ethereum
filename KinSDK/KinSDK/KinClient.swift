@@ -15,7 +15,7 @@ public final class KinClient {
         NetworkIdTruffle
     ]
 
-    fileprivate(set) lazy var account: KinAccount? = {
+    fileprivate(set) public lazy var account: KinAccount? = {
         if self.accountStore.accounts.size() > 0 {
             if let account = try? self.accountStore.accounts.get(0) {
                 return KinAccount(gethAccount: account, accountStore: self.accountStore)
