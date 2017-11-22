@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import KinSDK
+
+let GetKinSucceededOnce = "GetKinSucceededOnce"
 
 class GetKinTableViewCell: KinClientCell {
     @IBOutlet weak var getKinButton: UIButton!
@@ -17,7 +20,20 @@ class GetKinTableViewCell: KinClientCell {
         getKinButton.fill(with: tintColor)
     }
 
+    override var kinClient: KinClient! {
+        didSet {
+            verifyGetKinButtonAvailability()
+        }
+    }
+
     @IBAction func getKinTapped(_ sender: Any) {
         kinClientCellDelegate?.getTestKin(cell: self)
+    }
+
+    func verifyGetKinButtonAvailability() {
+        let gotKin = UserDefaults.standard.bool(forKey: GetKinSucceededOnce)
+        let isTestNet = kinClient.networkId != NetworkIdMain
+
+        getKinButton.isEnabled = isTestNet && !gotKin
     }
 }

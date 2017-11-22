@@ -26,6 +26,10 @@ public final class KinClient {
 
     fileprivate let accountStore: KinAccountStore
 
+    public var networkId: UInt64 {
+        return self.accountStore.networkId
+    }
+
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
     }
@@ -38,13 +42,16 @@ public final class KinClient {
         self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
     }
 
-    public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount? {
-        if accountStore.accounts.size() == 0 {
-            account = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                                     accountStore: accountStore)
+    public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
+        if let existingAccount = account {
+            return existingAccount
+        } else {
+            let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
+                                            accountStore: accountStore)
+            account = newAccount
+            
+            return newAccount
         }
-
-        return account
     }
 
     public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {

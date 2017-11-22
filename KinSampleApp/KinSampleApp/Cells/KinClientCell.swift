@@ -13,11 +13,11 @@ protocol KinClientCellDelegate: class {
     func revealKeyStore()
     func startSendTransaction()
     func getTestKin(cell: KinClientCell)
-    func balanceDidUpdate(balance: Decimal, pendingBalance: Decimal)
 }
 
 class KinClientCell: UITableViewCell {
     weak var kinClientCellDelegate: KinClientCellDelegate?
     var kinClient: KinClient!
+    var kinAccount: KinAccount!
 }
 

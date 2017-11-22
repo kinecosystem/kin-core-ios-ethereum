@@ -15,7 +15,7 @@ class KinAccountTableViewCell: KinClientCell {
     @IBOutlet weak var copyButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
 
-    override var kinClient: KinClient! {
+    override var kinAccount: KinAccount! {
         didSet {
             showAddress()
         }
@@ -30,7 +30,6 @@ class KinAccountTableViewCell: KinClientCell {
     }
 
     func showAddress() {
-        let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
-        addressLabel.text = account.publicAddress
+        addressLabel.text = kinAccount.publicAddress
     }
 }

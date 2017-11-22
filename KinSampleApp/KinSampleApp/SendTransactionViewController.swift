@@ -10,7 +10,7 @@ import UIKit
 import KinSDK
 
 class SendTransactionViewController: UIViewController {
-    var kinClient: KinClient!
+    var kinAccount: KinAccount!
 
     @IBOutlet weak var sendButton: UIButton!
 
@@ -30,12 +30,10 @@ class SendTransactionViewController: UIViewController {
     }
 
     @IBAction func sendTapped(_ sender: Any) {
-        let account = try! kinClient.createAccountIfNeeded(with: KinAccountPassphrase)!
-
         let amount = UInt64(amountTextField.text ?? "0") ?? 0
         let address = addressTextField.text ?? ""
 
-        account.sendTransaction(to: address, kin: amount, passphrase: KinAccountPassphrase) { transactionId, error in
+        kinAccount.sendTransaction(to: address, kin: amount, passphrase: KinAccountPassphrase) { transactionId, error in
             DispatchQueue.main.async { [weak self] in
                 guard let aSelf = self else {
                     return
