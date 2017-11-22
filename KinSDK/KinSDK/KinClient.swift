@@ -26,6 +26,10 @@ public final class KinClient {
 
     fileprivate let accountStore: KinAccountStore
 
+    public var networkId: UInt64 {
+        return self.accountStore.networkId
+    }
+
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
     }
