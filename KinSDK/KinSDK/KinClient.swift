@@ -46,8 +46,11 @@ public final class KinClient {
         if let existingAccount = account {
             return existingAccount
         } else {
-            return try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                                                accountStore: accountStore)
+            let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
+                                            accountStore: accountStore)
+            account = newAccount
+            
+            return newAccount
         }
     }
 

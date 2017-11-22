@@ -83,7 +83,7 @@ class KinAccountTests: XCTestCase {
     func test_pending_balance() {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
-            let pendingBalance = try account?.pendingBalance()
+            let pendingBalance = try account.pendingBalance()
 
             XCTAssertNotNil(pendingBalance, "Unable to retrieve pending balance for account: \(String(describing: account))")
         }
@@ -98,7 +98,7 @@ class KinAccountTests: XCTestCase {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
 
-            account?.pendingBalance(completion: { balance, error in
+            account.pendingBalance(completion: { balance, error in
                 let bothNil = balance == nil && error == nil
                 let bothNotNil = balance != nil && error != nil
 
