@@ -82,5 +82,13 @@ To run the tests, use (from the root directory):
 $ make test
 ```
 
+## Contributing
+
+Please review our [CONTRIBUTING.md](CONTRIBUTING.md) guide before opening issues and pull requests.
+
+## License
+This repository is licensed under the [MIT license](LICENSE.md).
+
+[infura]: https://infura.io
 [testrpc]: https://github.com/ethereumjs/testrpc
 [truffle]: http://truffleframework.com/
