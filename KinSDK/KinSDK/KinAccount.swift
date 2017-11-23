@@ -27,13 +27,6 @@ public class KinAccount {
                                  client: accountStore.client)
     }
 
-    func decimals() throws -> UInt8 {
-        let result = GethNewInterface()!
-        result.setDefaultUint8()
-        try contract.call(method: "decimals", outputs: [result])
-        return UInt8(result.getUint8().getInt64())
-    }
-
     public func sendTransaction(to: String,
                                 kin: UInt64,
                                 passphrase: String,
@@ -51,16 +44,17 @@ public class KinAccount {
     }
 
     public func sendTransaction(to: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+        guard kin > 0 else {
+            throw KinError.invalidAmount
+        }
+
+        guard let addressFromHex = GethNewAddressFromHex(to, nil) else {
+            throw KinError.invalidAddress
+        }
+
         guard let store = accountStore else {
             throw KinError.internalInconsistancy
         }
-
-        let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
-        defer {
-            _ = UnsafeMutablePointer<Int64>.deallocate(nonce)
-        }
-
-        try store.client.getPendingNonce(at: store.context, account: gethAccount.getAddress(), nonce: nonce)
 
         guard
             let wei = Decimal(kin).kinToWei().toBigInt(),
@@ -71,13 +65,12 @@ public class KinAccount {
                 throw KinError.internalInconsistancy
         }
 
-        guard let addressFromHex = GethNewAddressFromHex(to, nil) else {
-            throw KinError.invalidAddress
+        let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
+        defer {
+            _ = UnsafeMutablePointer<Int64>.deallocate(nonce)
         }
 
-        guard kin > 0 else {
-            throw KinError.invalidAmount
-        }
+        try store.client.getPendingNonce(at: store.context, account: gethAccount.getAddress(), nonce: nonce)
 
         options.setContext(store.context)
         options.setGasLimit(Contract.defaultGasLimit)
@@ -117,6 +110,7 @@ public class KinAccount {
         arg.setAddress(gethAccount.getAddress())
         let result = GethNewInterface()!
         result.setDefaultBigInt()
+
         try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
 
         guard let balance = Decimal(bigInt: result.getBigInt())?.weiToKin() else {
@@ -139,22 +133,14 @@ public class KinAccount {
 
     public func pendingBalance() throws -> Balance {
         let balance = try self.balance().kinToWei()
-        let sent = try pendingSentBalance()
-        let earned = try pendingEarnedBalance()
+
+        let sent = try sumTransactionAmount(logs: contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(),
+                                                                                  to: nil))
+
+        let earned = try sumTransactionAmount(logs: contract.pendingTransactionLogs(from: nil,
+                                                                                    to: gethAccount.getAddress().getHex()))
 
         return (balance + earned - sent).weiToKin()
-    }
-
-    fileprivate func pendingSentBalance() throws -> Balance {
-        let logs = try contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(), to: nil)
-
-        return try sumTransactionAmount(logs: logs)
-    }
-
-    fileprivate func pendingEarnedBalance() throws -> Balance {
-        let logs = try contract.pendingTransactionLogs(from: nil, to: gethAccount.getAddress().getHex())
-
-        return try sumTransactionAmount(logs: logs)
     }
 
     fileprivate func sumTransactionAmount(logs: GethLogs) throws -> Balance {
@@ -177,3 +163,11 @@ public class KinAccount {
     }
 }
 
+extension KinAccount {
+    func decimals() throws -> UInt8 {
+        let result = GethNewInterface()!
+        result.setDefaultUint8()
+        try contract.call(method: "decimals", outputs: [result])
+        return UInt8(result.getUint8().getInt64())
+    }
+}

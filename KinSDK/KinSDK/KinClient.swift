@@ -16,11 +16,11 @@ public final class KinClient {
     ]
 
     fileprivate(set) public lazy var account: KinAccount? = {
-        if self.accountStore.accounts.size() > 0 {
-            if let account = try? self.accountStore.accounts.get(0) {
-                return KinAccount(gethAccount: account, accountStore: self.accountStore)
-            }
+        if self.accountStore.accounts.size() > 0,
+            let account = try? self.accountStore.accounts.get(0) {
+            return KinAccount(gethAccount: account, accountStore: self.accountStore)
         }
+
         return nil
     }()
 
@@ -43,15 +43,13 @@ public final class KinClient {
     }
 
     public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
-        if let existingAccount = account {
-            return existingAccount
-        } else {
+        return try account ?? {
             let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
                                             accountStore: accountStore)
             account = newAccount
             
             return newAccount
-        }
+        }()
     }
 
     public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
