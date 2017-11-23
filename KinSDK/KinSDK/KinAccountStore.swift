@@ -39,9 +39,7 @@ class KinAccountStore {
     let context = GethNewContext()!
 
     var accounts: GethAccounts {
-        get {
-            return keystore.getAccounts()
-        }
+        return keystore.getAccounts()
     }
     let networkId: UInt64
 
@@ -50,7 +48,7 @@ class KinAccountStore {
             Directories.documents,
             Directories.networks,
             networkId.description,
-            Directories.keystore,
+            Directories.keystore
             ]
             .joined(separator: "/")
     }
@@ -62,7 +60,7 @@ class KinAccountStore {
             Directories.documents,
             Directories.networks,
             networkId.description,
-            Directories.keystore,
+            Directories.keystore
             ]
             .joined(separator: "/")
 
@@ -85,14 +83,12 @@ class KinAccountStore {
                                             passphrase: passphrase)
     }
 
-    func export(account: GethAccount, passphrase: String,
-                        exportPassphrase: String) throws -> Data {
+    func export(account: GethAccount, passphrase: String, exportPassphrase: String) throws -> Data {
         return try keystore.exportKey(account, passphrase: passphrase,
                                       newPassphrase: exportPassphrase)
     }
 
-    func update(account: GethAccount, passphrase: String,
-                       newPassphrase: String) -> Bool {
+    func update(account: GethAccount, passphrase: String, newPassphrase: String) -> Bool {
         return (try? keystore.update(account, passphrase: passphrase,
                                      newPassphrase: newPassphrase)) != nil
     }

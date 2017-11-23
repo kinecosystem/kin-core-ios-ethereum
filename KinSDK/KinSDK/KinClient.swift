@@ -10,9 +10,9 @@ import Foundation
 
 public final class KinClient {
     static private let supportedNetworks = [
-        NetworkIdMain,
-        NetworkIdRopsten,
-        NetworkIdTruffle
+        networkIdMain,
+        networkIdRopsten,
+        networkIdTruffle
     ]
 
     fileprivate(set) public lazy var account: KinAccount? = {
@@ -47,7 +47,7 @@ public final class KinClient {
             let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
                                             accountStore: accountStore)
             account = newAccount
-            
+
             return newAccount
         }()
     }
@@ -65,7 +65,7 @@ public final class KinClient {
     }
 }
 
-//MARK: - For testing only
+// MARK: - For testing only
 
 extension KinClient {
     func deleteKeystore() {
@@ -82,4 +82,3 @@ extension KinClient {
         return account
     }
 }
-

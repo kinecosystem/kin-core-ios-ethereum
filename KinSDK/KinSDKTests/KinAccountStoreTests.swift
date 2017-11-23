@@ -10,21 +10,26 @@ import XCTest
 import KinSDKPrivate
 @testable import KinSDK
 
-let ropsten = NodeProvider(networkId: NetworkIdRopsten)
+let ropsten = NodeProvider(networkId: networkIdRopsten)
 
 // todo add to readme https://github.com/ethereum/go-ethereum/issues/14369#issuecomment-318823725
 class KinAccountStoreTests: XCTestCase {
-
     let store = KinAccountStore(url: ropsten.url, networkId: ropsten.networkId)
     let creationPass = UUID().uuidString
     let exportPass = UUID().uuidString
     var account: GethAccount!
 
-    
     override func setUp() {
-        account = try! store.createAccount(passphrase: creationPass)
+        super.setUp()
+
+        do {
+            account = try store.createAccount(passphrase: creationPass)
+        }
+        catch {
+            XCTAssert(false, "Couldn't create account from store.createAccount()")
+        }
     }
-    
+
     override func tearDown() {
         super.tearDown()
 
@@ -32,15 +37,15 @@ class KinAccountStoreTests: XCTestCase {
                                            networkId: ropsten.networkId)
         try? accountStore.deleteKeystore()
     }
-    
+
     func test_key_store_created() {
         XCTAssertNotNil(store)
     }
-    
+
     func test_create_account() {
         XCTAssertTrue(account.isKind(of: GethAccount.self))
     }
-    
+
     func test_delete_with_bad_password_fails() {
         do {
             try store.delete(account: account, passphrase: "HiImWrongPass")
@@ -50,7 +55,7 @@ class KinAccountStoreTests: XCTestCase {
             XCTAssertTrue(true, "A delete should fail if using worng password")
         }
     }
-    
+
     func test_update_account() {
         let newPass = UUID().uuidString
         var result = store.update(account: account, passphrase: creationPass,
@@ -66,7 +71,7 @@ class KinAccountStoreTests: XCTestCase {
         _ = store.update(account: account, passphrase: "nevermind",
                          newPassphrase: creationPass)
     }
-    
+
     func test_export_delete_and_import_account() {
         let numberOfStores = store.accounts.size()
         XCTAssertTrue(numberOfStores > 0, "Number of files at test's start should be at least 1, Check setup func.")

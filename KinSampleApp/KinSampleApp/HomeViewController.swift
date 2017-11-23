@@ -42,12 +42,12 @@ class HomeViewController: UIViewController {
 
     @IBAction func networkSelected(_ sender: UIButton) {
         let production = sender == mainNetButton
-        
+
         let provider: Provider
         if production {
-            provider = Provider(url: URL(string: "http://159.89.240.147:8545")!, networkId: NetworkIdMain)
+            provider = Provider(url: URL(string: "http://159.89.240.147:8545")!, networkId: networkIdMain)
         } else {
-            provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: NetworkIdRopsten)
+            provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: networkIdRopsten)
         }
         
         guard let kinClient = try? KinClient(provider: provider) else {

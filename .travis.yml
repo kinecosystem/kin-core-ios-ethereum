@@ -6,12 +6,16 @@ cache:
     - node_modules
 
 before_install:
-  # install node (npm), truffle, testrpc
+  # install node (npm)
   - rm -rf ~/.nvm
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - source ~/.nvm/nvm.sh
   - nvm install 8.9.1
   - node --version
+
+install:
+  #swiftline, truffle, testrpc
+  - ./scripts/install_swiftlint.sh
   - cd truffle
   - npm install
   - cd ../

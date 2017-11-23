@@ -27,28 +27,29 @@ public class KinAccount {
                                  client: accountStore.client)
     }
 
-    public func sendTransaction(to: String,
+    public func sendTransaction(to recipient: String,
                                 kin: UInt64,
                                 passphrase: String,
                                 completion: @escaping TransactionCompletion) {
         accountQueue.async {
             do {
-                let transactionId = try self.sendTransaction(to: to,
+                let transactionId = try self.sendTransaction(to: recipient,
                                                              kin: kin,
                                                              passphrase: passphrase)
                 completion(transactionId, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }
     }
 
-    public func sendTransaction(to: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+    public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
         guard kin > 0 else {
             throw KinError.invalidAmount
         }
 
-        guard let addressFromHex = GethNewAddressFromHex(to, nil) else {
+        guard let addressFromHex = GethNewAddressFromHex(recipient, nil) else {
             throw KinError.invalidAddress
         }
 
@@ -99,7 +100,8 @@ public class KinAccount {
             do {
                 let balance = try self.balance()
                 completion(balance, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }
@@ -125,7 +127,8 @@ public class KinAccount {
             do {
                 let balance = try self.pendingBalance()
                 completion(balance, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }
@@ -134,11 +137,13 @@ public class KinAccount {
     public func pendingBalance() throws -> Balance {
         let balance = try self.balance().kinToWei()
 
-        let sent = try sumTransactionAmount(logs: contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(),
-                                                                                  to: nil))
+        let sentLogs = try contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(),
+                                                           to: nil)
+        let sent = try sumTransactionAmount(logs: sentLogs)
 
-        let earned = try sumTransactionAmount(logs: contract.pendingTransactionLogs(from: nil,
-                                                                                    to: gethAccount.getAddress().getHex()))
+        let earnedLogs = try contract.pendingTransactionLogs(from: nil,
+                                                             to: gethAccount.getAddress().getHex())
+        let earned = try sumTransactionAmount(logs: earnedLogs)
 
         return (balance + earned - sent).weiToKin()
     }
