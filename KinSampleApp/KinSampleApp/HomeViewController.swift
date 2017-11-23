@@ -71,8 +71,8 @@ class HomeViewController: UIViewController {
 
     func createKinAccount(with kinClient: KinClient, production: Bool) {
         let testOrMainNet = production ? "Main" : "Test"
-        let alertController = UIAlertController(title: "No \(testOrMainNet) Net Account Yet", message: "Let's create a new one", preferredStyle: .alert)
-        let action = UIAlertAction(title: "Create Account", style: .default) { _ in
+        let alertController = UIAlertController(title: "No \(testOrMainNet) Net Wallet Yet", message: "Let's create a new one, using the kinClient.createAccountIfNeeded() api.", preferredStyle: .alert)
+        let createWalletAction = UIAlertAction(title: "Create a Wallet", style: .default) { _ in
             do {
                 let kinAccount = try kinClient.createAccountIfNeeded(with: KinAccountPassphrase)
                 self.showSampleViewController(with: kinClient, kinAccount: kinAccount, production: production)
@@ -80,8 +80,10 @@ class HomeViewController: UIViewController {
                 print("KinAccount couldn't be created: \(error)")
             }
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-        alertController.addAction(action)
+        alertController.addAction(createWalletAction)
+        alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
 
