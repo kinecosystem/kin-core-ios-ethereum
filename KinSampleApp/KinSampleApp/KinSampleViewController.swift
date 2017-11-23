@@ -75,7 +75,7 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         getKinCell.getKinButton.isEnabled = false
 
-        let urlString = "http://kin-faucet.rkik.prod/send?public_address=\(kinAccount.publicAddress)"
+        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(kinAccount.publicAddress)"
         URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
             DispatchQueue.main.async {
                 guard let aSelf = self else {
