@@ -21,7 +21,8 @@ class KinAccountTests: XCTestCase {
 
         do {
             kinClient = try KinClient(provider: truffle)
-        } catch {
+        }
+        catch {
             XCTAssert(false, "Couldn't create kinClient")
         }
     }
@@ -42,7 +43,8 @@ class KinAccountTests: XCTestCase {
             let publicAddress = account?.publicAddress
 
             XCTAssertEqual(publicAddress, expectedPublicAddress)
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
@@ -55,7 +57,8 @@ class KinAccountTests: XCTestCase {
             let balance = try account?.balance()
 
             XCTAssertEqual(balance, TruffleConfiguration.STARTING_BALANCE)
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
 
@@ -66,7 +69,8 @@ class KinAccountTests: XCTestCase {
         do {
             let key = TruffleConfiguration.privateKey(at: 0)
             account = try kinClient.createAccount(with: key, passphrase: passphrase)
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
 
@@ -88,7 +92,8 @@ class KinAccountTests: XCTestCase {
 
             XCTAssertNotNil(pendingBalance,
                             "Unable to retrieve pending balance for account: \(String(describing: account))")
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
@@ -113,7 +118,8 @@ class KinAccountTests: XCTestCase {
 
                 expectation.fulfill()
             })
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
 
             expectation.fulfill()
@@ -150,7 +156,8 @@ class KinAccountTests: XCTestCase {
 
             XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
             XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }

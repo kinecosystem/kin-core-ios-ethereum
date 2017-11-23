@@ -65,7 +65,8 @@ class Contract {
                 let abi = try String(contentsOfFile: path, encoding: .utf8)
                 boundContract = GethBindContract(contractAddress, abi, client, nil)
             }
-        } catch {
+        }
+        catch {
             fatalError("Unable to load contract abi: \(error)")
         }
     }

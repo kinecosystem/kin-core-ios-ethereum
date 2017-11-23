@@ -1,2 +1,5 @@
 excluded:
   - KinTestHost
+
+disabled_rules:
+  - statement_position

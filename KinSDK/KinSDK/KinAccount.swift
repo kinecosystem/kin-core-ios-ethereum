@@ -37,7 +37,8 @@ public class KinAccount {
                                                              kin: kin,
                                                              passphrase: passphrase)
                 completion(transactionId, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }
@@ -99,7 +100,8 @@ public class KinAccount {
             do {
                 let balance = try self.balance()
                 completion(balance, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }
@@ -125,7 +127,8 @@ public class KinAccount {
             do {
                 let balance = try self.pendingBalance()
                 completion(balance, nil)
-            } catch {
+            }
+            catch {
                 completion(nil, error)
             }
         }

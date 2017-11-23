@@ -24,7 +24,8 @@ class KinAccountStoreTests: XCTestCase {
 
         do {
             account = try store.createAccount(passphrase: creationPass)
-        } catch {
+        }
+        catch {
             XCTAssert(false, "Couldn't create account from store.createAccount()")
         }
     }
@@ -49,7 +50,8 @@ class KinAccountStoreTests: XCTestCase {
         do {
             try store.delete(account: account, passphrase: "HiImWrongPass")
             XCTAssertTrue(false, "A delete should fail if using worng password")
-        } catch {
+        }
+        catch {
             XCTAssertTrue(true, "A delete should fail if using worng password")
         }
     }
@@ -85,7 +87,8 @@ class KinAccountStoreTests: XCTestCase {
             _ = store.importAccount(keystoreData: data!, passphrase: creationPass,
                                     newPassphrase: creationPass)
             XCTAssertTrue(store.accounts.size() == numberOfStores)
-        } catch {
+        }
+        catch {
             XCTAssertTrue(false, "Unable to delete account: \(error)")
         }
     }
