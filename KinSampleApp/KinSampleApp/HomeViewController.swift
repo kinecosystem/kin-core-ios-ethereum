@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
 
         let provider: Provider
         if production {
-            provider = Provider(url: URL(string: "https://mainnet.infura.io/ciS27F9JQYk8MaJd8Fbu")!, networkId: networkIdMain)
+            provider = Provider(url: URL(string: "http://159.89.240.147:8545")!, networkId: networkIdMain)
         } else {
             provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: networkIdRopsten)
         }
