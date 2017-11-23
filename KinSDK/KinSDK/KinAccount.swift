@@ -66,6 +66,12 @@ public class KinAccount {
                 throw KinError.internalInconsistency
         }
 
+        let currentBalance = (try balance() as NSDecimalNumber).uint64Value
+
+        if currentBalance < kin {
+            throw KinError.insufficientBalance
+        }
+
         let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
         defer {
             _ = UnsafeMutablePointer<Int64>.deallocate(nonce)

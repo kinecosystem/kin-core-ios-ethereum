@@ -162,6 +162,40 @@ class KinAccountTests: XCTestCase {
         }
     }
 
+    func test_send_transaction_with_insufficient_funds() {
+        let key0 = TruffleConfiguration.privateKey(at: 0)
+        let key1 = TruffleConfiguration.privateKey(at: 1)
+
+        do {
+            guard
+                let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase),
+                let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase) else {
+                    XCTAssertTrue(false, "account creation failed")
+                    return
+            }
+
+            let balance = try account0.balance()
+
+            do {
+                _ = try account0.sendTransaction(to: account1.publicAddress,
+                                                 kin: (balance as NSDecimalNumber).uint64Value + 1,
+                                                 passphrase: passphrase)
+                XCTAssertTrue(false, "Tried to send kin with insufficient funds, but didn't get an error")
+            }
+            catch {
+                if let kinError = error as? KinError {
+                    XCTAssertEqual(kinError, KinError.insufficientBalance)
+                } else {
+                    print(error)
+                    XCTAssertTrue(false, "Tried to send kin, and got error, but not a KinError: \(error.localizedDescription)")
+                }
+            }
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
 //    func test_decimals() {
 //        do {
 //            let account = try kinClient.createAccountIfNeeded(with: passphrase)
