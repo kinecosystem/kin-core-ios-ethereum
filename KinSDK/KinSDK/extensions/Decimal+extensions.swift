@@ -9,9 +9,9 @@
 import Foundation
 import KinSDKPrivate
 
-fileprivate let kinDecimal = Decimal(sign: .plus,
-                                     exponent: -18,
-                                     significand: Decimal(1))
+private let kinDecimal = Decimal(sign: .plus,
+                                 exponent: -18,
+                                 significand: Decimal(1))
 
 extension Decimal {
     init?(bigInt: GethBigInt) {

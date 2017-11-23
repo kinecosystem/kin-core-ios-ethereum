@@ -14,12 +14,17 @@ class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: NetworkIdTruffle)
+    let truffle = NodeProvider(networkId: networkIdTruffle)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: truffle)
+        do {
+            kinClient = try KinClient(provider: truffle)
+        }
+        catch {
+            XCTAssert(false, "Couldn't create kinClient")
+        }
     }
 
     override func tearDown() {
@@ -43,7 +48,7 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
-    
+
     func test_balance_sync() {
         do {
             let key = TruffleConfiguration.privateKey(at: 0)
@@ -51,14 +56,14 @@ class KinAccountTests: XCTestCase {
 
             let balance = try account?.balance()
 
-            XCTAssertEqual(balance, TruffleConfiguration.STARTING_BALANCE)
+            XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
-        
+
     }
-    
+
     func test_balance_async() {
         var account: KinAccount? = nil
         do {
@@ -68,16 +73,16 @@ class KinAccountTests: XCTestCase {
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
-        
+
         var balanceChecked: Balance? = nil
         let expectation = self.expectation(description: "wait for callback")
-        account?.balance { balance, error in
+        account?.balance { balance, _ in
             balanceChecked = balance
             expectation.fulfill()
         }
 
         self.waitForExpectations(timeout: 5.0)
-        XCTAssertEqual(balanceChecked, TruffleConfiguration.STARTING_BALANCE)
+        XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
     }
 
     func test_pending_balance() {
@@ -85,7 +90,8 @@ class KinAccountTests: XCTestCase {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
             let pendingBalance = try account.pendingBalance()
 
-            XCTAssertNotNil(pendingBalance, "Unable to retrieve pending balance for account: \(String(describing: account))")
+            XCTAssertNotNil(pendingBalance,
+                            "Unable to retrieve pending balance for account: \(String(describing: account))")
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -105,8 +111,10 @@ class KinAccountTests: XCTestCase {
                 let stringBalance = String(describing: balance)
                 let stringError = String(describing: error)
 
-                XCTAssertFalse(bothNil, "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
-                XCTAssertFalse(bothNotNil, "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
+                XCTAssertFalse(bothNil,
+                               "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
+                XCTAssertFalse(bothNotNil,
+                               "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
 
                 expectation.fulfill()
             })

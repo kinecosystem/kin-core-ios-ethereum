@@ -13,12 +13,17 @@ import XCTest
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: NetworkIdTruffle)
+    let truffle = NodeProvider(networkId: networkIdTruffle)
 
     override func setUp() {
         super.setUp()
 
-        kinClient = try! KinClient(provider: truffle)
+        do {
+            kinClient = try KinClient(provider: truffle)
+        }
+        catch {
+            XCTAssert(false, "Couldn't create kinClient")
+        }
     }
 
     override func tearDown() {

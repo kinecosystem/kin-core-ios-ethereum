@@ -15,15 +15,16 @@ class TransactionSigner: NSObject, GethSignerProtocol {
     fileprivate var passphrase: String
     fileprivate var networkId: UInt64
 
-    init(with keyStore: GethKeyStore, account: GethAccount, passphrase: String,  networkId: UInt64) {
+    init(with keyStore: GethKeyStore, account: GethAccount, passphrase: String, networkId: UInt64) {
         self.keyStore = keyStore
         self.account = account
         self.networkId = networkId
         self.passphrase = passphrase
-        
+
         super.init()
     }
 
+    // swiftlint:disable:next identifier_name
     func sign(_ p0: GethAddress!, p1: GethTransaction!) throws -> GethTransaction {
         guard
             let keyStore = keyStore,
@@ -32,6 +33,9 @@ class TransactionSigner: NSObject, GethSignerProtocol {
 
         }
 
-        return try keyStore.signTxPassphrase(account, passphrase: passphrase, tx: p1, chainID: GethNewBigInt(Int64(networkId)))
+        return try keyStore.signTxPassphrase(account,
+                                             passphrase: passphrase,
+                                             tx: p1,
+                                             chainID: GethNewBigInt(Int64(networkId)))
     }
 }
