@@ -62,6 +62,20 @@ class KinClientTests: XCTestCase {
         XCTAssertEqual(accountCount, 1)
     }
 
+    func test_delete_account() {
+        do {
+            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+
+            try kinClient.deleteAccount(with: passphrase)
+
+            XCTAssertNotNil(account)
+            XCTAssertNil(kinClient.account)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
     func test_keystore_export() {
         do {
             let account = try kinClient.createAccountIfNeeded(with: passphrase)
