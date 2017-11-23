@@ -13,16 +13,6 @@ public protocol ServiceProvider {
     var networkId: UInt64 { get }
 }
 
-public enum KinError: Error {
-    case unknown
-    case invalidInput
-    case internalInconsistancy
-    case invalidPassphrase
-    case unsupportedNetwork
-    case invalidAddress
-    case invalidAmount
-}
-
 public let networkIdMain: UInt64 = 1
 public let networkIdRopsten: UInt64 = 3
 public let networkIdTruffle: UInt64 = 9
