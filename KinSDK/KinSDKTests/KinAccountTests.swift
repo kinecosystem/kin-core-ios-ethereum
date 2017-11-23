@@ -14,7 +14,7 @@ class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: NetworkIdTruffle)
+    let truffle = NodeProvider(networkId: networkIdTruffle)
 
     override func setUp() {
         super.setUp()
@@ -56,7 +56,7 @@ class KinAccountTests: XCTestCase {
 
             let balance = try account?.balance()
 
-            XCTAssertEqual(balance, TruffleConfiguration.STARTING_BALANCE)
+            XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -82,7 +82,7 @@ class KinAccountTests: XCTestCase {
         }
 
         self.waitForExpectations(timeout: 5.0)
-        XCTAssertEqual(balanceChecked, TruffleConfiguration.STARTING_BALANCE)
+        XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
     }
 
     func test_pending_balance() {

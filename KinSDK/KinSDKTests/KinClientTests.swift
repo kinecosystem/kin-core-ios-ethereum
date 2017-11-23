@@ -13,7 +13,7 @@ import XCTest
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: NetworkIdTruffle)
+    let truffle = NodeProvider(networkId: networkIdTruffle)
 
     override func setUp() {
         super.setUp()

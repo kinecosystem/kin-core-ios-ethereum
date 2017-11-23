@@ -10,7 +10,7 @@ import XCTest
 import KinSDKPrivate
 @testable import KinSDK
 
-let ropsten = NodeProvider(networkId: NetworkIdRopsten)
+let ropsten = NodeProvider(networkId: networkIdRopsten)
 
 // todo add to readme https://github.com/ethereum/go-ethereum/issues/14369#issuecomment-318823725
 class KinAccountStoreTests: XCTestCase {
