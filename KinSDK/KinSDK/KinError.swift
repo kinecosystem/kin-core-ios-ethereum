@@ -35,9 +35,9 @@ extension KinError: LocalizedError {
         case .invalidAmount:
             return "Invalid Amount"
         case .insufficientBalance:
-            return "Not enough Kin"
-        default:
-            return "Unknown error"
+            return "Not Enough Kin"
+        case .unknown:
+            return "Unknown Error"
         }
     }
 }
