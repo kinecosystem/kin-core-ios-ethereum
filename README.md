@@ -1,4 +1,4 @@
-![Kin logo](.github/KINLogo.svg?sanitize=true)
+![Kin iOS](.github/kin_ios.png)
 
 #  Kin iOS SDK
 
