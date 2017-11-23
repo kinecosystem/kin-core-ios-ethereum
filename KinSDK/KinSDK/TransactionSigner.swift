@@ -29,7 +29,7 @@ class TransactionSigner: NSObject, GethSignerProtocol {
         guard
             let keyStore = keyStore,
             let account = account else {
-                throw KinError.internalInconsistancy
+                throw KinError.internalInconsistency
 
         }
 

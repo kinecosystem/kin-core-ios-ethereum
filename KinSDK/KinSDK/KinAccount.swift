@@ -54,7 +54,7 @@ public class KinAccount {
         }
 
         guard let store = accountStore else {
-            throw KinError.internalInconsistancy
+            throw KinError.internalInconsistency
         }
 
         guard
@@ -63,7 +63,13 @@ public class KinAccount {
             let price = try? store.client.suggestGasPrice(store.context),
             let toAddress = GethNewInterface(),
             let value = GethNewInterface() else {
-                throw KinError.internalInconsistancy
+                throw KinError.internalInconsistency
+        }
+
+        let currentBalance = (try balance() as NSDecimalNumber).uint64Value
+
+        if currentBalance < kin {
+            throw KinError.insufficientBalance
         }
 
         let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
@@ -116,7 +122,7 @@ public class KinAccount {
         try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
 
         guard let balance = Decimal(bigInt: result.getBigInt())?.weiToKin() else {
-            throw KinError.internalInconsistancy
+            throw KinError.internalInconsistency
         }
 
         return balance

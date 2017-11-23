@@ -9,7 +9,7 @@ import KinSDKPrivate
 
 enum ContractError: Error {
     case geth
-    case internalInconsistancy
+    case internalInconsistency
 }
 
 class Contract {
@@ -77,7 +77,7 @@ class Contract {
         guard   let context = context,
                 let options = GethNewCallOpts(),
                 let contract = boundContract else {
-                throw ContractError.internalInconsistancy
+                throw ContractError.internalInconsistency
         }
 
         options.setContext(context)
@@ -91,7 +91,7 @@ class Contract {
     func transact(method: String, options: GethTransactOpts,
                   parameters: [GethInterface]) throws -> GethTransaction {
         guard let contract = boundContract else {
-            throw ContractError.internalInconsistancy
+            throw ContractError.internalInconsistency
         }
         return try contract.transact(options, method: method,
                                     args: try parameters.interfaces())
@@ -101,7 +101,7 @@ class Contract {
         guard
             let client = client,
             let context = context else {
-                throw ContractError.internalInconsistancy
+                throw ContractError.internalInconsistency
         }
 
         guard
