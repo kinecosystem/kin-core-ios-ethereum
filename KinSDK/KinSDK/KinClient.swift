@@ -52,6 +52,16 @@ public final class KinClient {
         }()
     }
 
+    public func deleteAccount(with passphrase: String) throws {
+        guard let gethAccount = account?.gethAccount else {
+            return
+        }
+
+        try accountStore.delete(account: gethAccount, passphrase: passphrase)
+
+        account = nil
+    }
+
     public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         guard let account = account else {
             return nil
