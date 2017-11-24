@@ -12,7 +12,7 @@ enum ContractError: Error {
     case internalInconsistency
 }
 
-class Contract {
+final class Contract {
     private struct Constants {
         static let sha3Transfer = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
     }

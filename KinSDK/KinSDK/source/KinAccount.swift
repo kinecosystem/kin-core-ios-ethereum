@@ -9,7 +9,7 @@
 import Foundation
 import KinSDKPrivate
 
-public class KinAccount {
+public final class KinAccount {
     internal let gethAccount: GethAccount
     fileprivate weak var accountStore: KinAccountStore?
     fileprivate let contract: Contract
