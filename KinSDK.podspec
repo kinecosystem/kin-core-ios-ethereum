@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.2.8'
+  s.version          = '0.2.9'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -13,7 +13,13 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'git@github.com:kinfoundation/kin-sdk-core-ios.git' }
 
   s.prepare_command = <<-CMD
-                      make get-geth
+                        echo "Downloading Geth..."
+                        mkdir gethTemp
+                        cd gethTemp
+                        git clone --depth=1 git@github.com:kinfoundation/Geth-iOS.git
+                        cd Geth-iOS
+                        unzip -a Geth.framework.zip
+                        cp -r Geth.framework ../../KinSDK/Geth.framework
                       CMD
 
   s.source_files = 'KinSDK/KinSDK/**/*.swift'
@@ -22,7 +28,7 @@ Pod::Spec.new do |s|
     'KinSDK' => ['KinSDK/KinSDK/Resources/contractABI.json']
   }
 
-  s.preserve_paths = 'KinSDK/Module/module.modulemap'
+  s.preserve_paths = 'KinSDK/Module/module.modulemap', 'KinSDK/Geth.framework/**/*'
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK',
                  'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/KinSDK/KinSDK/Module',
                  'OTHER_LDFLAGS' => '-framework Geth' }
