@@ -181,6 +181,17 @@ public final class KinAccount {
         return balance
     }
 
+    /**
+     **Synchronously** gets the current **pending** Kin balance.
+
+     Please note that this is not the sum of pending transactions, but the **current balance plus
+     the sum of pending transactions.**
+
+     The completion block **is not dispatched on the main thread**.
+
+     - parameter completion: A callback block to be invoked once the pending balance is fetched, or
+     fails to be fetched.
+     */
     public func pendingBalance(completion: @escaping BalanceCompletion) {
         accountQueue.async {
             do {
@@ -193,6 +204,18 @@ public final class KinAccount {
         }
     }
 
+    /**
+     **Synchronously** gets the current **pending** Kin balance.
+
+     Please note that this is not the sum of pending transactions, but the **current balance plus
+     the sum of pending transactions.**
+
+     **Do not** call this from the main thread.
+
+     - throws: An `Error` if balance cannot be fetched.
+
+     - returns: The pending balance of the account.
+     */
     public func pendingBalance() throws -> Balance {
         let balance = try self.balance().kinToWei()
 

@@ -172,7 +172,7 @@ final class Contract {
 extension Array where Element == GethInterface {
     func interfaces() throws -> GethInterfaces {
         guard let interfaces = GethNewInterfaces(self.count) else {
-            throw KinError.invalidInput
+            throw KinError.internalInconsistency
         }
         for (i, object) in self.enumerated() {
             try interfaces.set(i, object: object)

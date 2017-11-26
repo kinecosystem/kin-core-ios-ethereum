@@ -8,8 +8,18 @@
 
 import Foundation
 
+/**
+ A protocol to encapsulate the formation of the endpoint `URL` and the `NetworkId`.
+ */
 public protocol ServiceProvider {
+    /**
+     The `URL` of the Ethereum node.
+     */
     var url: URL { get }
+
+    /**
+     The `NetworkId` to be used.
+     */
     var networkId: NetworkId { get }
 }
 
