@@ -8,22 +8,53 @@
 
 import Foundation
 
+/**
+ Operations performed by the KinSDK that throw errors might throw a `KinError`; alternatively,
+ errors in completion blocks might be of this type.
+ */
 public enum KinError: Error {
-    case unknown
-    case invalidInput
+    /**
+     An internal error happened in the KinSDK.
+     */
     case internalInconsistency
+
+    /**
+     Thrown when any operation that requires a passphrase receives the wrong passphrase.
+     */
     case invalidPassphrase
+
+    /**
+     When `KinClient` receives an unsupported `NetworkId` to be initialized with, this error is
+     thrown.
+     */
     case unsupportedNetwork
+
+    /**
+     An invalid address was used as a recipient in a transaction.
+     */
     case invalidAddress
+
+    /**
+     Amounts must be greater than zero when trying to transfer Kin. When sending 0 Kin, this error
+     is thrown.
+     */
     case invalidAmount
+
+    /**
+     Thrown when trying to send more than the available Kin.
+     */
     case insufficientBalance
+
+    /**
+     An unknown error happened.
+     */
+    case unknown
 }
 
 extension KinError: LocalizedError {
+    /// :nodoc:
     public var errorDescription: String? {
         switch self {
-        case .invalidInput:
-            return "Invalid Input"
         case .internalInconsistency:
             return "Internal Inconsistency"
         case .invalidPassphrase:

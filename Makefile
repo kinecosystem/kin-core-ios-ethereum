@@ -35,3 +35,6 @@ testrpc-kill:
 clean: truffle-clean testrpc-kill
 	rm -f truffle/truffle.log
 	rm -f truffle/testrpc.log
+
+generate-docs:
+	scripts/generate-docs.sh

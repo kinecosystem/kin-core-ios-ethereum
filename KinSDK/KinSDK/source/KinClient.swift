@@ -8,13 +8,44 @@
 
 import Foundation
 
+/**
+ `KinClient` is a factory class for managing an instance of `KinAccount`.
+ */
 public final class KinClient {
-    static private let supportedNetworks = [
-        NetworkId.mainNet,
-        NetworkId.ropsten,
-        NetworkId.truffle
-    ]
+    /**
+     Convenience initializer to instantiate a `KinClient` with a `ServiceProvider`.
 
+     - parameter provider: The `ServiceProvider` instance that provides the `URL` and `NetworkId`.
+
+     - throws: `KinError.unsupportedNetwork` if a custom `NetworkId` is used.
+     */
+    public convenience init(provider: ServiceProvider) throws {
+        try self.init(with: provider.url, networkId: provider.networkId)
+    }
+
+    private let supportedNetworks: [NetworkId] = [.mainNet, .ropsten, .truffle]
+
+    /**
+     Instantiates a `KinClient` with a `URL` and a `NetworkId`.
+
+     - parameter nodeProviderUrl: The `URL` of the node this client will communicate to.
+     - parameter networkId: The `NetworkId` to be used.
+
+     - throws: `KinError.unsupportedNetwork` if a custom `NetworkId` is used.
+     */
+    public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
+        if supportedNetworks.contains(where: { $0 == networkId }) == false {
+            throw KinError.unsupportedNetwork
+        }
+
+        self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
+    }
+
+    /**
+     The current account associated to this client.
+
+     Returns `nil` if no account has been created yet, or if it was deleted.
+     */
     fileprivate(set) public lazy var account: KinAccount? = {
         if self.accountStore.accounts.size() > 0,
             let account = try? self.accountStore.accounts.get(0) {
@@ -26,22 +57,21 @@ public final class KinClient {
 
     fileprivate let accountStore: KinAccountStore
 
+    /**
+     The `NetworkId` of the network which this client communicates to.
+     */
     public var networkId: NetworkId {
         return self.accountStore.networkId
     }
 
-    public convenience init(provider: ServiceProvider) throws {
-        try self.init(with: provider.url, networkId: provider.networkId)
-    }
+    /**
+     Creates an account associated to this client. If this method was previously called and
+     `account` already exists, it is returned instead.
 
-    public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
-        if KinClient.supportedNetworks.contains(where: { $0 == networkId }) == false {
-            throw KinError.unsupportedNetwork
-        }
+     - parameter passphrase: The passphrase to use in order to create the associated account.
 
-        self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
-    }
-
+     - throws: If creating the account fails.
+     */
     public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
         return try account ?? {
             let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
@@ -52,6 +82,18 @@ public final class KinClient {
         }()
     }
 
+    /**
+     Deletes the current account associated to this client. This method is a no-op in case the
+     `account` is `nil`. In case it succeeds, `account` becomes `nil`.
+
+     If this is an action triggered by the user, make sure you let the him know that any funds owned
+     by the account will be lost if it hasn't been backed up. See
+     `exportKeyStore(passphrase:exportPassphrase:)`.
+
+     - parameter passphrase: The passphrase used to create the associated account.
+
+     - throws: If the passphrase is invalid, or if deleting the account fails.
+     */
     public func deleteAccount(with passphrase: String) throws {
         guard let gethAccount = account?.gethAccount else {
             return
@@ -62,6 +104,16 @@ public final class KinClient {
         account = nil
     }
 
+    /**
+     Exports this account as a Key Store JSON string, to be backed up by the user.
+
+     - parameter passphrase: The passphrase used to create the associated account.
+     - parameter exportPassphrase: A new passphrase, to encrypt the Key Store JSON.
+
+     - throws: If the passphrase is invalid, or if exporting the associated account fails.
+
+     - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
+     */
     public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         guard let account = account else {
             return nil

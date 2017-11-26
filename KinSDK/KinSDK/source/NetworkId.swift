@@ -8,10 +8,28 @@
 
 import Foundation
 
+/**
+ `NetworkId` represents the Ethereum network to which `KinClient` will connect.
+ */
 public enum NetworkId {
+    /**
+     A production node.
+     */
     case mainNet
+
+    /**
+     The ropsten test net.
+     */
     case ropsten
+
+    /**
+     A local network setup by truffle (used by tests).
+     */
     case truffle
+
+    /**
+     A network with a custom ID. **Currently unsupported**
+     */
     case custom(value: UInt64)
 }
 
@@ -31,6 +49,7 @@ extension NetworkId {
 }
 
 extension NetworkId: CustomStringConvertible {
+    /// :nodoc:
     public var description: String {
         switch self {
         case .mainNet:
@@ -46,6 +65,7 @@ extension NetworkId: CustomStringConvertible {
 }
 
 extension NetworkId: Equatable {
+    /// :nodoc:
     public static func == (lhs: NetworkId, rhs: NetworkId) -> Bool {
         return lhs.asInteger() == rhs.asInteger()
     }
