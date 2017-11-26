@@ -293,8 +293,36 @@
                                             <outlet property="sendButton" destination="NYQ-Ky-ijI" id="C7n-8r-NXd"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetKinCell" rowHeight="85" id="loM-fb-yst" customClass="GetKinTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeleteAccountCell" rowHeight="85" id="kZg-yc-CSG" customClass="DeleteAccountCell" customModule="KinSampleApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="348" width="375" height="85"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kZg-yc-CSG" id="OQK-OS-0lj">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6r-FP-s33">
+                                                    <rect key="frame" x="16" y="20.5" width="343" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="44" id="X3x-81-hMW"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Delete Wallet"/>
+                                                    <connections>
+                                                        <action selector="deleteAccountTapped:" destination="kZg-yc-CSG" eventType="touchUpInside" id="C0x-km-taZ"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="W6r-FP-s33" firstAttribute="centerY" secondItem="OQK-OS-0lj" secondAttribute="centerY" id="Qce-oZ-HqC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="W6r-FP-s33" secondAttribute="trailing" id="ktg-NE-SXC"/>
+                                                <constraint firstItem="W6r-FP-s33" firstAttribute="leading" secondItem="OQK-OS-0lj" secondAttribute="leadingMargin" id="ziK-lR-Lq1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="deleteAccountButton" destination="W6r-FP-s33" id="pry-99-y2o"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetKinCell" rowHeight="85" id="loM-fb-yst" customClass="GetKinTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="433" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="loM-fb-yst" id="wAo-C0-Cyx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
@@ -332,7 +360,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEg-tW-s8y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1263" y="188"/>
+            <point key="canvasLocation" x="1261.5999999999999" y="187.55622188905548"/>
         </scene>
         <!--Send Transaction View Controller-->
         <scene sceneID="NWp-Qa-wrI">

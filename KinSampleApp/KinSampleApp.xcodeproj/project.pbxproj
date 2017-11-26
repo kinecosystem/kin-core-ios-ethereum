@@ -21,6 +21,7 @@
 		919238881FB0AA6A00390BE5 /* KinSampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919238871FB0AA6A00390BE5 /* KinSampleViewController.swift */; };
 		9192388B1FB1BE1D00390BE5 /* BalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */; };
 		9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9192389A1FB1C62800390BE5 /* KinClientCell.swift */; };
+		91DDFE011FCABED7004B0903 /* DeleteAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DDFE001FCABED7004B0903 /* DeleteAccountCell.swift */; };
 		91ED610F1FB1CE6E006D9FCC /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 919238931FB1C40500390BE5 /* KinSDK.framework */; };
 		91ED61131FB212D5006D9FCC /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 919238931FB1C40500390BE5 /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91FFFF5B1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FFFF5A1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift */; };
@@ -96,6 +97,7 @@
 		9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceTableViewCell.swift; sourceTree = "<group>"; };
 		9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KinSDK.xcodeproj; path = ../KinSDK/KinSDK.xcodeproj; sourceTree = "<group>"; };
 		9192389A1FB1C62800390BE5 /* KinClientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientCell.swift; sourceTree = "<group>"; };
+		91DDFE001FCABED7004B0903 /* DeleteAccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountCell.swift; sourceTree = "<group>"; };
 		91FFFF5A1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetKinTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 				9176B8FB1FB84C9400AEDBDE /* KinAccountTableViewCell.swift */,
 				910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */,
 				9192388A1FB1BE1D00390BE5 /* BalanceTableViewCell.swift */,
+				91DDFE001FCABED7004B0903 /* DeleteAccountCell.swift */,
 				91FFFF5A1FBDDCFC00CEE6D9 /* GetKinTableViewCell.swift */,
 			);
 			path = Cells;
@@ -282,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91DDFE011FCABED7004B0903 /* DeleteAccountCell.swift in Sources */,
 				919238761FB09E9000390BE5 /* HomeViewController.swift in Sources */,
 				9192389B1FB1C62800390BE5 /* KinClientCell.swift in Sources */,
 				919238741FB09E9000390BE5 /* AppDelegate.swift in Sources */,
