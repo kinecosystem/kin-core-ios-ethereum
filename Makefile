@@ -38,3 +38,6 @@ clean: truffle-clean testrpc-kill
 
 generate-docs:
 	scripts/generate-docs.sh
+	
+get-geth:
+	scripts/get_geth.sh

@@ -278,6 +278,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82140EBD1FA88E5B00FAF19B /* Build configuration list for PBXNativeTarget "KinSDK" */;
 			buildPhases = (
+				E9D6B31E1FCB031B00D9F0F0 /* Get geth */,
 				91EB959B1FC5D2E4000AE5B1 /* Lint with SwiftLint */,
 				82140EA41FA88E5B00FAF19B /* Sources */,
 				82140EA51FA88E5B00FAF19B /* Frameworks */,
@@ -422,6 +423,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed. Checkout install options at at https://github.com/realm/SwiftLint\"\nfi";
+		};
+		E9D6B31E1FCB031B00D9F0F0 /* Get geth */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Get geth";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "if [ ! -r ${PROJECT_DIR}/Geth.framework ]; then\ncd ${PROJECT_DIR}/..\nmake get-geth\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -644,6 +659,10 @@
 					"$(PROJECT_DIR)/Geth.framework/Versions/A",
 				);
 				MACH_O_TYPE = mh_dylib;
+				"OTHER_LDFLAGS[arch=i386]" = (
+					"-read_only_relocs",
+					suppress,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -676,6 +695,10 @@
 					"$(PROJECT_DIR)/Geth.framework/Versions/A",
 				);
 				MACH_O_TYPE = mh_dylib;
+				"OTHER_LDFLAGS[arch=i386]" = (
+					"-read_only_relocs",
+					suppress,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kik.KinSDK;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
