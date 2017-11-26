@@ -12,9 +12,9 @@ import SafariServices
 
 struct Provider: ServiceProvider {
     public let url: URL
-    public let networkId: UInt64
+    public let networkId: NetworkId
 
-    init(url: URL, networkId: UInt64) {
+    init(url: URL, networkId: NetworkId) {
         self.url = url
         self.networkId = networkId
     }

@@ -13,9 +13,9 @@ class TransactionSigner: NSObject, GethSignerProtocol {
     fileprivate weak var keyStore: GethKeyStore?
     fileprivate weak var account: GethAccount?
     fileprivate var passphrase: String
-    fileprivate var networkId: UInt64
+    fileprivate var networkId: NetworkId
 
-    init(with keyStore: GethKeyStore, account: GethAccount, passphrase: String, networkId: UInt64) {
+    init(with keyStore: GethKeyStore, account: GethAccount, passphrase: String, networkId: NetworkId) {
         self.keyStore = keyStore
         self.account = account
         self.networkId = networkId
@@ -36,6 +36,6 @@ class TransactionSigner: NSObject, GethSignerProtocol {
         return try keyStore.signTxPassphrase(account,
                                              passphrase: passphrase,
                                              tx: p1,
-                                             chainID: GethNewBigInt(Int64(networkId)))
+                                             chainID: GethNewBigInt(Int64(networkId.asInteger())))
     }
 }

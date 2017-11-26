@@ -10,12 +10,8 @@ import Foundation
 
 public protocol ServiceProvider {
     var url: URL { get }
-    var networkId: UInt64 { get }
+    var networkId: NetworkId { get }
 }
-
-public let networkIdMain: UInt64 = 1
-public let networkIdRopsten: UInt64 = 3
-public let networkIdTruffle: UInt64 = 9
 
 public typealias Balance = Decimal
 public typealias TransactionId = String
