@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.2.7'
+  s.version          = '0.3.0'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -18,11 +18,11 @@ Pod::Spec.new do |s|
 
   s.source_files = 'KinSDK/KinSDK/**/*.swift'
 
-  s.resources = {
+  s.resource_bundles = {
     'KinSDK' => ['KinSDK/KinSDK/Resources/contractABI.json']
   }
 
-  s.preserve_paths = 'KinSDK/Module/module.modulemap'
+  s.preserve_paths = 'KinSDK/Module/module.modulemap', 'KinSDK/Geth.framework/**/*', 'KinSDK/KinSDK/Resources/**/*'
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK',
                  'SWIFT_INCLUDE_PATHS' => '$(PODS_ROOT)/KinSDK/KinSDK/Module',
                  'OTHER_LDFLAGS' => '-framework Geth' }
