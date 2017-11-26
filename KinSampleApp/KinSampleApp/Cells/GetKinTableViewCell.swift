@@ -32,7 +32,7 @@ class GetKinTableViewCell: KinClientCell {
 
     func verifyGetKinButtonAvailability() {
         let gotKin = UserDefaults.standard.bool(forKey: GetKinSucceededOnce)
-        let isTestNet = kinClient.networkId != networkIdMain
+        let isTestNet = kinClient.networkId != .mainNet
 
         getKinButton.isEnabled = isTestNet && !gotKin
     }

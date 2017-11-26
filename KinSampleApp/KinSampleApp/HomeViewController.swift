@@ -45,9 +45,9 @@ class HomeViewController: UIViewController {
 
         let provider: Provider
         if production {
-            provider = Provider(url: URL(string: "http://159.89.240.147:8545")!, networkId: networkIdMain)
+            provider = Provider(url: URL(string: "http://159.89.240.147:8545")!, networkId: .mainNet)
         } else {
-            provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: networkIdRopsten)
+            provider = Provider(url: URL(string: "http://207.154.247.11:8545")!, networkId: .ropsten)
         }
         
         guard let kinClient = try? KinClient(provider: provider) else {
