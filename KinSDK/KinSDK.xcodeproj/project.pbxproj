@@ -164,15 +164,9 @@
 				E9D6B3071FC43D8A00D9F0F0 /* Module */,
 				824CBAA11FB9932700B736AA /* extensions */,
 				E970C26D1FAB63600091181B /* Resources */,
-				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
+				8246E7231FC836F30087140A /* source */,
 				82140EAD1FA88E5B00FAF19B /* Info.plist */,
-				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
-				91DDFDFB1FC6ED99004B0903 /* KinError.swift */,
-				91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */,
-				91D4395B1FC410630006FEB5 /* KinClient.swift */,
-				91D4395D1FC410860006FEB5 /* KinAccount.swift */,
-				82140EC81FA89A8600FAF19B /* KinAccountStore.swift */,
-				E970C2731FAE394D0091181B /* Contract.swift */,
+				82140EAC1FA88E5B00FAF19B /* KinSDK.h */,
 			);
 			path = KinSDK;
 			sourceTree = "<group>";
@@ -185,12 +179,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8246E7231FC836F30087140A /* source */ = {
+			isa = PBXGroup;
+			children = (
+				E970C2731FAE394D0091181B /* Contract.swift */,
+				91D4395D1FC410860006FEB5 /* KinAccount.swift */,
+				82140EC81FA89A8600FAF19B /* KinAccountStore.swift */,
+				91D4395B1FC410630006FEB5 /* KinClient.swift */,
+				91DDFDFB1FC6ED99004B0903 /* KinError.swift */,
+				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
+				91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
 		824CBAA11FB9932700B736AA /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */,
 				824CBAA21FB9932700B736AA /* Decimal+extensions.swift */,
 				E9816BCB1FBC736300C84F1C /* String+extensions.swift */,
-				E9816BCD1FBC737500C84F1C /* Collection+extensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";

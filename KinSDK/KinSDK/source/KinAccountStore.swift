@@ -9,7 +9,7 @@
 import Foundation
 import KinSDKPrivate
 
-class KinAccountStore {
+final class KinAccountStore {
     struct Directories {
         static let documents = NSSearchPathForDirectoriesInDomains(.documentDirectory,
                                                                    .userDomainMask,
