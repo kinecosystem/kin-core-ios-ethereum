@@ -68,6 +68,21 @@ extension KinSampleViewController: KinClientCellDelegate {
         navigationController?.pushViewController(txViewController, animated: true)
     }
 
+    func deleteAccountTapped() {
+        let alertController = UIAlertController(title: "Delete Wallet?",
+                                                message: "Deleting a wallet when it hasn't been backed up will cause funds to be lost",
+                                                preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: "I've backed it up, delete wallet", style: .destructive) { _ in
+            try? self.kinClient.deleteAccount(with: KinAccountPassphrase)
+            self.navigationController?.popViewController(animated: true)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        alertController.addAction(deleteAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+
     func getTestKin(cell: KinClientCell) {
         guard let getKinCell = cell as? GetKinTableViewCell else {
             return

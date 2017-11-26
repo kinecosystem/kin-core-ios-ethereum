@@ -12,6 +12,7 @@ import KinSDK
 protocol KinClientCellDelegate: class {
     func revealKeyStore()
     func startSendTransaction()
+    func deleteAccountTapped()
     func getTestKin(cell: KinClientCell)
 }
 
