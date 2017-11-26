@@ -10,9 +10,9 @@ import Foundation
 
 public final class KinClient {
     static private let supportedNetworks = [
-        networkIdMain,
-        networkIdRopsten,
-        networkIdTruffle
+        NetworkId.mainNet,
+        NetworkId.ropsten,
+        NetworkId.truffle
     ]
 
     fileprivate(set) public lazy var account: KinAccount? = {
@@ -27,15 +27,15 @@ public final class KinClient {
     fileprivate let accountStore: KinAccountStore
 
     public var networkId: UInt64 {
-        return self.accountStore.networkId
+        return self.accountStore.networkId.asInteger()
     }
 
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
     }
 
-    public init(with nodeProviderUrl: URL, networkId: UInt64) throws {
-        if KinClient.supportedNetworks.contains(networkId) == false {
+    public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
+        if KinClient.supportedNetworks.contains(where: { $0 == networkId }) == false {
             throw KinError.unsupportedNetwork
         }
 

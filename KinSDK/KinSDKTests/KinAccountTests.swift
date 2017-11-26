@@ -14,7 +14,7 @@ class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: networkIdTruffle)
+    let truffle = NodeProvider(networkId: .truffle)
 
     override func setUp() {
         super.setUp()
@@ -180,14 +180,16 @@ class KinAccountTests: XCTestCase {
                 _ = try account0.sendTransaction(to: account1.publicAddress,
                                                  kin: (balance as NSDecimalNumber).uint64Value + 1,
                                                  passphrase: passphrase)
-                XCTAssertTrue(false, "Tried to send kin with insufficient funds, but didn't get an error")
+                XCTAssertTrue(false,
+                              "Tried to send kin with insufficient funds, but didn't get an error")
             }
             catch {
                 if let kinError = error as? KinError {
                     XCTAssertEqual(kinError, KinError.insufficientBalance)
                 } else {
                     print(error)
-                    XCTAssertTrue(false, "Tried to send kin, and got error, but not a KinError: \(error.localizedDescription)")
+                    XCTAssertTrue(false,
+                                  "Tried to send kin, and got error, but not a KinError: \(error.localizedDescription)")
                 }
             }
         }

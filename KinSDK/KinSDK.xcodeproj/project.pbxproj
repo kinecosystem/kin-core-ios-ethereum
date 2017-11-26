@@ -23,6 +23,7 @@
 		8278354E1FA9B60D0006C3DF /* KinAccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825C77EE1FA9B0800065C840 /* KinAccountStoreTests.swift */; };
 		82CC7BE51FBD8F8400B4C738 /* TruffleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CC7BE41FBD8F8400B4C738 /* TruffleConfiguration.swift */; };
 		82F6D8051FB2112B00AEE17D /* KinSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9148CE4F1FCACF9C0005D603 /* NetworkId.swift */; };
 		91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395B1FC410630006FEB5 /* KinClient.swift */; };
 		91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395D1FC410860006FEB5 /* KinAccount.swift */; };
 		91D439601FC410E50006FEB5 /* TransactionSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */; };
@@ -95,6 +96,7 @@
 		827835451FA9B5F20006C3DF /* KinClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClientTests.swift; sourceTree = "<group>"; };
 		827835471FA9B5F20006C3DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82CC7BE41FBD8F8400B4C738 /* TruffleConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruffleConfiguration.swift; sourceTree = "<group>"; };
+		9148CE4F1FCACF9C0005D603 /* NetworkId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkId.swift; sourceTree = "<group>"; };
 		91D4395B1FC410630006FEB5 /* KinClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinClient.swift; sourceTree = "<group>"; };
 		91D4395D1FC410860006FEB5 /* KinAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccount.swift; sourceTree = "<group>"; };
 		91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSigner.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				91D4395B1FC410630006FEB5 /* KinClient.swift */,
 				91DDFDFB1FC6ED99004B0903 /* KinError.swift */,
 				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
+				9148CE4F1FCACF9C0005D603 /* NetworkId.swift */,
 				91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */,
 			);
 			path = source;
@@ -428,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */,
+				9148CE501FCACF9C0005D603 /* NetworkId.swift in Sources */,
 				E9816BCC1FBC736300C84F1C /* String+extensions.swift in Sources */,
 				82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */,
 				91D4395C1FC410630006FEB5 /* KinClient.swift in Sources */,

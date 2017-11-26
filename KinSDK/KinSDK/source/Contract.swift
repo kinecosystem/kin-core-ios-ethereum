@@ -23,17 +23,17 @@ final class Contract {
     fileprivate let contractAddress: GethAddress
     static let defaultGasLimit: Int64 = 60000
 
-    init(with context: GethContext, networkId: UInt64, client: GethEthereumClient) {
+    init(with context: GethContext, networkId: NetworkId, client: GethEthereumClient) {
         self.context = context
         self.client = client
         var address: String
 
         switch networkId {
-        case networkIdMain:
+        case .mainNet:
             address = "0x818fc6c2ec5986bc6e2cbf00939d90556ab12ce5"
-        case networkIdRopsten:
+        case .ropsten:
             address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
-        case networkIdTruffle:
+        case .truffle:
             guard
                 let fileUrl = Bundle.main.url(forResource: "testConfig", withExtension: "plist"),
                 let data = try? Data(contentsOf: fileUrl),

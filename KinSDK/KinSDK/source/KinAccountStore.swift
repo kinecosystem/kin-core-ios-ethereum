@@ -19,20 +19,6 @@ final class KinAccountStore {
         static let account = "account"
     }
 
-    enum EthereumNetworkId: Int64, CustomStringConvertible {
-        case main = 1       // Ethereum public main network
-        case ropsten = 3    // Ethereum test network
-
-        var description: String {
-            switch self {
-            case .main:
-                return "main"
-            case .ropsten:
-                return "ropsten"
-            }
-        }
-    }
-
     let client: GethEthereumClient
 
     let keystore: GethKeyStore!
@@ -41,7 +27,7 @@ final class KinAccountStore {
     var accounts: GethAccounts {
         return keystore.getAccounts()
     }
-    let networkId: UInt64
+    let networkId: NetworkId
 
     fileprivate var dataDir: String {
         return [
@@ -53,7 +39,7 @@ final class KinAccountStore {
             .joined(separator: "/")
     }
 
-    init(url: URL, networkId: UInt64) {
+    init(url: URL, networkId: NetworkId) {
         self.networkId = networkId
 
         let dataDir = [
