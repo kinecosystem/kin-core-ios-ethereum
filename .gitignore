@@ -6,7 +6,7 @@ KinSampleApp/KinSampleApp.xcodeproj/project.xcworkspace/xcuserdata
 KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 
 KinSDK/build
-
+KinSDK/Geth.framework
 # test related files (ethereum testrpc):
 
 truffle/node_modules
