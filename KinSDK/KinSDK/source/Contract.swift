@@ -60,7 +60,7 @@ final class Contract {
 
     func bindContractAbi() {
         do {
-            if let path = contractABIPath() {
+            if let path = Bundle.kinResources.path(forResource: "contractABI", ofType: "json") {
                 let abi = try String(contentsOfFile: path, encoding: .utf8)
                 boundContract = GethBindContract(contractAddress, abi, client, nil)
             }
@@ -167,17 +167,7 @@ final class Contract {
         return hash!
     }
     
-    fileprivate func contractABIPath() -> String? {
-        if let path = Bundle(for: Contract.self).path(forResource: "contractABI",
-                                                      ofType: "json") {
-            return path
-        } else if   let bundlePath = Bundle.main.path(forResource: "KinSDK", ofType: "bundle"),
-                    let bundle = Bundle(path: bundlePath),
-                    let path = bundle.path(forResource: "contractABI", ofType: "json") {
-            return path
-        }
-        return nil
-    }
+    
 }
 
 extension Array where Element == GethInterface {
