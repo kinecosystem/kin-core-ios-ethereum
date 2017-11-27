@@ -60,8 +60,7 @@ final class Contract {
 
     func bindContractAbi() {
         do {
-            if let path = Bundle(for: Contract.self).path(forResource: "contractABI",
-                                                          ofType: "json") {
+            if let path = Bundle.kinResources.path(forResource: "contractABI", ofType: "json") {
                 let abi = try String(contentsOfFile: path, encoding: .utf8)
                 boundContract = GethBindContract(contractAddress, abi, client, nil)
             }
