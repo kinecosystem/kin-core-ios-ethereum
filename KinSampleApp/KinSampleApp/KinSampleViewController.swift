@@ -97,13 +97,12 @@ extension KinSampleViewController: KinClientCellDelegate {
                     return
                 }
 
+                getKinCell.getKinButton.isEnabled = true
+                
                 if let error = error {
-                    getKinCell.getKinButton.isEnabled = true
                     print("Not able to get test Kin. \(error)")
                     return
                 }
-
-                UserDefaults.standard.set(true, forKey: GetKinSucceededOnce)
 
                 if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
                     balanceCell.refreshBalance(aSelf)
