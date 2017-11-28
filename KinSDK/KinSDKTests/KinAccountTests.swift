@@ -111,7 +111,7 @@ class KinAccountTests: XCTestCase {
                 XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
             }
             else {
-                XCTAssertNotNil(balance)
+                XCTAssertNotEqual(balance, 0)
             }
         }
         catch {
@@ -135,7 +135,7 @@ class KinAccountTests: XCTestCase {
             XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
         }
         else {
-            XCTAssertNotNil(balanceChecked)
+            XCTAssertNotEqual(balance, 0)
         }
     }
 
