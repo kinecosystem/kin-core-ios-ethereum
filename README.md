@@ -32,6 +32,12 @@ let kinClient = try? KinClient(provider: InfuraTestProvider(apiKey: "YourApiToke
 
 No activity can take place until an account is created. To do so, call `createAccountIfNeeded(with passphrase: String)`. To check if an account already exists, you can inspect the `account` property. The passphrase used to encrypt the account is the same one used to get the key store and send transactions.
 
+### <a name="parity">Parity service provider</a>
+Unfortunately there is no guarantee that [`getPendingBalance`](#pendingBalance) will work when working with an Infura provider
+because of an existing known [issue](https://github.com/ethereum/go-ethereum/issues/15359) with the geth implementation of the ethereum protocol.\
+In order for `getPendingBalance` to work as expected you will need to connect to a node running a parity implementation of the protocol.
+Let us know if you need help with that.
+
 ### `KinAccount`
 
 #### Public Address and Private Key
