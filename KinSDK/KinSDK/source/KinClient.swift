@@ -23,8 +23,6 @@ public final class KinClient {
         try self.init(with: provider.url, networkId: provider.networkId)
     }
 
-    private let supportedNetworks: [NetworkId] = [.mainNet, .ropsten, .truffle]
-
     /**
      Instantiates a `KinClient` with a `URL` and a `NetworkId`.
 
@@ -34,10 +32,6 @@ public final class KinClient {
      - throws: `KinError.unsupportedNetwork` if a custom `NetworkId` is used.
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
-        if supportedNetworks.contains(where: { $0 == networkId }) == false {
-            throw KinError.unsupportedNetwork
-        }
-
         self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
     }
 

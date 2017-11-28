@@ -46,8 +46,8 @@ final class Contract {
                         "the tests environment isn't correctly set up. Please see readme for more details")
             }
             address = contractAddress
-        default:
-            address = "0xef2fcc998847db203dea15fc49d0872c7614910c"
+        case .custom(_, let contractAddress):
+            address = contractAddress
         }
 
         guard address.isEmpty == false else {
