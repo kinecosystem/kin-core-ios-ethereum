@@ -9,8 +9,6 @@
 import UIKit
 import KinSDK
 
-let GetKinSucceededOnce = "GetKinSucceededOnce"
-
 class GetKinTableViewCell: KinClientCell {
     @IBOutlet weak var getKinButton: UIButton!
 
@@ -31,9 +29,6 @@ class GetKinTableViewCell: KinClientCell {
     }
 
     func verifyGetKinButtonAvailability() {
-        let gotKin = UserDefaults.standard.bool(forKey: GetKinSucceededOnce)
-        let isTestNet = kinClient.networkId != .mainNet
-
-        getKinButton.isEnabled = isTestNet && !gotKin
+        getKinButton.isEnabled = kinClient.networkId != .mainNet
     }
 }
