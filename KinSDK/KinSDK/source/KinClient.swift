@@ -115,6 +115,23 @@ public final class KinClient {
 
         return String(data: data, encoding: String.Encoding.utf8)
     }
+
+    public func status(for transactionId: TransactionId) throws -> TransactionStatus {
+        do {
+            _ = try accountStore.transactionReceipt(for: transactionId)
+        }
+        catch {
+            let nsError = error as NSError
+
+            if nsError.domain == "go" && nsError.code == 1 {
+                return .pending
+            }
+
+            throw error
+        }
+
+        return .complete
+    }
 }
 
 // MARK: - For testing only
@@ -132,5 +149,10 @@ extension KinClient {
         }
 
         return account
+    }
+
+    func createAccount(with passphrase: String) throws -> KinAccount {
+        return try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
+                              accountStore: accountStore)
     }
 }
