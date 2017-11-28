@@ -47,7 +47,6 @@ class KinAccountTests: XCTestCase {
                 account1 = try kinClient.createAccount(with: passphrase)
 
                 try obtain_kin_and_ether(for: account0!.publicAddress)
-                try obtain_kin_and_ether(for: account1!.publicAddress)
             }
             else {
                 XCTAssertTrue(false, "I don't know what to do with: \(node)")
@@ -195,13 +194,12 @@ class KinAccountTests: XCTestCase {
             }
 
             var startBalance0 = try account0.balance()
-            var startBalance1 = try account1.balance()
+            let startBalance1 = try account1.balance()
 
-            while startBalance0 == 0 || startBalance1 == 1 {
+            while startBalance0 == 0 {
                 sleep(1)
 
                 startBalance0 = try account0.balance()
-                startBalance1 = try account1.balance()
             }
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
