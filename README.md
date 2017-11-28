@@ -36,7 +36,6 @@ No activity can take place until an account is created. To do so, call `createAc
 Unfortunately there is no guarantee that [`getPendingBalance`](#pendingBalance) will work when working with an Infura provider
 because of an existing known [issue](https://github.com/ethereum/go-ethereum/issues/15359) with the geth implementation of the ethereum protocol.\
 In order for `getPendingBalance` to work as expected you will need to connect to a node running a parity implementation of the protocol.
-Let us know if you need help with that.
 
 ### `KinAccount`
 
