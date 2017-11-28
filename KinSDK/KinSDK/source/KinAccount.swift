@@ -80,7 +80,9 @@ public final class KinAccount {
 
      - returns: The `TransactionId` in case of success.
      */
-    public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+    @discardableResult public func sendTransaction(to recipient: String,
+                                                   kin: UInt64,
+                                                   passphrase: String) throws -> TransactionId {
         guard kin > 0 else {
             throw KinError.invalidAmount
         }

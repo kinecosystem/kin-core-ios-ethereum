@@ -10,6 +10,7 @@ import XCTest
 @testable import KinSDK
 import Geth
 
+//swiftlint:disable:next type_body_length
 class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
@@ -266,6 +267,91 @@ class KinAccountTests: XCTestCase {
         }
     }
 
+    func test_consecutive_send_transactions() {
+        guard
+            let account0 = account0,
+            let account1 = account1 else {
+                XCTAssertTrue(false, "account creation failed")
+                return
+        }
+
+        do {
+            try account0.sendTransaction(to: account1.publicAddress,
+                                         kin: 5,
+                                         passphrase: passphrase)
+
+            try account1.sendTransaction(to: account1.publicAddress,
+                                         kin: 10,
+                                         passphrase: passphrase)
+        }
+        catch {
+            XCTAssertTrue(false,
+                          "Consecutives transactions with correct passphrase should have succeeded: \(error)")
+        }
+    }
+
+    func test_send_transaction_with_empty_passphrase_after_successful_send() {
+        guard
+            let account0 = account0,
+            let account1 = account1 else {
+                XCTAssertTrue(false, "account creation failed")
+                return
+        }
+
+        do {
+            try account0.sendTransaction(to: account1.publicAddress,
+                                         kin: 5,
+                                         passphrase: passphrase)
+        }
+        catch {
+            XCTAssertTrue(false, "Transaction with correct passphrase should have succeeded: \(error)")
+        }
+
+        do {
+            try account1.sendTransaction(to: account1.publicAddress,
+                                         kin: 10,
+                                         passphrase: "")
+            XCTAssertTrue(false, "Transaction with empty passphrase should have failed.")
+        }
+        catch {
+            let nsError = error as NSError
+            XCTAssertEqual(nsError.domain, "go")
+            XCTAssertEqual(nsError.code, 1)
+            XCTAssertEqual(nsError.localizedDescription, "could not decrypt key with given passphrase")
+        }
+    }
+
+    func test_send_transaction_with_wrong_passphrase_after_successful_send() {
+        guard
+            let account0 = account0,
+            let account1 = account1 else {
+                XCTAssertTrue(false, "account creation failed")
+                return
+        }
+
+        do {
+            try account0.sendTransaction(to: account1.publicAddress,
+                                         kin: 5,
+                                         passphrase: passphrase)
+        }
+        catch {
+            XCTAssertTrue(false, "Transaction with correct passphrase should have succeeded: \(error)")
+        }
+
+        do {
+            try account1.sendTransaction(to: account1.publicAddress,
+                                         kin: 10,
+                                         passphrase: "SomeWrongDumbPassword")
+            XCTAssertTrue(false, "Transaction with wrong passphrase should have failed.")
+        }
+        catch {
+            let nsError = error as NSError
+            XCTAssertEqual(nsError.domain, "go")
+            XCTAssertEqual(nsError.code, 1)
+            XCTAssertEqual(nsError.localizedDescription, "could not decrypt key with given passphrase")
+        }
+    }
+
     func test_send_transaction_with_insufficient_funds() {
         do {
             guard
@@ -278,20 +364,14 @@ class KinAccountTests: XCTestCase {
             let balance = try account0.balance()
 
             do {
-                _ = try account0.sendTransaction(to: account1.publicAddress,
-                                                 kin: (balance as NSDecimalNumber).uint64Value + 1,
-                                                 passphrase: passphrase)
+                try account0.sendTransaction(to: account1.publicAddress,
+                                             kin: (balance as NSDecimalNumber).uint64Value + 1,
+                                             passphrase: passphrase)
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
             }
             catch {
-                if let kinError = error as? KinError {
-                    XCTAssertEqual(kinError, KinError.insufficientBalance)
-                } else {
-                    print(error)
-                    XCTAssertTrue(false,
-                                  "Tried to send kin, and got error, but not a KinError: \(error.localizedDescription)")
-                }
+                XCTAssertEqual(error as? KinError, KinError.insufficientBalance)
             }
         }
         catch {

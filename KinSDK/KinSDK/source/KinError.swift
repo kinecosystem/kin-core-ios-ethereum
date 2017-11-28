@@ -19,11 +19,6 @@ public enum KinError: Error {
     case internalInconsistency
 
     /**
-     Thrown when any operation that requires a passphrase receives the wrong passphrase.
-     */
-    case invalidPassphrase
-
-    /**
      An invalid address was used as a recipient in a transaction.
      */
     case invalidAddress
@@ -51,8 +46,6 @@ extension KinError: LocalizedError {
         switch self {
         case .internalInconsistency:
             return "Internal Inconsistency"
-        case .invalidPassphrase:
-            return "Invalid Passphrase"
         case .invalidAddress:
             return "Invalid Address"
         case .invalidAmount:
