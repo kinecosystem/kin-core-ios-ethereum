@@ -14,7 +14,12 @@ class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
+
+    #if ROPSTEN_UNIT_TEST
+    let node = NodeProvider(networkId: .ropsten)
+    #else
     let node = NodeProvider(networkId: .truffle)
+    #endif
 
     var account0: KinAccount?
     var account1: KinAccount?
