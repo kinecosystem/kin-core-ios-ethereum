@@ -90,6 +90,25 @@ class KinAccountTests: XCTestCase {
         }
     }
 
+    func wait_for_non_zero_balance(account: KinAccount) throws -> Balance {
+        var balance = try account.balance()
+
+        let exp = expectation(for: NSPredicate(block: { _, _ in
+            do {
+                balance = try account.balance()
+            }
+            catch {
+                XCTAssertTrue(false, "Something went wrong: \(error)")
+            }
+
+            return balance > 0
+        }), evaluatedWith: balance, handler: nil)
+
+        self.wait(for: [exp], timeout: 120)
+
+        return balance
+    }
+
     func test_publicAddress() {
         let expectedPublicAddress = "0x8B455Ab06C6F7ffaD9fDbA11776E2115f1DE14BD"
 
@@ -105,7 +124,11 @@ class KinAccountTests: XCTestCase {
 
     func test_balance_sync() {
         do {
-            let balance = try account0?.balance()
+            var balance = try account0?.balance()
+
+            if balance == 0 {
+                balance = try wait_for_non_zero_balance(account: account0!)
+            }
 
             if node.networkId == .truffle {
                 XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
@@ -124,19 +147,27 @@ class KinAccountTests: XCTestCase {
         var balanceChecked: Balance? = nil
         let expectation = self.expectation(description: "wait for callback")
 
-        account0?.balance { balance, _ in
-            balanceChecked = balance
-            expectation.fulfill()
+        do {
+            _ = try wait_for_non_zero_balance(account: account0!)
+
+            account0?.balance { balance, _ in
+                balanceChecked = balance
+                expectation.fulfill()
+            }
+
+            self.waitForExpectations(timeout: 5.0)
+
+            if node.networkId == .truffle {
+                XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
+            }
+            else {
+                XCTAssertNotEqual(balanceChecked, 0)
+            }
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
         }
 
-        self.waitForExpectations(timeout: 5.0)
-
-        if node.networkId == .truffle {
-            XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
-        }
-        else {
-            XCTAssertNotEqual(balance, 0)
-        }
     }
 
     func test_pending_balance() {
@@ -196,10 +227,8 @@ class KinAccountTests: XCTestCase {
             var startBalance0 = try account0.balance()
             let startBalance1 = try account1.balance()
 
-            while startBalance0 == 0 {
-                sleep(1)
-
-                startBalance0 = try account0.balance()
+            if startBalance0 == 0 {
+                startBalance0 = try wait_for_non_zero_balance(account: account0)
             }
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
@@ -210,7 +239,20 @@ class KinAccountTests: XCTestCase {
 
             // testrpc never returns
             if node.networkId != .truffle {
-                while try kinClient.status(for: txId) == .pending {}
+                var status: TransactionStatus = .pending
+
+                let exp = expectation(for: NSPredicate(block: { _, _ in
+                    do {
+                        status = try self.kinClient.status(for: txId)
+                    }
+                    catch {
+                        XCTAssertTrue(false, "Something went wrong: \(error)")
+                    }
+
+                    return status != .pending
+                }), evaluatedWith: status, handler: nil)
+
+                self.wait(for: [exp], timeout: 120)
             }
 
             let balance0 = try account0.balance()
