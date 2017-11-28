@@ -24,12 +24,6 @@ public enum KinError: Error {
     case invalidPassphrase
 
     /**
-     When `KinClient` receives an unsupported `NetworkId` to be initialized with, this error is
-     thrown.
-     */
-    case unsupportedNetwork
-
-    /**
      An invalid address was used as a recipient in a transaction.
      */
     case invalidAddress
@@ -59,8 +53,6 @@ extension KinError: LocalizedError {
             return "Internal Inconsistency"
         case .invalidPassphrase:
             return "Invalid Passphrase"
-        case .unsupportedNetwork:
-            return "Unsupported Network"
         case .invalidAddress:
             return "Invalid Address"
         case .invalidAmount:

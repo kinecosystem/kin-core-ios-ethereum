@@ -16,8 +16,6 @@ public final class KinClient {
      Convenience initializer to instantiate a `KinClient` with a `ServiceProvider`.
 
      - parameter provider: The `ServiceProvider` instance that provides the `URL` and `NetworkId`.
-
-     - throws: `KinError.unsupportedNetwork` if a custom `NetworkId` is used.
      */
     public convenience init(provider: ServiceProvider) throws {
         try self.init(with: provider.url, networkId: provider.networkId)
@@ -28,8 +26,6 @@ public final class KinClient {
 
      - parameter nodeProviderUrl: The `URL` of the node this client will communicate to.
      - parameter networkId: The `NetworkId` to be used.
-
-     - throws: `KinError.unsupportedNetwork` if a custom `NetworkId` is used.
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
         self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
