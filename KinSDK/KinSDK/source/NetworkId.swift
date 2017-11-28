@@ -30,7 +30,7 @@ public enum NetworkId {
     /**
      A network with a custom ID. **Currently unsupported**
      */
-    case custom(value: UInt64)
+    case custom(value: UInt64, contractAddress: String)
 }
 
 extension NetworkId {
@@ -42,7 +42,7 @@ extension NetworkId {
             return 3
         case .truffle:
             return 9
-        case .custom(let value):
+        case .custom(let value, _):
             return value
         }
     }
@@ -59,7 +59,7 @@ extension NetworkId: CustomStringConvertible {
         case .truffle:
             return "truffle"
         default:
-            return "unsupported network"
+            return "custom network"
         }
     }
 }
