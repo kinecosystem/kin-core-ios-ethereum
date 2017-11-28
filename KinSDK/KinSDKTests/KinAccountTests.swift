@@ -14,16 +14,42 @@ class KinAccountTests: XCTestCase {
 
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: .truffle)
+    let node = NodeProvider(networkId: .truffle)
+
+    var account0: KinAccount?
+    var account1: KinAccount?
 
     override func setUp() {
         super.setUp()
 
         do {
-            kinClient = try KinClient(provider: truffle)
+            kinClient = try KinClient(provider: node)
         }
         catch {
-            XCTAssert(false, "Couldn't create kinClient")
+            XCTAssert(false, "Couldn't create kinClient: \(error)")
+        }
+
+        do {
+            if node.networkId == .truffle {
+                account0 = try kinClient.createAccount(with: TruffleConfiguration.privateKey(at: 0),
+                                                       passphrase: passphrase)
+
+                account1 = try kinClient.createAccount(with: TruffleConfiguration.privateKey(at: 1),
+                                                       passphrase: passphrase)
+            }
+            else if node.networkId == .ropsten {
+                account0 = try kinClient.createAccount(with: passphrase)
+                account1 = try kinClient.createAccount(with: passphrase)
+
+                try obtain_kin_and_ether(for: account0!.publicAddress)
+                try obtain_kin_and_ether(for: account1!.publicAddress)
+            }
+            else {
+                XCTAssertTrue(false, "I don't know what to do with: \(node)")
+            }
+        }
+        catch {
+            XCTAssert(false, "Couldn't create accounts: \(error)")
         }
     }
 
@@ -33,30 +59,56 @@ class KinAccountTests: XCTestCase {
         kinClient.deleteKeystore()
     }
 
+    func obtain_kin_and_ether(for publicAddress: String) throws {
+        let group = DispatchGroup()
+        group.enter()
+
+        var e: Error?
+
+        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(publicAddress)"
+        URLSession.shared.dataTask(with: URL(string: urlString)!) { _, _, error in
+            defer {
+                group.leave()
+            }
+
+            if let error = error {
+                e = error
+
+                return
+            }
+            }
+            .resume()
+
+        group.wait()
+
+        if let error = e {
+            throw error
+        }
+    }
+
     func test_publicAddress() {
         let expectedPublicAddress = "0x8B455Ab06C6F7ffaD9fDbA11776E2115f1DE14BD"
 
-        do {
-            let key = TruffleConfiguration.privateKey(at: 0)
-            let account = try kinClient.createAccount(with: key, passphrase: passphrase)
+        let publicAddress = account0?.publicAddress
 
-            let publicAddress = account?.publicAddress
-
+        if node.networkId == .truffle {
             XCTAssertEqual(publicAddress, expectedPublicAddress)
         }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
+        else {
+            XCTAssertNotNil(publicAddress)
         }
     }
 
     func test_balance_sync() {
         do {
-            let key = TruffleConfiguration.privateKey(at: 0)
-            let account = try kinClient.createAccount(with: key, passphrase: passphrase)
+            let balance = try account0?.balance()
 
-            let balance = try account?.balance()
-
-            XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
+            if node.networkId == .truffle {
+                XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
+            }
+            else {
+                XCTAssertNotNil(balance)
+            }
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -65,24 +117,22 @@ class KinAccountTests: XCTestCase {
     }
 
     func test_balance_async() {
-        var account: KinAccount? = nil
-        do {
-            let key = TruffleConfiguration.privateKey(at: 0)
-            account = try kinClient.createAccount(with: key, passphrase: passphrase)
-        }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
-        }
-
         var balanceChecked: Balance? = nil
         let expectation = self.expectation(description: "wait for callback")
-        account?.balance { balance, _ in
+
+        account0?.balance { balance, _ in
             balanceChecked = balance
             expectation.fulfill()
         }
 
         self.waitForExpectations(timeout: 5.0)
-        XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
+
+        if node.networkId == .truffle {
+            XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
+        }
+        else {
+            XCTAssertNotNil(balanceChecked)
+        }
     }
 
     func test_pending_balance() {
@@ -131,25 +181,34 @@ class KinAccountTests: XCTestCase {
     func test_send_transaction() {
         let sendAmount: UInt64 = 5
 
-        let key0 = TruffleConfiguration.privateKey(at: 0)
-        let key1 = TruffleConfiguration.privateKey(at: 1)
-
         do {
             guard
-                let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase),
-                let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase) else {
-                    XCTAssertTrue(false, "account creation failed")
+                let account0 = account0,
+                let account1 = account1 else {
+                    XCTAssertTrue(false, "No accounts to use.")
                     return
             }
 
-            let startBalance0 = try account0.balance()
-            let startBalance1 = try account1.balance()
+            var startBalance0 = try account0.balance()
+            var startBalance1 = try account1.balance()
+
+            while startBalance0 == 0 || startBalance1 == 1 {
+                sleep(1)
+
+                startBalance0 = try account0.balance()
+                startBalance1 = try account1.balance()
+            }
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
                                                      kin: sendAmount,
                                                      passphrase: passphrase)
 
             XCTAssertNotNil(txId)
+
+            // testrpc never returns
+            if node.networkId != .truffle {
+                while try kinClient.status(for: txId) == .pending {}
+            }
 
             let balance0 = try account0.balance()
             let balance1 = try account1.balance()
@@ -163,14 +222,11 @@ class KinAccountTests: XCTestCase {
     }
 
     func test_send_transaction_with_insufficient_funds() {
-        let key0 = TruffleConfiguration.privateKey(at: 0)
-        let key1 = TruffleConfiguration.privateKey(at: 1)
-
         do {
             guard
-                let account0 = try kinClient.createAccount(with: key0, passphrase: passphrase),
-                let account1 = try kinClient.createAccount(with: key1, passphrase: passphrase) else {
-                    XCTAssertTrue(false, "account creation failed")
+                let account0 = account0,
+                let account1 = account1 else {
+                    XCTAssertTrue(false, "No accounts to use.")
                     return
             }
 
@@ -197,16 +253,4 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
-
-//    func test_decimals() {
-//        do {
-//            let account = try kinClient.createAccountIfNeeded(with: passphrase)
-//            let decimals = try account?.decimals()
-//
-//            XCTAssertNotNil(decimals, "Unable to retrieve decimals for account: \(String(describing: account))")
-//        }
-//        catch {
-//            XCTAssertTrue(false, "Something went wrong: \(error)")
-//        }
-//    }
 }

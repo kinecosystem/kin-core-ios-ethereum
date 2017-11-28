@@ -37,3 +37,8 @@ public typealias TransactionCompletion = (TransactionId?, Error?) -> Void
  success, or an error in case of failure.
  */
 public typealias BalanceCompletion = (Balance?, Error?) -> Void
+
+public enum TransactionStatus {
+    case pending
+    case complete
+}

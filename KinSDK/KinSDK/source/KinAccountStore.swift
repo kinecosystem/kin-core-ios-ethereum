@@ -86,4 +86,15 @@ final class KinAccountStore {
     func deleteKeystore() throws {
         try FileManager.default.removeItem(at: URL(fileURLWithPath: dataDir))
     }
+
+    func transactionReceipt(for transactionId: TransactionId) throws -> GethReceipt {
+        var error: NSError? = nil
+        let hash = GethNewHashFromHex(transactionId, &error)
+
+        if let error = error {
+            throw error
+        }
+
+        return try client.getTransactionReceipt(context, hash: hash)
+    }
 }
