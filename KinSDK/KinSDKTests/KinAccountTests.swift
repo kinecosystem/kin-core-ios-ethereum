@@ -60,7 +60,7 @@ class KinAccountTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
 
-        kinClient.deleteKeystore()
+        try? kinClient.deleteKeystore()
     }
 
     func obtain_kin_and_ether(for publicAddress: String) throws {

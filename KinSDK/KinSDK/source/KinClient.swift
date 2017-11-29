@@ -132,15 +132,18 @@ public final class KinClient {
 
         return .complete
     }
+
+    /**
+     Deletes the keystore.
+     */
+    public func deleteKeystore() throws {
+        try accountStore.deleteKeystore()
+    }
 }
 
 // MARK: - For testing only
 
 extension KinClient {
-    func deleteKeystore() {
-        try? accountStore.deleteKeystore()
-    }
-
     func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
         let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
         if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
