@@ -91,6 +91,7 @@ public final class KinClient {
 
         try accountStore.delete(account: gethAccount, passphrase: passphrase)
 
+        account?.deleted = true
         account = nil
     }
 
@@ -138,6 +139,9 @@ public final class KinClient {
      */
     public func deleteKeystore() throws {
         try accountStore.deleteKeystore()
+
+        account?.deleted = true
+        account = nil
     }
 }
 
