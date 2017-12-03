@@ -40,6 +40,11 @@ public enum KinError: Error {
     case insufficientBalance
 
     /**
+     Thrown when trying to use an instance of `KinAccount` after `deleteAccount(:)` has been called.
+     */
+    case accountDeleted
+
+    /**
      An unknown error happened.
      */
     case unknown
@@ -59,6 +64,8 @@ extension KinError: LocalizedError {
             return "Invalid Amount"
         case .insufficientBalance:
             return "Not Enough Kin"
+        case .accountDeleted:
+            return "Account Deleted"
         case .unknown:
             return "Unknown Error"
         }

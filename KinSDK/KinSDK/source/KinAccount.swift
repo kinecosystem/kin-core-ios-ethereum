@@ -19,6 +19,8 @@ public final class KinAccount {
     fileprivate let contract: Contract
     fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
 
+    internal var deleted = false
+
     /**
      The public address of this account. If the user wants to receive KIN by sending his address
      manually to someone, or if you want to display the public address, use this property.
@@ -81,6 +83,10 @@ public final class KinAccount {
      - returns: The `TransactionId` in case of success.
      */
     public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+        guard deleted == false else {
+            throw KinError.accountDeleted
+        }
+
         guard kin > 0 else {
             throw KinError.invalidAmount
         }
@@ -167,6 +173,10 @@ public final class KinAccount {
      - returns: The `Balance` of the account.
      */
     public func balance() throws -> Balance {
+        guard deleted == false else {
+            throw KinError.accountDeleted
+        }
+
         let arg = GethNewInterface()!
         arg.setAddress(gethAccount.getAddress())
         let result = GethNewInterface()!
@@ -217,6 +227,10 @@ public final class KinAccount {
      - returns: The pending balance of the account.
      */
     public func pendingBalance() throws -> Balance {
+        guard deleted == false else {
+            throw KinError.accountDeleted
+        }
+
         let balance = try self.balance().kinToWei()
 
         let sentLogs = try contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(),

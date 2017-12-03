@@ -298,4 +298,46 @@ class KinAccountTests: XCTestCase {
             XCTAssertTrue(false, "Something went wrong: \(error)")
         }
     }
+
+    func test_use_after_delete_balance() {
+        do {
+            let account = kinClient.account
+
+            try kinClient.deleteAccount(with: passphrase)
+            _ = try account?.balance()
+
+            XCTAssert(false, "An exception should have been thrown.")
+        }
+        catch {
+            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+        }
+    }
+
+    func test_use_after_delete_pending_balance() {
+        do {
+            let account = kinClient.account
+
+            try kinClient.deleteAccount(with: passphrase)
+            _ = try account?.pendingBalance()
+
+            XCTAssert(false, "An exception should have been thrown.")
+        }
+        catch {
+            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+        }
+    }
+
+    func test_use_after_delete_transaction() {
+        do {
+            let account = kinClient.account
+
+            try kinClient.deleteAccount(with: passphrase)
+            _ = try account?.sendTransaction(to: "", kin: 1, passphrase: passphrase)
+
+            XCTAssert(false, "An exception should have been thrown.")
+        }
+        catch {
+            XCTAssert((error as? KinError) == KinError.accountDeleted, "Expected .accountDeleted error, received: \(error)")
+        }
+    }
 }
