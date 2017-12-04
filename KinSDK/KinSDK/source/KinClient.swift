@@ -95,28 +95,6 @@ public final class KinClient {
         account = nil
     }
 
-    /**
-     Exports this account as a Key Store JSON string, to be backed up by the user.
-
-     - parameter passphrase: The passphrase used to create the associated account.
-     - parameter exportPassphrase: A new passphrase, to encrypt the Key Store JSON.
-
-     - throws: If the passphrase is invalid, or if exporting the associated account fails.
-
-     - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
-     */
-    public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
-        guard let account = account as? KinEthereumAccount else {
-            return nil
-        }
-
-        let data = try accountStore.export(account: account.gethAccount,
-                                           passphrase: passphrase,
-                                           exportPassphrase: exportPassphrase)
-
-        return String(data: data, encoding: String.Encoding.utf8)
-    }
-
     public func status(for transactionId: TransactionId) throws -> TransactionStatus {
         do {
             _ = try accountStore.transactionReceipt(for: transactionId)
