@@ -32,7 +32,7 @@ class KeyStoreViewController: UIViewController {
         saveButton.fill(with: view.tintColor)
     }
 
-   @objc func showKeyStore() {
+    @objc func showKeyStore() {
         guard let exportPassphrase = textField.text,
             exportPassphrase.count > 0 else {
                 textView?.text = "Add a passphrase to encrypt the account"
@@ -40,7 +40,8 @@ class KeyStoreViewController: UIViewController {
                 return
         }
 
-        guard let keyStore = try? kinClient.exportKeyStore(passphrase: KinAccountPassphrase, exportPassphrase: exportPassphrase),
+        guard let keyStore = try? kinClient.account?.exportKeyStore(passphrase: KinAccountPassphrase,
+                                                                    exportPassphrase: exportPassphrase),
             let unwrapped = keyStore,
             let prettified = unwrapped.prettified() else {
                 return

@@ -98,6 +98,18 @@ public protocol KinAccount {
      - returns: The pending balance of the account.
      */
     func pendingBalance() throws -> Balance
+
+    /**
+     Exports this account as a Key Store JSON string, to be backed up by the user.
+
+     - parameter passphrase: The passphrase used to create the associated account.
+     - parameter exportPassphrase: A new passphrase, to encrypt the Key Store JSON.
+
+     - throws: If the passphrase is invalid, or if exporting the associated account fails.
+
+     - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
+     */
+    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
 }
 
 /**
@@ -280,6 +292,18 @@ final class KinEthereumAccount: KinAccount {
         }
 
         return total
+    }
+
+    public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
+        guard let accountStore = accountStore else {
+            return nil
+        }
+
+        let data = try accountStore.export(account: gethAccount,
+                                           passphrase: passphrase,
+                                           exportPassphrase: exportPassphrase)
+
+        return String(data: data, encoding: String.Encoding.utf8)
     }
 }
 
