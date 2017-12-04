@@ -9,33 +9,12 @@
 import Foundation
 import KinSDKPrivate
 
-/**
- `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
- other accounts.
- */
-public final class KinAccount {
-    internal let gethAccount: GethAccount
-    fileprivate weak var accountStore: KinAccountStore?
-    fileprivate let contract: Contract
-    fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
-
-    internal var deleted = false
-
+public protocol KinAccount {
     /**
      The public address of this account. If the user wants to receive KIN by sending his address
      manually to someone, or if you want to display the public address, use this property.
      */
-    public var publicAddress: String {
-        return gethAccount.getAddress().getHex()
-    }
-
-    init(gethAccount: GethAccount, accountStore: KinAccountStore) {
-        self.gethAccount = gethAccount
-        self.accountStore = accountStore
-        self.contract = Contract(with: accountStore.context,
-                                 networkId: accountStore.networkId,
-                                 client: accountStore.client)
-    }
+    var publicAddress: String { get }
 
     /**
      **Asynchronously** posts a Kin transfer to a specific address.
@@ -49,22 +28,10 @@ public final class KinAccount {
      - parameter kin: The amount of Kin to be sent
      - parameter passphrase: The passphrase used to generate the `KinAccount`
      */
-    public func sendTransaction(to recipient: String,
-                                kin: UInt64,
-                                passphrase: String,
-                                completion: @escaping TransactionCompletion) {
-        accountQueue.async {
-            do {
-                let transactionId = try self.sendTransaction(to: recipient,
-                                                             kin: kin,
-                                                             passphrase: passphrase)
-                completion(transactionId, nil)
-            }
-            catch {
-                completion(nil, error)
-            }
-        }
-    }
+    func sendTransaction(to recipient: String,
+                         kin: UInt64,
+                         passphrase: String,
+                         completion: @escaping TransactionCompletion)
 
     /**
      **Synchronously** posts a Kin transfer to a specific address.
@@ -82,6 +49,98 @@ public final class KinAccount {
 
      - returns: The `TransactionId` in case of success.
      */
+    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId
+
+    /**
+     **Asynchronously** gets the current Kin balance. **Does not** take into account
+     transactions pending confirmations. The completion block **is not dispatched on the main thread**.
+
+     - parameter completion: A callback block to be invoked once the balance is fetched, or fails to
+     be fetched.
+     */
+    func balance(completion: @escaping BalanceCompletion)
+
+    /**
+     **Synchronously** gets the current Kin balance. **Does not** take into account
+     transactions pending confirmations.
+
+     **Do not** call this from the main thread.
+
+     - throws: An `Error` if balance cannot be fetched.
+
+     - returns: The `Balance` of the account.
+     */
+    func balance() throws -> Balance
+
+    /**
+     **Synchronously** gets the current **pending** Kin balance.
+
+     Please note that this is not the sum of pending transactions, but the **current balance plus
+     the sum of pending transactions.**
+
+     The completion block **is not dispatched on the main thread**.
+
+     - parameter completion: A callback block to be invoked once the pending balance is fetched, or
+     fails to be fetched.
+     */
+    func pendingBalance(completion: @escaping BalanceCompletion)
+
+    /**
+     **Synchronously** gets the current **pending** Kin balance.
+
+     Please note that this is not the sum of pending transactions, but the **current balance plus
+     the sum of pending transactions.**
+
+     **Do not** call this from the main thread.
+
+     - throws: An `Error` if balance cannot be fetched.
+
+     - returns: The pending balance of the account.
+     */
+    func pendingBalance() throws -> Balance
+}
+
+/**
+ `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
+ other accounts.
+ */
+final class KinEthereumAccount: KinAccount {
+    internal let gethAccount: GethAccount
+    fileprivate weak var accountStore: KinAccountStore?
+    fileprivate let contract: Contract
+    fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
+
+    internal var deleted = false
+
+    public var publicAddress: String {
+        return gethAccount.getAddress().getHex()
+    }
+
+    init(gethAccount: GethAccount, accountStore: KinAccountStore) {
+        self.gethAccount = gethAccount
+        self.accountStore = accountStore
+        self.contract = Contract(with: accountStore.context,
+                                 networkId: accountStore.networkId,
+                                 client: accountStore.client)
+    }
+
+    public func sendTransaction(to recipient: String,
+                                kin: UInt64,
+                                passphrase: String,
+                                completion: @escaping TransactionCompletion) {
+        accountQueue.async {
+            do {
+                let transactionId = try self.sendTransaction(to: recipient,
+                                                             kin: kin,
+                                                             passphrase: passphrase)
+                completion(transactionId, nil)
+            }
+            catch {
+                completion(nil, error)
+            }
+        }
+    }
+
     public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
         guard deleted == false else {
             throw KinError.accountDeleted
@@ -143,13 +202,6 @@ public final class KinAccount {
         return transaction.getHash().getHex()
     }
 
-    /**
-     **Asynchronously** gets the current Kin balance. **Does not** take into account
-     transactions pending confirmations. The completion block **is not dispatched on the main thread**.
-
-     - parameter completion: A callback block to be invoked once the balance is fetched, or fails to
-     be fetched.
-     */
     public func balance(completion: @escaping BalanceCompletion) {
         accountQueue.async {
             do {
@@ -162,16 +214,6 @@ public final class KinAccount {
         }
     }
 
-    /**
-     **Synchronously** gets the current Kin balance. **Does not** take into account
-     transactions pending confirmations.
-
-     **Do not** call this from the main thread.
-
-     - throws: An `Error` if balance cannot be fetched.
-
-     - returns: The `Balance` of the account.
-     */
     public func balance() throws -> Balance {
         guard deleted == false else {
             throw KinError.accountDeleted
@@ -191,17 +233,6 @@ public final class KinAccount {
         return balance
     }
 
-    /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
-
-     The completion block **is not dispatched on the main thread**.
-
-     - parameter completion: A callback block to be invoked once the pending balance is fetched, or
-     fails to be fetched.
-     */
     public func pendingBalance(completion: @escaping BalanceCompletion) {
         accountQueue.async {
             do {
@@ -214,18 +245,6 @@ public final class KinAccount {
         }
     }
 
-    /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
-
-     **Do not** call this from the main thread.
-
-     - throws: An `Error` if balance cannot be fetched.
-
-     - returns: The pending balance of the account.
-     */
     public func pendingBalance() throws -> Balance {
         guard deleted == false else {
             throw KinError.accountDeleted
@@ -264,7 +283,7 @@ public final class KinAccount {
     }
 }
 
-extension KinAccount {
+extension KinEthereumAccount {
     func decimals() throws -> UInt8 {
         let result = GethNewInterface()!
         result.setDefaultUint8()

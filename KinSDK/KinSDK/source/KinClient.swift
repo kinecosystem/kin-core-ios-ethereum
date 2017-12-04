@@ -39,7 +39,7 @@ public final class KinClient {
     fileprivate(set) public lazy var account: KinAccount? = {
         if self.accountStore.accounts.size() > 0,
             let account = try? self.accountStore.accounts.get(0) {
-            return KinAccount(gethAccount: account, accountStore: self.accountStore)
+            return KinEthereumAccount(gethAccount: account, accountStore: self.accountStore)
         }
 
         return nil
@@ -64,8 +64,8 @@ public final class KinClient {
      */
     public func createAccountIfNeeded(with passphrase: String) throws -> KinAccount {
         return try account ?? {
-            let newAccount = try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                                            accountStore: accountStore)
+            let newAccount = try KinEthereumAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
+                                                    accountStore: accountStore)
             account = newAccount
 
             return newAccount
@@ -85,13 +85,13 @@ public final class KinClient {
      - throws: If the passphrase is invalid, or if deleting the account fails.
      */
     public func deleteAccount(with passphrase: String) throws {
-        guard let gethAccount = account?.gethAccount else {
+        guard let gethAccount = (account as? KinEthereumAccount)?.gethAccount else {
             return
         }
 
         try accountStore.delete(account: gethAccount, passphrase: passphrase)
 
-        account?.deleted = true
+        (account as? KinEthereumAccount)?.deleted = true
         account = nil
     }
 
@@ -106,7 +106,7 @@ public final class KinClient {
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
     public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
-        guard let account = account else {
+        guard let account = account as? KinEthereumAccount else {
             return nil
         }
 
@@ -140,7 +140,7 @@ public final class KinClient {
     public func deleteKeystore() throws {
         try accountStore.deleteKeystore()
 
-        account?.deleted = true
+        (account as? KinEthereumAccount)?.deleted = true
         account = nil
     }
 }
@@ -151,15 +151,15 @@ extension KinClient {
     func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
         let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
         if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
-            account =  KinAccount(gethAccount: gAccount,
-                                  accountStore: accountStore)
+            account =  KinEthereumAccount(gethAccount: gAccount,
+                                          accountStore: accountStore)
         }
 
         return account
     }
 
     func createAccount(with passphrase: String) throws -> KinAccount {
-        return try KinAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                              accountStore: accountStore)
+        return try KinEthereumAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
+                                      accountStore: accountStore)
     }
 }
