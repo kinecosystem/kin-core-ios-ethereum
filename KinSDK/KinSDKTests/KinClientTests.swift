@@ -39,7 +39,7 @@ class KinClientTests: XCTestCase {
         XCTAssertNil(account, "There should not be an existing account!")
 
         do {
-            account = try kinClient.createAccountIfNeeded(with: passphrase)
+            account = try kinClient.createAccount(with: passphrase)
         }
         catch {
             e = error
@@ -48,7 +48,37 @@ class KinClientTests: XCTestCase {
         XCTAssertNotNil(account, "Creation failed: \(String(describing: e))")
     }
 
-    func test_account_creation_limited_to_one() {
+    func test_delete_account() {
+        do {
+            let account = try kinClient.createAccount(with: passphrase)
+
+            try kinClient.deleteAccount(at: 0, with: passphrase)
+
+            XCTAssertNotNil(account)
+            XCTAssertNil(kinClient.accounts[0])
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
+    func test_account_instance_reuse() {
+        do {
+            let _ = try kinClient.createAccount(with: passphrase) as? KinEthereumAccount
+
+            let first = kinClient.accounts[0] as? KinEthereumAccount
+            let second = kinClient.accounts[0] as? KinEthereumAccount
+
+            XCTAssertNotNil(second)
+            XCTAssert(first === second!)
+        }
+        catch {
+            XCTAssertTrue(false, "Something went wrong: \(error)")
+        }
+    }
+
+    @available(*, deprecated)
+    func test_account_creation_limited_to_one_deprecated() {
         do {
             _ = try kinClient.createAccountIfNeeded(with: passphrase)
             _ = try kinClient.createAccountIfNeeded(with: passphrase)
@@ -62,9 +92,10 @@ class KinClientTests: XCTestCase {
         XCTAssertEqual(accountCount, 1)
     }
 
-    func test_delete_account() {
+    @available(*, deprecated)
+    func test_delete_account_deprecated() {
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let account = try kinClient.createAccount(with: passphrase)
 
             try kinClient.deleteAccount(with: passphrase)
 
