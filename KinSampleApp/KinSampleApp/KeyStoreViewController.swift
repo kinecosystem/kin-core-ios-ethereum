@@ -40,8 +40,8 @@ class KeyStoreViewController: UIViewController {
                 return
         }
 
-        guard let keyStore = try? kinClient.account?.exportKeyStore(passphrase: KinAccountPassphrase,
-                                                                    exportPassphrase: exportPassphrase),
+        guard let keyStore = try? kinClient.accounts[0]?.exportKeyStore(passphrase: KinAccountPassphrase,
+                                                                        exportPassphrase: exportPassphrase),
             let unwrapped = keyStore,
             let prettified = unwrapped.prettified() else {
                 return

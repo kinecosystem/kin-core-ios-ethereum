@@ -67,13 +67,13 @@ public final class KinClient {
     }
 
     /**
-     Creates an account associated to this client, and returns it.
+     Adds an account associated to this client, and returns it.
 
      - parameter passphrase: The passphrase to use in order to create the associated account.
 
      - throws: If creating the account fails.
      */
-    func createAccount(with passphrase: String) throws -> KinAccount {
+    public func addAccount(with passphrase: String) throws -> KinAccount {
         return try accounts.createAccount(with: passphrase)
     }
 

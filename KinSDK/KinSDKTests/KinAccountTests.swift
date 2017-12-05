@@ -43,8 +43,8 @@ class KinAccountTests: XCTestCase {
                                                        passphrase: passphrase)
             }
             else if node.networkId == .ropsten {
-                account0 = try kinClient.createAccount(with: passphrase)
-                account1 = try kinClient.createAccount(with: passphrase)
+                account0 = try kinClient.addAccount(with: passphrase)
+                account1 = try kinClient.addAccount(with: passphrase)
 
                 try obtain_kin_and_ether(for: account0!.publicAddress)
             }
@@ -172,7 +172,7 @@ class KinAccountTests: XCTestCase {
 
     func test_pending_balance() {
         do {
-            let account = try kinClient.createAccount(with: passphrase)
+            let account = try kinClient.addAccount(with: passphrase)
             let pendingBalance = try account.pendingBalance()
 
             XCTAssertNotNil(pendingBalance,
@@ -187,7 +187,7 @@ class KinAccountTests: XCTestCase {
         let expectation = self.expectation(description: "wait for callback")
 
         do {
-            let account = try kinClient.createAccount(with: passphrase)
+            let account = try kinClient.addAccount(with: passphrase)
 
             account.pendingBalance(completion: { balance, error in
                 let bothNil = balance == nil && error == nil
@@ -343,7 +343,7 @@ class KinAccountTests: XCTestCase {
 
     func test_keystore_export() {
         do {
-            let account = try kinClient.createAccount(with: passphrase)
+            let account = try kinClient.addAccount(with: passphrase)
             let keyStore = try account.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
 
             XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")

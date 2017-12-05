@@ -39,7 +39,7 @@ class KinClientTests: XCTestCase {
         XCTAssertNil(account, "There should not be an existing account!")
 
         do {
-            account = try kinClient.createAccount(with: passphrase)
+            account = try kinClient.addAccount(with: passphrase)
         }
         catch {
             e = error
@@ -50,7 +50,7 @@ class KinClientTests: XCTestCase {
 
     func test_delete_account() {
         do {
-            let account = try kinClient.createAccount(with: passphrase)
+            let account = try kinClient.addAccount(with: passphrase)
 
             try kinClient.deleteAccount(at: 0, with: passphrase)
 
@@ -64,7 +64,7 @@ class KinClientTests: XCTestCase {
 
     func test_account_instance_reuse() {
         do {
-            let _ = try kinClient.createAccount(with: passphrase) as? KinEthereumAccount
+            let _ = try kinClient.addAccount(with: passphrase) as? KinEthereumAccount
 
             let first = kinClient.accounts[0] as? KinEthereumAccount
             let second = kinClient.accounts[0] as? KinEthereumAccount
@@ -95,7 +95,7 @@ class KinClientTests: XCTestCase {
     @available(*, deprecated)
     func test_delete_account_deprecated() {
         do {
-            let account = try kinClient.createAccount(with: passphrase)
+            let account = try kinClient.addAccount(with: passphrase)
 
             try kinClient.deleteAccount(with: passphrase)
 
