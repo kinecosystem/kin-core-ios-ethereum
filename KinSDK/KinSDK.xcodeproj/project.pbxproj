@@ -437,7 +437,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [ ! -r ${PROJECT_DIR}/Geth.framework ]; then\ncd ${PROJECT_DIR}/..\nmake get-geth\nfi";
+			shellScript = "cd ${PROJECT_DIR}/..\nmake get-geth";
 		};
 /* End PBXShellScriptBuildPhase section */
 
