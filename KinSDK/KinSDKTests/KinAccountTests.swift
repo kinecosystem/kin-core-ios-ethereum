@@ -172,7 +172,7 @@ class KinAccountTests: XCTestCase {
 
     func test_pending_balance() {
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let account = try kinClient.createAccount(with: passphrase)
             let pendingBalance = try account.pendingBalance()
 
             XCTAssertNotNil(pendingBalance,
@@ -187,7 +187,7 @@ class KinAccountTests: XCTestCase {
         let expectation = self.expectation(description: "wait for callback")
 
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let account = try kinClient.createAccount(with: passphrase)
 
             account.pendingBalance(completion: { balance, error in
                 let bothNil = balance == nil && error == nil
@@ -301,9 +301,9 @@ class KinAccountTests: XCTestCase {
 
     func test_use_after_delete_balance() {
         do {
-            let account = kinClient.account
+            let account = kinClient.accounts[0]
 
-            try kinClient.deleteAccount(with: passphrase)
+            try kinClient.deleteAccount(at: 0, with: passphrase)
             _ = try account?.balance()
 
             XCTAssert(false, "An exception should have been thrown.")
@@ -315,9 +315,9 @@ class KinAccountTests: XCTestCase {
 
     func test_use_after_delete_pending_balance() {
         do {
-            let account = kinClient.account
+            let account = kinClient.accounts[0]
 
-            try kinClient.deleteAccount(with: passphrase)
+            try kinClient.deleteAccount(at: 0, with: passphrase)
             _ = try account?.pendingBalance()
 
             XCTAssert(false, "An exception should have been thrown.")
@@ -329,9 +329,9 @@ class KinAccountTests: XCTestCase {
 
     func test_use_after_delete_transaction() {
         do {
-            let account = kinClient.account
+            let account = kinClient.accounts[0]
 
-            try kinClient.deleteAccount(with: passphrase)
+            try kinClient.deleteAccount(at: 0, with: passphrase)
             _ = try account?.sendTransaction(to: "", kin: 1, passphrase: passphrase)
 
             XCTAssert(false, "An exception should have been thrown.")
@@ -343,7 +343,7 @@ class KinAccountTests: XCTestCase {
 
     func test_keystore_export() {
         do {
-            let account = try kinClient.createAccountIfNeeded(with: passphrase)
+            let account = try kinClient.createAccount(with: passphrase)
             let keyStore = try account.exportKeyStore(passphrase: passphrase, exportPassphrase: "exportPass")
 
             XCTAssertNotNil(keyStore, "Unable to retrieve keyStore account: \(String(describing: account))")
