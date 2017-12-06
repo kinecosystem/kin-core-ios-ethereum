@@ -62,10 +62,10 @@ public final class KinAccounts {
         try accountStore.delete(account: account.gethAccount, passphrase: passphrase)
         account.deleted = true
 
-        shuffleCache(for: index)
+        shiftCache(for: index)
     }
 
-    private func shuffleCache(for index: Int) {
+    private func shiftCache(for index: Int) {
         let indexesToShuffle = cache.keys.map { $0 }.filter({ $0 > index }).sorted()
 
         cache[index] = nil
