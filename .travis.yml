@@ -1,0 +1,29 @@
+language: swift
+osx_image: xcode9.1
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  # install node (npm)
+  - rm -rf ~/.nvm
+  - git clone https://github.com/creationix/nvm.git ~/.nvm
+  - source ~/.nvm/nvm.sh
+  - nvm install 8.9.1
+  - node --version
+
+install:
+  #swiftline, truffle, testrpc
+  - ./scripts/install_swiftlint.sh
+  - cd truffle
+  - npm install
+  - cd ../
+
+script:
+  - make test
+
+after_script:
+  # print truffle and testrpc logs
+  - cat truffle/truffle.log
+  - cat truffle/testrpc.log
