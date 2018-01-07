@@ -7,7 +7,7 @@ KinSampleApp/KinSampleApp.xcodeproj/xcuserdata
 
 KinSDK/build
 KinSDK/Geth.framework
-gethTemp
+geth-commit
 
 # test related files (ethereum testrpc):
 
