@@ -10,6 +10,7 @@
 		82140EBA1FA88E5B00FAF19B /* KinSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 82140EAC1FA88E5B00FAF19B /* KinSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82140EC41FA88EAF00FAF19B /* KinTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC31FA88EAF00FAF19B /* KinTypes.swift */; };
 		82140EC91FA89A8600FAF19B /* KinAccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82140EC81FA89A8600FAF19B /* KinAccountStore.swift */; };
+		822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822107A31FD66DC80007D63F /* KinAccounts.swift */; };
 		824539411FAACFC6009117B4 /* KinSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82140EA91FA88E5B00FAF19B /* KinSDK.framework */; };
 		824539431FAB0102009117B4 /* KinAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824539421FAB0102009117B4 /* KinAccountTests.swift */; };
 		824CBAA31FB9932700B736AA /* Decimal+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824CBAA21FB9932700B736AA /* Decimal+extensions.swift */; };
@@ -77,6 +78,7 @@
 		82140EAD1FA88E5B00FAF19B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		82140EC31FA88EAF00FAF19B /* KinTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinTypes.swift; sourceTree = "<group>"; };
 		82140EC81FA89A8600FAF19B /* KinAccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountStore.swift; sourceTree = "<group>"; };
+		822107A31FD66DC80007D63F /* KinAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccounts.swift; sourceTree = "<group>"; };
 		824539421FAB0102009117B4 /* KinAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinAccountTests.swift; sourceTree = "<group>"; };
 		824CBAA21FB9932700B736AA /* Decimal+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Decimal+extensions.swift"; sourceTree = "<group>"; };
 		8257BF411FB447C0000FDD3F /* Geth */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Geth; path = Geth.framework/Versions/A/Geth; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				82140EC31FA88EAF00FAF19B /* KinTypes.swift */,
 				9148CE4F1FCACF9C0005D603 /* NetworkId.swift */,
 				91D4395F1FC410E50006FEB5 /* TransactionSigner.swift */,
+				822107A31FD66DC80007D63F /* KinAccounts.swift */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				91D4395E1FC410860006FEB5 /* KinAccount.swift in Sources */,
 				E9816BCE1FBC737500C84F1C /* Collection+extensions.swift in Sources */,
 				E9816BC91FBC724700C84F1C /* TestServiceProviders.swift in Sources */,
+				822107A41FD66DC80007D63F /* KinAccounts.swift in Sources */,
 				E970C2741FAE394D0091181B /* Contract.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

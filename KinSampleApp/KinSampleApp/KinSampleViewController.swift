@@ -73,7 +73,7 @@ extension KinSampleViewController: KinClientCellDelegate {
                                                 message: "Deleting a wallet when it hasn't been backed up will cause funds to be lost",
                                                 preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "I've backed it up, delete wallet", style: .destructive) { _ in
-            try? self.kinClient.deleteAccount(with: KinAccountPassphrase)
+            try? self.kinClient.deleteAccount(at: 0, with: KinAccountPassphrase)
             self.navigationController?.popViewController(animated: true)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
