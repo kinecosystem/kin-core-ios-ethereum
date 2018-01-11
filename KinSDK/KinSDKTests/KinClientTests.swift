@@ -7,19 +7,19 @@
 //
 
 import XCTest
-@testable import KinTestHost
 @testable import KinSDK
+@testable import StellarKinKit
 
 class KinClientTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
-    let truffle = NodeProvider(networkId: .truffle)
+    let stellar = NodeProvider(networkId: .testNet)
 
     override func setUp() {
         super.setUp()
 
         do {
-            kinClient = try KinClient(provider: truffle)
+            kinClient = try KinClient(provider: stellar)
         }
         catch {
             XCTAssert(false, "Couldn't create kinClient")
@@ -64,10 +64,10 @@ class KinClientTests: XCTestCase {
 
     func test_account_instance_reuse() {
         do {
-            let _ = try kinClient.addAccount(with: passphrase) as? KinEthereumAccount
+            let _ = try kinClient.addAccount(with: passphrase) as? KinStellarAccount
 
-            let first = kinClient.accounts[0] as? KinEthereumAccount
-            let second = kinClient.accounts[0] as? KinEthereumAccount
+            let first = kinClient.accounts[0] as? KinStellarAccount
+            let second = kinClient.accounts[0] as? KinStellarAccount
 
             XCTAssertNotNil(second)
             XCTAssert(first === second!)
@@ -86,10 +86,7 @@ class KinClientTests: XCTestCase {
         catch {
         }
 
-        let accountStore = KinAccountStore(url: truffle.url, networkId: truffle.networkId)
-        let accountCount = accountStore.accounts.size()
-
-        XCTAssertEqual(accountCount, 1)
+        XCTAssertEqual(KeyStore.count(), 1)
     }
 
     @available(*, deprecated)

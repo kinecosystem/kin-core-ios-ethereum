@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import StellarKinKit
 
 /**
  `KinClient` is a factory class for managing an instance of `KinAccount`.
@@ -28,8 +29,11 @@ public final class KinClient {
      - parameter networkId: The `NetworkId` to be used.
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
-        self.accountStore = KinAccountStore(url: nodeProviderUrl, networkId: networkId)
-        self.accounts = KinAccounts(accountStore: accountStore)
+        self.stellar = Stellar(baseURL: nodeProviderUrl,
+                               kinIssuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH")
+        self.accounts = KinAccounts(stellar: stellar)
+
+        self.networkId = networkId
     }
 
     /**
@@ -44,14 +48,12 @@ public final class KinClient {
 
     public var accounts: KinAccounts
 
-    fileprivate let accountStore: KinAccountStore
+    internal let stellar: Stellar
 
     /**
      The `NetworkId` of the network which this client communicates to.
      */
-    public var networkId: NetworkId {
-        return self.accountStore.networkId
-    }
+    public let networkId: NetworkId
 
     /**
      Creates an account associated to this client. If one or more accounts already exist, the
@@ -110,28 +112,13 @@ public final class KinClient {
         try accounts.deleteAccount(at: index, with: passphrase)
     }
 
-    public func status(for transactionId: TransactionId) throws -> TransactionStatus {
-        do {
-            _ = try accountStore.transactionReceipt(for: transactionId)
-        }
-        catch {
-            let nsError = error as NSError
-
-            if nsError.domain == "go" && nsError.code == 1 {
-                return .pending
-            }
-
-            throw error
-        }
-
-        return .complete
-    }
-
     /**
      Deletes the keystore.
      */
-    public func deleteKeystore() throws {
-        try accountStore.deleteKeystore()
+    public func deleteKeystore() {
+        for _ in 0..<KeyStore.count() {
+            KeyStore.remove(at: 0)
+        }
 
         accounts.flushCache()
     }
@@ -140,13 +127,13 @@ public final class KinClient {
 // MARK: - For testing only
 
 extension KinClient {
-    func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
-        let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
-        if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
-            return KinEthereumAccount(gethAccount: gAccount,
-                                      accountStore: accountStore)
-        }
-
-        return nil
-    }
+//    func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
+//        let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
+//        if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
+//            return KinEthereumAccount(gethAccount: gAccount,
+//                                      accountStore: accountStore)
+//        }
+//
+//        return nil
+//    }
 }

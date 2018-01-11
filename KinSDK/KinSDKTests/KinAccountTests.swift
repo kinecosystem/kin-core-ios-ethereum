@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import KinSDK
+@testable import StellarKinKit
 import Geth
 
 class KinAccountTests: XCTestCase {
@@ -15,73 +16,94 @@ class KinAccountTests: XCTestCase {
     var kinClient: KinClient!
     let passphrase = UUID().uuidString
 
-    #if ROPSTEN_UNIT_TEST
-    let node = NodeProvider(networkId: .ropsten)
-    #else
-    let node = NodeProvider(networkId: .truffle)
-    #endif
+    let node = NodeProvider(networkId: .testNet)
 
     var account0: KinAccount?
     var account1: KinAccount?
+    var issuer: StellarAccount?
 
     override func setUp() {
         super.setUp()
 
-        do {
-            kinClient = try KinClient(provider: node)
-        }
-        catch {
-            XCTAssert(false, "Couldn't create kinClient: \(error)")
+        kinClient = try! KinClient(provider: node)
+
+        KeyStore.removeAll()
+
+        if KeyStore.count() > 0 {
+            XCTAssertTrue(false, "Unable to clear existing accounts!")
         }
 
-        do {
-            if node.networkId == .truffle {
-                account0 = try kinClient.createAccount(with: TruffleConfiguration.privateKey(at: 0),
-                                                       passphrase: passphrase)
+        self.account0 = try? kinClient.addAccount(with: passphrase)
+        self.account1 = try? kinClient.addAccount(with: passphrase)
 
-                account1 = try kinClient.createAccount(with: TruffleConfiguration.privateKey(at: 1),
-                                                       passphrase: passphrase)
-            }
-            else if node.networkId == .ropsten {
-                account0 = try kinClient.addAccount(with: passphrase)
-                account1 = try kinClient.addAccount(with: passphrase)
+        if account0 == nil || account1 == nil {
+            XCTAssertTrue(false, "Unable to create account(s)!")
+        }
 
-                try obtain_kin_and_ether(for: account0!.publicAddress)
-            }
-            else {
-                XCTAssertTrue(false, "I don't know what to do with: \(node)")
-            }
+        issuer = try? KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
+                                                passphrase: passphrase)
+
+        if issuer == nil {
+            XCTAssertTrue(false, "Unable to import issuer account!")
         }
-        catch {
-            XCTAssert(false, "Couldn't create accounts: \(error)")
-        }
+
+        try! obtain_kin_and_lumens(for: (account0 as! KinStellarAccount).stellarAccount)
+        try! obtain_kin_and_lumens(for: (account1 as! KinStellarAccount).stellarAccount)
     }
 
     override func tearDown() {
         super.tearDown()
 
-        try? kinClient.deleteKeystore()
+        kinClient.deleteKeystore()
     }
 
-    func obtain_kin_and_ether(for publicAddress: String) throws {
+    func obtain_kin_and_lumens(for account: StellarAccount) throws {
         let group = DispatchGroup()
         group.enter()
 
         var e: Error?
+        let stellar = Stellar(baseURL: node.url,
+                              kinIssuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH")
 
-        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(publicAddress)"
-        URLSession.shared.dataTask(with: URL(string: urlString)!) { _, _, error in
-            defer {
+        guard
+            let issuer = issuer
+            else {
+                throw KinError.unknown
+        }
+
+        stellar.fund(account: account.publicKey!) { success in
+            if !success {
+                e = KinError.unknown
+
                 group.leave()
-            }
-
-            if let error = error {
-                e = error
 
                 return
             }
+
+            stellar
+                .trustKIN(account: account,
+                          passphrase: self.passphrase) { txHash, error in
+                            if let error = error {
+                                e = error
+
+                                group.leave()
+
+                                return
+                            }
+
+                            stellar
+                                .payment(source: issuer,
+                                         destination: account.publicKey!,
+                                         amount: 10000,
+                                         passphrase: self.passphrase) { txHash, error in
+                                            defer {
+                                                group.leave()
+                                            }
+
+                                            e = error
+                            }
             }
-            .resume()
+        }
 
         group.wait()
 
@@ -109,19 +131,6 @@ class KinAccountTests: XCTestCase {
         return balance
     }
 
-    func test_publicAddress() {
-        let expectedPublicAddress = "0x8B455Ab06C6F7ffaD9fDbA11776E2115f1DE14BD"
-
-        let publicAddress = account0?.publicAddress
-
-        if node.networkId == .truffle {
-            XCTAssertEqual(publicAddress, expectedPublicAddress)
-        }
-        else {
-            XCTAssertNotNil(publicAddress)
-        }
-    }
-
     func test_balance_sync() {
         do {
             var balance = try account0?.balance()
@@ -130,12 +139,7 @@ class KinAccountTests: XCTestCase {
                 balance = try wait_for_non_zero_balance(account: account0!)
             }
 
-            if node.networkId == .truffle {
-                XCTAssertEqual(balance, TruffleConfiguration.startingBalance)
-            }
-            else {
-                XCTAssertNotEqual(balance, 0)
-            }
+            XCTAssertNotEqual(balance, 0)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -155,14 +159,9 @@ class KinAccountTests: XCTestCase {
                 expectation.fulfill()
             }
 
-            self.waitForExpectations(timeout: 5.0)
+            self.waitForExpectations(timeout: 25.0)
 
-            if node.networkId == .truffle {
-                XCTAssertEqual(balanceChecked, TruffleConfiguration.startingBalance)
-            }
-            else {
-                XCTAssertNotEqual(balanceChecked, 0)
-            }
+            XCTAssertNotEqual(balanceChecked, 0)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -172,11 +171,10 @@ class KinAccountTests: XCTestCase {
 
     func test_pending_balance() {
         do {
-            let account = try kinClient.addAccount(with: passphrase)
-            let pendingBalance = try account.pendingBalance()
+            let pendingBalance = try account0?.pendingBalance()
 
             XCTAssertNotNil(pendingBalance,
-                            "Unable to retrieve pending balance for account: \(String(describing: account))")
+                            "Unable to retrieve pending balance for account: \(String(describing: account0))")
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -186,29 +184,20 @@ class KinAccountTests: XCTestCase {
     func test_pending_balance_async() {
         let expectation = self.expectation(description: "wait for callback")
 
-        do {
-            let account = try kinClient.addAccount(with: passphrase)
+        account0!.pendingBalance(completion: { balance, error in
+            let bothNil = balance == nil && error == nil
+            let bothNotNil = balance != nil && error != nil
 
-            account.pendingBalance(completion: { balance, error in
-                let bothNil = balance == nil && error == nil
-                let bothNotNil = balance != nil && error != nil
+            let stringBalance = String(describing: balance)
+            let stringError = String(describing: error)
 
-                let stringBalance = String(describing: balance)
-                let stringError = String(describing: error)
-
-                XCTAssertFalse(bothNil,
-                               "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
-                XCTAssertFalse(bothNotNil,
-                               "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
-
-                expectation.fulfill()
-            })
-        }
-        catch {
-            XCTAssertTrue(false, "Something went wrong: \(error)")
+            XCTAssertFalse(bothNil,
+                           "Only one of balance [\(stringBalance)] and error [\(stringError)] should be nil")
+            XCTAssertFalse(bothNotNil,
+                           "Only one of balance [\(stringBalance)] and error [\(stringError)] should be non-nil")
 
             expectation.fulfill()
-        }
+        })
 
         self.waitForExpectations(timeout: 5.0)
     }
@@ -237,29 +226,11 @@ class KinAccountTests: XCTestCase {
 
             XCTAssertNotNil(txId)
 
-            // testrpc never returns
-            if node.networkId != .truffle {
-                var status: TransactionStatus = .pending
-
-                let exp = expectation(for: NSPredicate(block: { _, _ in
-                    do {
-                        status = try self.kinClient.status(for: txId)
-                    }
-                    catch {
-                        XCTAssertTrue(false, "Something went wrong: \(error)")
-                    }
-
-                    return status != .pending
-                }), evaluatedWith: status, handler: nil)
-
-                self.wait(for: [exp], timeout: 120)
-            }
-
             let balance0 = try account0.balance()
             let balance1 = try account1.balance()
 
-            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
-            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
+            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount) / Decimal(10000000))
+            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount) / Decimal(10000000))
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -279,18 +250,18 @@ class KinAccountTests: XCTestCase {
 
             do {
                 _ = try account0.sendTransaction(to: account1.publicAddress,
-                                                 kin: (balance as NSDecimalNumber).uint64Value + 1,
+                                                 kin: (balance * 10000000 as NSDecimalNumber).uint64Value + 1,
                                                  passphrase: passphrase)
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
             }
             catch {
-                if let kinError = error as? KinError {
-                    XCTAssertEqual(kinError, KinError.insufficientBalance)
+                if let paymentError = error as? PaymentError {
+                    XCTAssertEqual(paymentError, PaymentError.PAYMENT_UNDERFUNDED)
                 } else {
                     print(error)
                     XCTAssertTrue(false,
-                                  "Tried to send kin, and got error, but not a KinError: \(error.localizedDescription)")
+                                  "Tried to send kin, and got error, but not a PaymentError: \(error.localizedDescription)")
                 }
             }
         }

@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import StellarKinKit
 
 public final class KinAccounts {
     private var cache = [Int: KinAccount]()
     private let cacheLock = NSLock()
 
-    private weak var accountStore: KinAccountStore?
+    private weak var stellar: Stellar?
 
     public var count: Int {
-        return accountStore?.accounts.size() ?? 0
+        return KeyStore.count()
     }
 
     public subscript(_ index: Int) -> KinAccount? {
@@ -28,7 +29,7 @@ public final class KinAccounts {
     }
 
     func createAccount(with passphrase: String) throws -> KinAccount {
-        guard let accountStore = accountStore else {
+        guard let stellar = stellar else {
             throw KinError.internalInconsistency
         }
 
@@ -37,8 +38,8 @@ public final class KinAccounts {
             self.cacheLock.unlock()
         }
 
-        let account = try KinEthereumAccount(gethAccount: accountStore.createAccount(passphrase: passphrase),
-                                             accountStore: accountStore)
+        let account = try KinStellarAccount(stellarAccount: KeyStore.newAccount(passphrase: passphrase),
+                                            stellar: stellar)
 
         cache[count - 1] = account
 
@@ -46,20 +47,19 @@ public final class KinAccounts {
     }
 
     func deleteAccount(at index: Int, with passphrase: String) throws {
-        guard let accountStore = accountStore else {
-            throw KinError.internalInconsistency
-        }
-
         self.cacheLock.lock()
         defer {
             self.cacheLock.unlock()
         }
 
-        guard let account = account(at: index) as? KinEthereumAccount else {
+        guard let account = account(at: index) as? KinStellarAccount else {
             throw KinError.internalInconsistency
         }
 
-        try accountStore.delete(account: account.gethAccount, passphrase: passphrase)
+        guard KeyStore.remove(at: index) else {
+            throw KinError.unknown
+        }
+
         account.deleted = true
 
         shiftCache(for: index)
@@ -86,9 +86,10 @@ public final class KinAccounts {
         return cache[index] ??
             {
                 if index < self.count,
-                    let accountStore = self.accountStore,
-                    let account = try? accountStore.accounts.get(index) {
-                    let kinAccount = KinEthereumAccount(gethAccount: account, accountStore: accountStore)
+                    let stellar = stellar,
+                    let stellarAccount = KeyStore.account(at: index) {
+                    let kinAccount = KinStellarAccount(stellarAccount: stellarAccount,
+                                                       stellar: stellar)
 
                     cache[index] = kinAccount
 
@@ -99,13 +100,13 @@ public final class KinAccounts {
             }()
     }
 
-    init(accountStore: KinAccountStore) {
-        self.accountStore = accountStore
+    init(stellar: Stellar) {
+        self.stellar = stellar
     }
 
     func flushCache() {
         for account in cache.values {
-            (account as? KinEthereumAccount)?.deleted = true
+            (account as? KinStellarAccount)?.deleted = true
         }
 
         cache.removeAll()

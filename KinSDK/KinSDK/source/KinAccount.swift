@@ -8,7 +8,12 @@
 
 import Foundation
 import KinSDKPrivate
+import StellarKinKit
 
+/**
+ `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
+ other accounts.
+ */
 public protocol KinAccount {
     /**
      The public address of this account. If the user wants to receive KIN by sending his address
@@ -112,206 +117,141 @@ public protocol KinAccount {
     func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
 }
 
-/**
- `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to
- other accounts.
- */
-final class KinEthereumAccount: KinAccount {
-    internal let gethAccount: GethAccount
-    fileprivate weak var accountStore: KinAccountStore?
-    fileprivate let contract: Contract
-    fileprivate let accountQueue = DispatchQueue(label: "com.kik.kin.account")
+final class KinStellarAccount: KinAccount {
+    internal let stellarAccount: StellarAccount
+    private weak var stellar: Stellar?
 
-    internal var deleted = false
+    var deleted = false
 
-    public var publicAddress: String {
-        return gethAccount.getAddress().getHex()
+    var publicAddress: String {
+        return stellarAccount.publicKey!
     }
 
-    init(gethAccount: GethAccount, accountStore: KinAccountStore) {
-        self.gethAccount = gethAccount
-        self.accountStore = accountStore
-        self.contract = Contract(with: accountStore.context,
-                                 networkId: accountStore.networkId,
-                                 client: accountStore.client)
+    init(stellarAccount: StellarAccount, stellar: Stellar) {
+        self.stellarAccount = stellarAccount
+        self.stellar = stellar
     }
 
-    public func sendTransaction(to recipient: String,
-                                kin: UInt64,
-                                passphrase: String,
-                                completion: @escaping TransactionCompletion) {
-        accountQueue.async {
-            do {
-                let transactionId = try self.sendTransaction(to: recipient,
-                                                             kin: kin,
-                                                             passphrase: passphrase)
-                completion(transactionId, nil)
-            }
-            catch {
-                completion(nil, error)
-            }
+    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String, completion: @escaping TransactionCompletion) {
+        guard let stellar = stellar else {
+            completion(nil, KinError.internalInconsistency)
+
+            return
         }
-    }
 
-    public func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
         guard deleted == false else {
-            throw KinError.accountDeleted
+            completion(nil, KinError.accountDeleted)
+
+            return
         }
 
         guard kin > 0 else {
-            throw KinError.invalidAmount
+            completion(nil, KinError.invalidAmount)
+
+            return
         }
 
-        guard let addressFromHex = GethNewAddressFromHex(recipient, nil) else {
-            throw KinError.invalidAddress
-        }
-
-        guard let store = accountStore else {
-            throw KinError.internalInconsistency
-        }
-
-        guard
-            let wei = Decimal(kin).kinToWei().toBigInt(),
-            let options = GethTransactOpts(),
-            let price = try? store.client.suggestGasPrice(store.context),
-            let toAddress = GethNewInterface(),
-            let value = GethNewInterface() else {
-                throw KinError.internalInconsistency
-        }
-
-        let currentBalance = (try balance() as NSDecimalNumber).uint64Value
-
-        if currentBalance < kin {
-            throw KinError.insufficientBalance
-        }
-
-        let nonce: UnsafeMutablePointer<Int64> = UnsafeMutablePointer<Int64>.allocate(capacity: 1)
-        defer {
-            _ = UnsafeMutablePointer<Int64>.deallocate(nonce)
-        }
-
-        try store.client.getPendingNonce(at: store.context, account: gethAccount.getAddress(), nonce: nonce)
-
-        options.setContext(store.context)
-        options.setGasLimit(Contract.defaultGasLimit)
-        options.setGasPrice(price)
-        options.setNonce(nonce.pointee)
-        options.setFrom(gethAccount.getAddress())
-
-        let signer = TransactionSigner(with: store.keystore,
-                                       account: gethAccount,
-                                       passphrase: passphrase,
-                                       networkId: store.networkId)
-
-        options.setSigner(signer)
-        toAddress.setAddress(addressFromHex)
-        value.setBigInt(wei)
-
-        let transaction = try self.contract.transact(method: "transfer",
-                                                     options: options,
-                                                     parameters: [toAddress, value])
-
-        return transaction.getHash().getHex()
-    }
-
-    public func balance(completion: @escaping BalanceCompletion) {
-        accountQueue.async {
-            do {
-                let balance = try self.balance()
-                completion(balance, nil)
-            }
-            catch {
-                completion(nil, error)
-            }
+        stellar.payment(source: stellarAccount,
+                        destination: recipient,
+                        amount: Int64(kin),
+                        passphrase: passphrase) { (txHash, error) in
+                            completion(txHash, error)
         }
     }
 
-    public func balance() throws -> Balance {
+    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String) throws -> TransactionId {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+
+        var errorToThrow: Error? = nil
+        var txHashToReturn: TransactionId? = nil
+
+        sendTransaction(to: recipient, kin: kin, passphrase: passphrase) { txHash, error in
+            errorToThrow = error
+            txHashToReturn = txHash
+
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.wait()
+
+        if let error = errorToThrow {
+            throw error
+        }
+
+        guard let txHash = txHashToReturn else {
+            throw KinError.unknown
+        }
+
+        return txHash
+    }
+
+    func balance(completion: @escaping BalanceCompletion) {
+        guard let stellar = stellar else {
+            completion(nil, KinError.internalInconsistency)
+
+            return
+        }
+
         guard deleted == false else {
-            throw KinError.accountDeleted
+            completion(nil, KinError.accountDeleted)
+
+            return
         }
 
-        let arg = GethNewInterface()!
-        arg.setAddress(gethAccount.getAddress())
-        let result = GethNewInterface()!
-        result.setDefaultBigInt()
+        stellar.balance(account: stellarAccount.publicKey!, completion: completion)
+    }
 
-        try self.contract.call(method: "balanceOf", inputs: [arg], outputs: [result])
+    func balance() throws -> Balance {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
 
-        guard let balance = Decimal(bigInt: result.getBigInt())?.weiToKin() else {
-            throw KinError.internalInconsistency
+        var errorToThrow: Error? = nil
+        var balanceToReturn: Balance? = nil
+
+        balance { (balance, error) in
+            errorToThrow = error
+            balanceToReturn = balance
+
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.wait()
+
+        if let error = errorToThrow {
+            throw error
+        }
+
+        guard let balance = balanceToReturn else {
+            throw KinError.unknown
         }
 
         return balance
     }
 
-    public func pendingBalance(completion: @escaping BalanceCompletion) {
-        accountQueue.async {
-            do {
-                let balance = try self.pendingBalance()
-                completion(balance, nil)
-            }
-            catch {
-                completion(nil, error)
-            }
-        }
+    func pendingBalance(completion: @escaping BalanceCompletion) {
+        balance(completion: completion)
     }
 
-    public func pendingBalance() throws -> Balance {
-        guard deleted == false else {
-            throw KinError.accountDeleted
-        }
-
-        let balance = try self.balance().kinToWei()
-
-        let sentLogs = try contract.pendingTransactionLogs(from: gethAccount.getAddress().getHex(),
-                                                           to: nil)
-        let sent = try sumTransactionAmount(logs: sentLogs)
-
-        let earnedLogs = try contract.pendingTransactionLogs(from: nil,
-                                                             to: gethAccount.getAddress().getHex())
-        let earned = try sumTransactionAmount(logs: earnedLogs)
-
-        return (balance + earned - sent).weiToKin()
+    func pendingBalance() throws -> Balance {
+        return try balance()
     }
 
-    fileprivate func sumTransactionAmount(logs: GethLogs) throws -> Balance {
-        var total: Decimal = 0
+    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
+        let store = KeyStore.exportKeystore(passphrase: passphrase,
+                                                  newPassphrase: exportPassphrase)
 
-        for i in 0..<logs.size() {
-            if let log = try? logs.get(i),
-                log.getTxHash().getHex() != nil,
-                let logData = log.getData(),
-                let bigInt = GethNewBigInt(0) {
-                bigInt.setBytes(logData)
-
-                if let b = Decimal(bigInt: bigInt) {
-                    total += b
-                }
-            }
+        guard store.count == KeyStore.count() else {
+            throw KinError.internalInconsistency
         }
 
-        return total
-    }
-
-    public func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
-        guard let accountStore = accountStore else {
-            return nil
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: store,
+                                                         options: [.prettyPrinted])
+            else {
+                return nil
         }
 
-        let data = try accountStore.export(account: gethAccount,
-                                           passphrase: passphrase,
-                                           exportPassphrase: exportPassphrase)
-
-        return String(data: data, encoding: String.Encoding.utf8)
+        return String(data: jsonData, encoding: .utf8)
     }
 }
 
-extension KinEthereumAccount {
-    func decimals() throws -> UInt8 {
-        let result = GethNewInterface()!
-        result.setDefaultUint8()
-        try contract.call(method: "decimals", outputs: [result])
-        return UInt8(result.getUint8().getInt64())
-    }
-}

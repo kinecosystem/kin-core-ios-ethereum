@@ -18,6 +18,11 @@ public enum NetworkId {
     case mainNet
 
     /**
+    The Stellar test net.
+     */
+    case testNet
+
+    /**
      The ropsten test net.
      */
     case ropsten
@@ -44,6 +49,8 @@ extension NetworkId {
             return 9
         case .custom(let value, _):
             return value
+        default:
+            return 0
         }
     }
 }
@@ -54,6 +61,8 @@ extension NetworkId: CustomStringConvertible {
         switch self {
         case .mainNet:
             return "main"
+        case .testNet:
+            return "test"
         case .ropsten:
             return "ropsten"
         case .truffle:

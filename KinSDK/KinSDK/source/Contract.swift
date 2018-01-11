@@ -48,6 +48,8 @@ final class Contract {
             address = contractAddress
         case .custom(_, let contractAddress):
             address = contractAddress
+        default:
+            address = ""
         }
 
         guard address.isEmpty == false else {
