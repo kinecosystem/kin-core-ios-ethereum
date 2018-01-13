@@ -23,34 +23,20 @@ public enum NetworkId {
     case testNet
 
     /**
-     The ropsten test net.
-     */
-    case ropsten
-
-    /**
-     A local network setup by truffle (used by tests).
-     */
-    case truffle
-
-    /**
      A network with a custom ID. **Currently unsupported**
      */
-    case custom(value: UInt64, contractAddress: String)
+    case custom(issuer: String)
 }
 
 extension NetworkId {
-    func asInteger() -> UInt64 {
+    public var issuer: String {
         switch self {
         case .mainNet:
-            return 1
-        case .ropsten:
-            return 3
-        case .truffle:
-            return 9
-        case .custom(let value, _):
-            return value
-        default:
-            return 0
+            return ""
+        case .testNet:
+            return "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"
+        case .custom (let issuer):
+            return issuer
         }
     }
 }
@@ -63,19 +49,9 @@ extension NetworkId: CustomStringConvertible {
             return "main"
         case .testNet:
             return "test"
-        case .ropsten:
-            return "ropsten"
-        case .truffle:
-            return "truffle"
         default:
             return "custom network"
         }
     }
 }
 
-extension NetworkId: Equatable {
-    /// :nodoc:
-    public static func == (lhs: NetworkId, rhs: NetworkId) -> Bool {
-        return lhs.asInteger() == rhs.asInteger()
-    }
-}

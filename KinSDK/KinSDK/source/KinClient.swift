@@ -30,7 +30,7 @@ public final class KinClient {
      */
     public init(with nodeProviderUrl: URL, networkId: NetworkId) throws {
         self.stellar = Stellar(baseURL: nodeProviderUrl,
-                               kinIssuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH")
+                               kinIssuer: networkId.issuer)
         self.accounts = KinAccounts(stellar: stellar)
 
         self.networkId = networkId

@@ -62,7 +62,7 @@ class KinAccountTests: XCTestCase {
 
         var e: Error?
         let stellar = Stellar(baseURL: node.url,
-                              kinIssuer: "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH")
+                              kinIssuer: node.networkId.issuer)
 
         guard
             let issuer = issuer
