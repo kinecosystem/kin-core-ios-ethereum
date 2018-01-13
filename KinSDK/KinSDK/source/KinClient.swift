@@ -123,17 +123,3 @@ public final class KinClient {
         accounts.flushCache()
     }
 }
-
-// MARK: - For testing only
-
-extension KinClient {
-//    func createAccount(with privateKey: String, passphrase: String) throws -> KinAccount? {
-//        let index = privateKey.index(privateKey.startIndex, offsetBy: 2)
-//        if let gAccount = accountStore.importAccount(with: privateKey.substring(from: index), passphrase: passphrase) {
-//            return KinEthereumAccount(gethAccount: gAccount,
-//                                      accountStore: accountStore)
-//        }
-//
-//        return nil
-//    }
-}

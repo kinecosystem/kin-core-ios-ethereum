@@ -35,11 +35,6 @@ public enum KinError: Error {
     case invalidAmount
 
     /**
-     Thrown when trying to send more than the available Kin.
-     */
-    case insufficientBalance
-
-    /**
      Thrown when trying to use an instance of `KinAccount` after `deleteAccount(:)` has been called.
      */
     case accountDeleted
@@ -62,8 +57,6 @@ extension KinError: LocalizedError {
             return "Invalid Address"
         case .invalidAmount:
             return "Invalid Amount"
-        case .insufficientBalance:
-            return "Not Enough Kin"
         case .accountDeleted:
             return "Account Deleted"
         case .unknown:

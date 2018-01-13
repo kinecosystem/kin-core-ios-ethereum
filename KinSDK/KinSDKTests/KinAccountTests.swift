@@ -9,7 +9,6 @@
 import XCTest
 @testable import KinSDK
 @testable import StellarKinKit
-import Geth
 
 class KinAccountTests: XCTestCase {
 
@@ -259,7 +258,6 @@ class KinAccountTests: XCTestCase {
                 if let paymentError = error as? PaymentError {
                     XCTAssertEqual(paymentError, PaymentError.PAYMENT_UNDERFUNDED)
                 } else {
-                    print(error)
                     XCTAssertTrue(false,
                                   "Tried to send kin, and got error, but not a PaymentError: \(error.localizedDescription)")
                 }
