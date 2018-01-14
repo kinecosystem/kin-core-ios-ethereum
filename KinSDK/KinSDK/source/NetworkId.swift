@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- `NetworkId` represents the Ethereum network to which `KinClient` will connect.
+ `NetworkId` represents the block chain network to which `KinClient` will connect.
  */
 public enum NetworkId {
     /**

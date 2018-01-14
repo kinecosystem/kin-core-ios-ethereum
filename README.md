@@ -50,45 +50,9 @@ No activity can take place until an account is created. To do so, call `createAc
 
 - `func sendTransaction(to: String, kin: Double, passphrase: String) throws -> TransactionId`: Sends a specific amount to an account's address, given the passphrase. Throws an error in case the passphrase is wrong. Returns the transaction ID. **Currently returns a hardcoded value of `MockTransactionId`**
 
-## Testing
-
-We use [ethereumjs/testrpc][testrpc] and [Truffle framework][truffle] unit tests.
-
-For the SDK tests target, pre-actions and post-actions scripts in the KinTestHost scheme will setup truffle and testrpc running for the duration of the test.
-
-### Requirements
-
-Node.js and NPM. You can install these using homebrew:
-
-```bash
-$ brew install node
-```
-Next, install specific npm packages using:
-
-```bash
-$ cd truffle
-$ npm install
-```
-
-Next, initialize and update git submodules.  This will include `truffle/kin-token`.
-
-```bash
-$ git submodule init && git submodule update
-```
-
-To run the tests, use (from the root directory):
-
-```bash
-$ make test
-```
-
 ## Contributing
 
 Please review our [CONTRIBUTING.md](CONTRIBUTING.md) guide before opening issues and pull requests.
 
 ## License
 This repository is licensed under the [MIT license](LICENSE.md).
-
-[infura]: https://infura.io
-[testrpc]: https://github.com/ethereumjs/testrpc
-[truffle]: http://truffleframework.com/

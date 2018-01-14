@@ -13,7 +13,7 @@ import Foundation
  */
 public protocol ServiceProvider {
     /**
-     The `URL` of the Ethereum node.
+     The `URL` of the block chain node.
      */
     var url: URL { get }
 
