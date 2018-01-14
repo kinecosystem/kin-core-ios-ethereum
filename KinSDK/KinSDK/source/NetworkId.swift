@@ -55,3 +55,25 @@ extension NetworkId: CustomStringConvertible {
     }
 }
 
+extension NetworkId: Equatable {
+    public static func ==(lhs: NetworkId, rhs: NetworkId) -> Bool {
+        switch lhs {
+        case .mainNet:
+            switch rhs {
+            case .mainNet:
+                return true
+            default:
+                return false
+            }
+        case .testNet:
+            switch rhs {
+            case .testNet:
+                return true
+            default:
+                return false
+            }
+        default:
+            return false
+        }
+    }
+}

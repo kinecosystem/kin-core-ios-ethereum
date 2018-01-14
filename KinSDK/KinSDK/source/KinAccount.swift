@@ -114,11 +114,23 @@ public protocol KinAccount {
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
     func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
+
+    /**
+     :nodoc
+     */
+    func fund(completion: @escaping (Bool) -> Void)
+
+    /**
+     :nodoc
+     */
+    func trustKIN(passphrase: String, completion: @escaping (String?, Error?) -> Void)
 }
 
 final class KinStellarAccount: KinAccount {
     internal let stellarAccount: StellarAccount
-    private weak var stellar: Stellar?
+    fileprivate weak var stellar: Stellar?
+
+    let KinMultiplier: UInt64 = 10000000
 
     var deleted = false
 
@@ -152,7 +164,7 @@ final class KinStellarAccount: KinAccount {
 
         stellar.payment(source: stellarAccount,
                         destination: recipient,
-                        amount: Int64(kin),
+                        amount: Int64(kin * KinMultiplier),
                         passphrase: passphrase) { (txHash, error) in
                             completion(txHash, error)
         }
@@ -254,3 +266,26 @@ final class KinStellarAccount: KinAccount {
     }
 }
 
+// For testing
+
+extension KinStellarAccount {
+    public func fund(completion: @escaping (Bool) -> Void) {
+        guard let stellar = stellar else {
+            completion(false)
+
+            return
+        }
+
+        stellar.fund(account: stellarAccount.publicKey!, completion: completion)
+    }
+
+    public func trustKIN(passphrase: String, completion: @escaping (String?, Error?) -> Void) {
+        guard let stellar = stellar else {
+            completion(nil, KinError.internalInconsistency)
+
+            return
+        }
+
+        stellar.trustKIN(account: stellarAccount, passphrase: passphrase, completion: completion)
+    }
+}

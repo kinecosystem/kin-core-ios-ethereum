@@ -45,9 +45,9 @@ class HomeViewController: UIViewController {
 
         let provider: Provider
         if production {
-            provider = Provider(url: URL(string: "http://mainnet.rounds.video:8545")!, networkId: .mainNet)
+            provider = Provider(url: URL(string: "")!, networkId: .mainNet)
         } else {
-            provider = Provider(url: URL(string: "http://parity.rounds.video:8545")!, networkId: .ropsten)
+            provider = Provider(url: URL(string: "https://horizon-testnet.stellar.org")!, networkId: .testNet)
         }
         
         guard let kinClient = try? KinClient(provider: provider) else {

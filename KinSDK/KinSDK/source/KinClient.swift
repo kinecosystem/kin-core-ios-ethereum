@@ -36,6 +36,10 @@ public final class KinClient {
         self.networkId = networkId
     }
 
+    public var url: URL {
+        return stellar.baseURL
+    }
+
     /**
      The current account associated to this client.
 

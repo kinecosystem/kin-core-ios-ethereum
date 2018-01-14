@@ -8,16 +8,5 @@
 
 import Foundation
 
-private let kinDecimal = Decimal(sign: .plus,
-                                 exponent: -18,
-                                 significand: Decimal(1))
+let KinDecimal = Decimal(10000000)
 
-extension Decimal {
-    func kinToWei() -> Decimal {
-        return self / kinDecimal
-    }
-
-    func weiToKin() -> Decimal {
-        return self * kinDecimal
-    }
-}

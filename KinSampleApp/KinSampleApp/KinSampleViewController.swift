@@ -8,6 +8,7 @@
 
 import UIKit
 import KinSDK
+import StellarKinKit
 
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!
@@ -90,24 +91,92 @@ extension KinSampleViewController: KinClientCellDelegate {
 
         getKinCell.getKinButton.isEnabled = false
 
-        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(kinAccount.publicAddress)"
-        URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
-            DispatchQueue.main.async {
-                guard let aSelf = self else {
-                    return
-                }
-
-                getKinCell.getKinButton.isEnabled = true
-                
-                if let error = error {
-                    print("Not able to get test Kin. \(error)")
-                    return
-                }
-
-                if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
-                    balanceCell.refreshBalance(aSelf)
-                }
+        kinAccount.fund { [weak self] success in
+            guard let aSelf = self else {
+                return
             }
-        }.resume()
+
+            if !success {
+                DispatchQueue.main.async {
+                    getKinCell.getKinButton.isEnabled = true
+                }
+
+                print("Not able to get test lumens.")
+
+                return
+            }
+
+            aSelf.kinAccount.trustKIN(passphrase: KinAccountPassphrase, completion: { [weak self] txHash, error in
+                guard let aSelf = self else {
+                    DispatchQueue.main.async {
+                        getKinCell.getKinButton.isEnabled = true
+                    }
+
+                    return
+                }
+
+                if let error = error {
+                    DispatchQueue.main.async {
+                        getKinCell.getKinButton.isEnabled = true
+                    }
+
+                    print("Not able to trust KIN asset. \(error)")
+
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                        balanceCell.refreshBalance(aSelf)
+                    }
+                }
+
+                let stellar = Stellar(baseURL: aSelf.kinClient.url, kinIssuer: aSelf.kinClient.networkId.issuer)
+                let issuer = try! KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
+                                                            passphrase: KinAccountPassphrase)
+                stellar.payment(source: issuer,
+                                destination: aSelf.kinAccount.publicAddress,
+                                amount: 1000 * 10000000,
+                                passphrase: KinAccountPassphrase) { [weak self] (txHash, error) in
+                                    DispatchQueue.main.async {
+                                        guard let aSelf = self else {
+                                            return
+                                        }
+
+                                        getKinCell.getKinButton.isEnabled = true
+
+                                        if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+                                            balanceCell.refreshBalance(aSelf)
+                                        }
+                                    }
+
+                                    if let error = error {
+                                        print("Not able to get test Kin. \(error)")
+                                        
+                                        return
+                                    }
+                }
+            })
+        }
+
+//        let urlString = "http://kin-faucet.rounds.video/send?public_address=\(kinAccount.publicAddress)"
+//        URLSession.shared.dataTask(with: URL(string: urlString)!) { [weak self] _, _, error in
+//            DispatchQueue.main.async {
+//                guard let aSelf = self else {
+//                    return
+//                }
+//
+//                getKinCell.getKinButton.isEnabled = true
+//
+//                if let error = error {
+//                    print("Not able to get test Kin. \(error)")
+//                    return
+//                }
+//
+//                if let balanceCell = aSelf.tableView.visibleCells.flatMap({ $0 as? BalanceTableViewCell }).first {
+//                    balanceCell.refreshBalance(aSelf)
+//                }
+//            }
+//        }.resume()
     }
 }
