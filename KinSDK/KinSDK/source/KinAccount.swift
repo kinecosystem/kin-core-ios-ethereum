@@ -249,10 +249,9 @@ final class KinStellarAccount: KinAccount {
     }
 
     func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
-        let store = KeyStore.exportKeystore(passphrase: passphrase,
-                                                  newPassphrase: exportPassphrase)
+        let accountData = KeyStore.exportAccount(account: stellarAccount, passphrase: passphrase, newPassphrase: exportPassphrase)
 
-        guard store.count == KeyStore.count() else {
+        guard let store = accountData else {
             throw KinError.internalInconsistency
         }
 
