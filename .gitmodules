@@ -1,0 +1,3 @@
+[submodule "KinSDK/StellarKinKit"]
+	path = KinSDK/StellarKinKit
+	url = git@github.com:kinfoundation/StellarKinKit.git
