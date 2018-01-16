@@ -77,12 +77,7 @@ public protocol KinAccount {
     func balance() throws -> Balance
 
     /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
-
-     The completion block **is not dispatched on the main thread**.
+     **Deprecated**: this method returns the result of `balance(completion:)`.
 
      - parameter completion: A callback block to be invoked once the pending balance is fetched, or
      fails to be fetched.
@@ -91,10 +86,7 @@ public protocol KinAccount {
     func pendingBalance(completion: @escaping BalanceCompletion)
 
     /**
-     **Synchronously** gets the current **pending** Kin balance.
-
-     Please note that this is not the sum of pending transactions, but the **current balance plus
-     the sum of pending transactions.**
+     **Deprecated**: this method returns the result of `balance()`.
 
      **Do not** call this from the main thread.
 
