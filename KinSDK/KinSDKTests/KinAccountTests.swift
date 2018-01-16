@@ -268,6 +268,31 @@ class KinAccountTests: XCTestCase {
         }
     }
 
+    func test_send_transaction_of_zero_kin() {
+        guard
+            let account0 = account0,
+            let account1 = account1 else {
+                XCTAssertTrue(false, "No accounts to use.")
+                return
+        }
+
+        do {
+            _ = try account0.sendTransaction(to: account1.publicAddress,
+                                             kin: 0,
+                                             passphrase: passphrase)
+            XCTAssertTrue(false,
+                          "Tried to send kin with insufficient funds, but didn't get an error")
+        }
+        catch {
+            if let kinError = error as? KinError {
+                XCTAssertEqual(kinError, KinError.invalidAmount)
+            } else {
+                XCTAssertTrue(false,
+                              "Tried to send kin, and got error, but not a PaymentError: \(error.localizedDescription)")
+            }
+        }
+    }
+
     func test_use_after_delete_balance() {
         do {
             let account = kinClient.accounts[0]
