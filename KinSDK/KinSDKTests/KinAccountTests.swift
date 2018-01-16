@@ -93,7 +93,7 @@ class KinAccountTests: XCTestCase {
                             stellar
                                 .payment(source: issuer,
                                          destination: account.publicKey!,
-                                         amount: 10000,
+                                         amount: 100 * 10000000,
                                          passphrase: self.passphrase) { txHash, error in
                                             defer {
                                                 group.leave()
@@ -228,8 +228,8 @@ class KinAccountTests: XCTestCase {
             let balance0 = try account0.balance()
             let balance1 = try account1.balance()
 
-            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount) / Decimal(10000000))
-            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount) / Decimal(10000000))
+            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
+            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
