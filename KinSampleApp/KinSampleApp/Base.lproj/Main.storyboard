@@ -184,60 +184,39 @@
                                             <outlet property="saveButton" destination="7YB-3P-dyE" id="F1w-4K-4Qz"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BalanceCell" rowHeight="133" id="ZFX-Ha-Dwy" customClass="BalanceTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="130" width="375" height="133"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BalanceCell" rowHeight="70" id="ZFX-Ha-Dwy" customClass="BalanceTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="130" width="375" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZFX-Ha-Dwy" id="HCx-wu-Rzc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="132.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="JCu-gJ-mNs">
-                                                    <rect key="frame" x="15" y="10" width="240" height="112.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JCu-gJ-mNs">
+                                                    <rect key="frame" x="15" y="10" width="106" height="49.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Aio-8M-45Q">
-                                                            <rect key="frame" x="0.0" y="0.0" width="106" height="22.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="106" height="16.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="balance()" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRB-nf-PHV">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="76" height="22.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="76" height="16.5"/>
                                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="DW1-fw-Qup">
-                                                                    <rect key="frame" x="86" y="0.0" width="20" height="22.5"/>
+                                                                    <rect key="frame" x="86" y="0.0" width="20" height="16.5"/>
                                                                 </activityIndicatorView>
                                                             </subviews>
                                                         </stackView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0e-3s-ov3">
-                                                            <rect key="frame" x="0.0" y="22.5" width="28.5" height="22.5"/>
+                                                            <rect key="frame" x="0.0" y="26.5" width="28.5" height="13"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r07-oL-CEq">
-                                                            <rect key="frame" x="0.0" y="45" width="240" height="22.5"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Eu6-uS-hFe">
-                                                            <rect key="frame" x="0.0" y="67.5" width="172" height="22.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pendingBalance()" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdB-by-nUe">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="142" height="22.5"/>
-                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="aju-g6-Xkn">
-                                                                    <rect key="frame" x="152" y="0.0" width="20" height="22.5"/>
-                                                                </activityIndicatorView>
-                                                            </subviews>
+                                                            <rect key="frame" x="0.0" y="49.5" width="50" height="0.0"/>
                                                         </stackView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="N/A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gEK-yQ-6BO">
-                                                            <rect key="frame" x="0.0" y="90" width="28.5" height="22.5"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CuH-bE-1Ta">
@@ -260,13 +239,11 @@
                                         <connections>
                                             <outlet property="balanceActivityIndicator" destination="DW1-fw-Qup" id="pdI-oV-knT"/>
                                             <outlet property="balanceLabel" destination="e0e-3s-ov3" id="EyN-LX-lv1"/>
-                                            <outlet property="pendingBalanceActivityIndicator" destination="aju-g6-Xkn" id="X6B-xH-zDo"/>
-                                            <outlet property="pendingBalanceLabel" destination="gEK-yQ-6BO" id="sri-BR-Epa"/>
                                             <outlet property="refreshButton" destination="CuH-bE-1Ta" id="H8s-f6-uAc"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SendTransactionCell" rowHeight="85" id="4sV-Bo-oln" customClass="SendTransactionTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="263" width="375" height="85"/>
+                                        <rect key="frame" x="0.0" y="200" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4sV-Bo-oln" id="5gZ-oh-IQQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
@@ -294,7 +271,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeleteAccountCell" rowHeight="85" id="kZg-yc-CSG" customClass="DeleteAccountCell" customModule="KinSampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="348" width="375" height="85"/>
+                                        <rect key="frame" x="0.0" y="285" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="kZg-yc-CSG" id="OQK-OS-0lj">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>
@@ -322,7 +299,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GetKinCell" rowHeight="85" id="loM-fb-yst" customClass="GetKinTableViewCell" customModule="KinSampleApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="433" width="375" height="85"/>
+                                        <rect key="frame" x="0.0" y="370" width="375" height="85"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="loM-fb-yst" id="wAo-C0-Cyx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="84.5"/>

@@ -87,6 +87,7 @@ public protocol KinAccount {
      - parameter completion: A callback block to be invoked once the pending balance is fetched, or
      fails to be fetched.
      */
+    @available(*, deprecated)
     func pendingBalance(completion: @escaping BalanceCompletion)
 
     /**
@@ -101,6 +102,7 @@ public protocol KinAccount {
 
      - returns: The pending balance of the account.
      */
+    @available(*, deprecated)
     func pendingBalance() throws -> Balance
 
     /**
@@ -240,10 +242,12 @@ final class KinStellarAccount: KinAccount {
         return balance
     }
 
+    @available(*, deprecated)
     func pendingBalance(completion: @escaping BalanceCompletion) {
         balance(completion: completion)
     }
 
+    @available(*, deprecated)
     func pendingBalance() throws -> Balance {
         return try balance()
     }

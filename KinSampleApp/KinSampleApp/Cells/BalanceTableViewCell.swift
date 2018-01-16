@@ -13,10 +13,7 @@ class BalanceTableViewCell: KinClientCell {
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var balanceActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var pendingBalanceLabel: UILabel!
-    @IBOutlet weak var pendingBalanceActivityIndicator: UIActivityIndicatorView!
     var balance: Decimal = 0
-    var pendingBalance: Decimal = 0
 
     var ongoingRequests = 0 {
         didSet {
@@ -57,28 +54,6 @@ class BalanceTableViewCell: KinClientCell {
                 self?.balance = balance
                 if let formattedBalance = self?.numberFormatter.string(from: balance as NSDecimalNumber) {
                     self?.balanceLabel.text = "\(formattedBalance) KIN"
-                }
-            }
-        }
-
-        ongoingRequests += 1
-        pendingBalanceActivityIndicator.startAnimating()
-        kinAccount.pendingBalance { [weak self] pBalance, error in
-            DispatchQueue.main.async {
-                self?.pendingBalanceActivityIndicator.stopAnimating()
-                defer {
-                    self?.ongoingRequests -= 1
-                }
-
-                guard let pBalance = pBalance,
-                    error == nil else {
-                        self?.pendingBalanceLabel.text = "Error"
-                        return
-                }
-
-                self?.pendingBalance = pBalance
-                if let formattedPendingBalance = self?.numberFormatter.string(from: pBalance as NSDecimalNumber) {
-                    self?.pendingBalanceLabel.text = "\(formattedPendingBalance) KIN"
                 }
             }
         }
