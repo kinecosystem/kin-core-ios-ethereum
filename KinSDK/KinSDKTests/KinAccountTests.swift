@@ -62,7 +62,7 @@ class KinAccountTests: XCTestCase {
 
         var e: Error?
         let stellar = Stellar(baseURL: node.url,
-                              kinIssuer: node.networkId.issuer)
+                              asset: Asset(assetCode: "KIN", issuer: node.networkId.issuer))
 
         guard
             let issuer = issuer
@@ -307,6 +307,7 @@ class KinAccountTests: XCTestCase {
         }
     }
 
+    @available(*, deprecated)
     func test_use_after_delete_pending_balance() {
         do {
             let account = kinClient.accounts[0]
