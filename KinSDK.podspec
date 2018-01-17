@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.5.4'
+  s.version          = '0.5.5'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'StellarKinKit' do |ss|
     ss.source_files = 'KinSDK/StellarKinKit/StellarKinKit/source/*.swift'
-    ss.frameworks = 'Sodium', 'KeychainSwift'
+    ss.frameworks = 'Sodium', 'KeychainSwift', 'CommonCrypto'
   end
 
 end
