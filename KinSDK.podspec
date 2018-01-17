@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.4.4'
+  s.version          = '0.4.5'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -14,7 +14,8 @@ Pod::Spec.new do |s|
 
   s.source_files = 'KinSDK/KinSDK/**/*.swift'
 
-  s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK/**' }
+  s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK/**',
+                  'OTHER_LDFLAGS' => '-framework StellarKinKit'}
   s.frameworks = 'StellarKinKit', 'KinSDK'
   s.preserve_path = 'KinSDK/StellarKinKit/**/*'
   s.ios.deployment_target = '8.0'
