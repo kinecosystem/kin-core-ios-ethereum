@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.5.6'
+  s.version          = '0.5.7'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
   s.platform = :ios, '8.0'
 
   s.subspec 'StellarKinKit' do |ss|
+    ss.source = { :path => '.', :submodules => true }
     ss.source_files = 'KinSDK/StellarKinKit/StellarKinKit/source/*.swift'
     ss.frameworks = 'Sodium', 'KeychainSwift'
     ss.xcconfig = { 'HEADER_SEARCH_PATHS' => '${BUILT_PRODUCTS_DIR}/CommonCryptoModuleMap' }
