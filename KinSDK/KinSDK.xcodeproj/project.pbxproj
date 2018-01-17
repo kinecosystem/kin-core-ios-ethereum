@@ -67,6 +67,13 @@
 			remoteGlobalIDString = 82140EA81FA88E5B00FAF19B;
 			remoteInfo = KinSDK;
 		};
+		E9C10F1C200F528D00B44DA4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 825BD909200BB96200AF981A /* StellarKinKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 82340B9B1FFDF2DA0034204F;
+			remoteInfo = StellarKinKit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -263,6 +270,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				E9C10F1D200F528D00B44DA4 /* PBXTargetDependency */,
 			);
 			name = KinSDK;
 			productName = KinSDK;
@@ -474,6 +482,11 @@
 			isa = PBXTargetDependency;
 			target = 82140EA81FA88E5B00FAF19B /* KinSDK */;
 			targetProxy = 8278354F1FA9B6290006C3DF /* PBXContainerItemProxy */;
+		};
+		E9C10F1D200F528D00B44DA4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = StellarKinKit;
+			targetProxy = E9C10F1C200F528D00B44DA4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
