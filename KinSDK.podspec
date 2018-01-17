@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KinSDK'
-  s.version          = '0.5.0'
+  s.version          = '0.5.1'
   s.summary          = 'pod for the KIN SDK.'
 
   s.description      = <<-DESC
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Kin Foundation' => 'kin@kik.com' }
   s.source           = { :git => 'https://github.com/kinfoundation/kin-sdk-core-ios.git', :tag => "#{s.version}", :submodules => true }
 
-  s.source_files = 'KinSDK/KinSDK/**/*.swift'
+  s.source_files = 'KinSDK/KinSDK/**/*.swift', 'KinSDK/StellarKinKit/**/*'
 
   s.xcconfig = { 'FRAMEWORK_SEARCH_PATHS' => '$(inherited) $(PODS_ROOT)/KinSDK/KinSDK/**' }
   s.frameworks = 'StellarKinKit', 'KinSDK'
