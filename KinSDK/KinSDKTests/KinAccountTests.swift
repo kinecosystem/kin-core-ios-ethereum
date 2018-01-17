@@ -80,27 +80,28 @@ class KinAccountTests: XCTestCase {
             }
 
             stellar
-                .trustKIN(account: account,
-                          passphrase: self.passphrase) { txHash, error in
-                            if let error = error {
-                                e = error
+                .trust(asset: stellar.asset,
+                       account: account,
+                       passphrase: self.passphrase) { txHash, error in
+                        if let error = error {
+                            e = error
 
-                                group.leave()
+                            group.leave()
 
-                                return
-                            }
+                            return
+                        }
 
-                            stellar
-                                .payment(source: issuer,
-                                         destination: account.publicKey!,
-                                         amount: 100 * 10000000,
-                                         passphrase: self.passphrase) { txHash, error in
-                                            defer {
-                                                group.leave()
-                                            }
+                        stellar
+                            .payment(source: issuer,
+                                     destination: account.publicKey!,
+                                     amount: 100 * 10000000,
+                                     passphrase: self.passphrase) { txHash, error in
+                                        defer {
+                                            group.leave()
+                                        }
 
-                                            e = error
-                            }
+                                        e = error
+                        }
             }
         }
 
@@ -220,8 +221,8 @@ class KinAccountTests: XCTestCase {
             }
 
             let txId = try account0.sendTransaction(to: account1.publicAddress,
-                                                     kin: sendAmount,
-                                                     passphrase: passphrase)
+                                                    kin: sendAmount,
+                                                    passphrase: passphrase)
 
             XCTAssertNotNil(txId)
 
@@ -325,7 +326,7 @@ class KinAccountTests: XCTestCase {
     func test_use_after_delete_transaction() {
         do {
             let account = kinClient.accounts[0]
-
+            
             try kinClient.deleteAccount(at: 0, with: passphrase)
             _ = try account?.sendTransaction(to: "", kin: 1, passphrase: passphrase)
 

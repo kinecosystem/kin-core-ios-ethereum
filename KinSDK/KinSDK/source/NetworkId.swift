@@ -25,7 +25,7 @@ public enum NetworkId {
     /**
      A network with a custom ID. **Currently unsupported**
      */
-    case custom(issuer: String)
+    case custom(issuer: String, stellarNetworkId: String)
 }
 
 extension NetworkId {
@@ -35,8 +35,19 @@ extension NetworkId {
             return ""
         case .testNet:
             return "GBOJSMAO3YZ3CQYUJOUWWFV37IFLQVNVKHVRQDEJ4M3O364H5FEGGMBH"
-        case .custom (let issuer):
+        case .custom (let issuer, _):
             return issuer
+        }
+    }
+
+    public var stellarNetworkId: String {
+        switch self {
+        case .mainNet:
+            return ""
+        case .testNet:
+            return "Test SDF Network ; September 2015"
+        case .custom(_, let stellarNetworkId):
+            return stellarNetworkId
         }
     }
 }
