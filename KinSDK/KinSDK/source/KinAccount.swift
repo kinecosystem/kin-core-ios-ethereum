@@ -281,6 +281,9 @@ extension KinStellarAccount {
             return
         }
 
-        stellar.trustKIN(account: stellarAccount, passphrase: passphrase, completion: completion)
+        stellar.trust(asset: stellar.asset,
+                      account: stellarAccount,
+                      passphrase: passphrase,
+                      completion: completion)
     }
 }
