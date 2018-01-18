@@ -137,7 +137,10 @@ final class KinStellarAccount: KinAccount {
         self.stellar = stellar
     }
 
-    func sendTransaction(to recipient: String, kin: UInt64, passphrase: String, completion: @escaping TransactionCompletion) {
+    func sendTransaction(to recipient: String,
+                         kin: UInt64,
+                         passphrase: String,
+                         completion: @escaping TransactionCompletion) {
         guard let stellar = stellar else {
             completion(nil, KinError.internalInconsistency)
 
