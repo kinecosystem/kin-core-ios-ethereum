@@ -131,7 +131,7 @@ extension KinSampleViewController: KinClientCellDelegate {
                     }
                 }
 
-                let stellar = Stellar(baseURL: aSelf.kinClient.url, kinIssuer: aSelf.kinClient.networkId.issuer)
+                let stellar = Stellar(baseURL: aSelf.kinClient.url)
                 let issuer = try! KeyStore.importSecretSeed("SCML43HASLG5IIN34KCJLDQ6LPWYQ3HIROP5CRBHVC46YRMJ6QLOYQJS",
                                                             passphrase: KinAccountPassphrase)
                 stellar.payment(source: issuer,

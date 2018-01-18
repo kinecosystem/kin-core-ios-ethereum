@@ -33,28 +33,30 @@ class SendTransactionViewController: UIViewController {
         let amount = UInt64(amountTextField.text ?? "0") ?? 0
         let address = addressTextField.text ?? ""
 
-        kinAccount.sendTransaction(to: address, kin: amount, passphrase: KinAccountPassphrase) { transactionId, error in
-            DispatchQueue.main.async { [weak self] in
-                guard let aSelf = self else {
-                    return
-                }
+        kinAccount.sendTransaction(to: address,
+                                   kin: Decimal(amount),
+                                   passphrase: KinAccountPassphrase) { transactionId, error in
+                                    DispatchQueue.main.async { [weak self] in
+                                        guard let aSelf = self else {
+                                            return
+                                        }
 
-                guard error == nil,
-                    let transactionId = transactionId else {
-                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription ?? "No transaction ID", preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    aSelf.present(alertController, animated: true, completion: nil)
-                    return
-                }
+                                        guard error == nil,
+                                            let transactionId = transactionId else {
+                                                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription ?? "No transaction ID", preferredStyle: .alert)
+                                                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                                aSelf.present(alertController, animated: true, completion: nil)
+                                                return
+                                        }
 
-                let message = "Transaction with ID \(transactionId) sent to \(address)"
-                let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
-                    UIPasteboard.general.string = transactionId
-                }))
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                aSelf.present(alertController, animated: true, completion: nil)
-            }
+                                        let message = "Transaction with ID \(transactionId) sent to \(address)"
+                                        let alertController = UIAlertController(title: "Transaction Sent", message: message, preferredStyle: .alert)
+                                        alertController.addAction(UIAlertAction(title: "Copy Transaction ID", style: .default, handler: { _ in
+                                            UIPasteboard.general.string = transactionId
+                                        }))
+                                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                                        aSelf.present(alertController, animated: true, completion: nil)
+                                    }
         }
     }
 
