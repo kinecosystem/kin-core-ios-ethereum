@@ -203,7 +203,7 @@ class KinAccountTests: XCTestCase {
     }
 
     func test_send_transaction() {
-        let sendAmount: UInt64 = 5
+        let sendAmount: Decimal = 5
 
         do {
             guard
@@ -229,8 +229,8 @@ class KinAccountTests: XCTestCase {
             let balance0 = try account0.balance()
             let balance1 = try account1.balance()
 
-            XCTAssertEqual(balance0, startBalance0 - Decimal(sendAmount))
-            XCTAssertEqual(balance1, startBalance1 + Decimal(sendAmount))
+            XCTAssertEqual(balance0, startBalance0 - sendAmount)
+            XCTAssertEqual(balance1, startBalance1 + sendAmount)
         }
         catch {
             XCTAssertTrue(false, "Something went wrong: \(error)")
@@ -250,7 +250,7 @@ class KinAccountTests: XCTestCase {
 
             do {
                 _ = try account0.sendTransaction(to: account1.publicAddress,
-                                                 kin: (balance * 10000000 as NSDecimalNumber).uint64Value + 1,
+                                                 kin: balance * 10000000 + 1,
                                                  passphrase: passphrase)
                 XCTAssertTrue(false,
                               "Tried to send kin with insufficient funds, but didn't get an error")
