@@ -33,22 +33,24 @@ class KeyStoreViewController: UIViewController {
     }
 
     @objc func showKeyStore() {
-        guard let exportPassphrase = textField.text,
-            exportPassphrase.count > 0 else {
-                textView?.text = "Add a passphrase to encrypt the account"
-                saveButton.isEnabled = false
-                return
-        }
+        return
 
-        guard let keyStore = try? kinClient.accounts[0]?.exportKeyStore(passphrase: KinAccountPassphrase,
-                                                                        exportPassphrase: exportPassphrase),
-            let unwrapped = keyStore,
-            let prettified = unwrapped.prettified() else {
-                return
-        }
-
-        textView?.text = prettified
-        saveButton.isEnabled = true
+//        guard let exportPassphrase = textField.text,
+//            exportPassphrase.count > 0 else {
+//                textView?.text = "Add a passphrase to encrypt the account"
+//                saveButton.isEnabled = false
+//                return
+//        }
+//
+//        guard let keyStore = try? kinClient.accounts[0]?.exportKeyStore(passphrase: KinAccountPassphrase,
+//                                                                        exportPassphrase: exportPassphrase),
+//            let unwrapped = keyStore,
+//            let prettified = unwrapped.prettified() else {
+//                return
+//        }
+//
+//        textView?.text = prettified
+//        saveButton.isEnabled = true
     }
 
     @IBAction func exportTapped() {

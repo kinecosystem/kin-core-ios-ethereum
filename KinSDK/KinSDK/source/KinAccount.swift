@@ -107,7 +107,7 @@ public protocol KinAccount {
 
      - returns: a prettified JSON string of the `account` exported; `nil` if `account` is `nil`.
      */
-    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
+//    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String?
 
     /**
      :nodoc
@@ -250,7 +250,7 @@ final class KinStellarAccount: KinAccount {
     }
 
     @available(*, unavailable)
-    internal func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
+    private func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         let accountData = KeyStore.exportAccount(account: stellarAccount, passphrase: passphrase, newPassphrase: exportPassphrase)
 
         guard let store = accountData else {
