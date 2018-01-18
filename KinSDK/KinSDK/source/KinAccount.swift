@@ -244,7 +244,8 @@ final class KinStellarAccount: KinAccount {
         return try balance()
     }
 
-    func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
+    @available(*, unavailable)
+    internal func exportKeyStore(passphrase: String, exportPassphrase: String) throws -> String? {
         let accountData = KeyStore.exportAccount(account: stellarAccount, passphrase: passphrase, newPassphrase: exportPassphrase)
 
         guard let store = accountData else {
