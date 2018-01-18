@@ -85,7 +85,6 @@
 /* Begin PBXFileReference section */
 		825BD8D9200B4E0700AF981A /* StellarKinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarKinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		825BD8DC200B504E00AF981A /* Sodium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Sodium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		825BD8DF200B5B6700AF981A /* KeychainSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KeychainSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionViewController.swift; sourceTree = "<group>"; };
 		910EEA031FB8A60C00610D06 /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
 		910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -123,7 +122,6 @@
 		919238671FB09E9000390BE5 = {
 			isa = PBXGroup;
 			children = (
-				825BD8DF200B5B6700AF981A /* KeychainSwift.framework */,
 				825BD8DC200B504E00AF981A /* Sodium.framework */,
 				825BD8D9200B4E0700AF981A /* StellarKinKit.framework */,
 				9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */,
