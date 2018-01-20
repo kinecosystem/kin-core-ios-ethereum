@@ -29,7 +29,7 @@ class KinClientTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
 
-        try? kinClient.deleteKeystore()
+        kinClient.deleteKeystore()
     }
 
     func test_account_creation() {
