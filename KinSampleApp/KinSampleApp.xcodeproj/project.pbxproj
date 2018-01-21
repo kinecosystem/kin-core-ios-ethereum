@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		825BD926200E1BFD00AF981A /* StellarKinKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 825BD8D9200B4E0700AF981A /* StellarKinKit.framework */; };
-		825BD927200E1BFD00AF981A /* StellarKinKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 825BD8D9200B4E0700AF981A /* StellarKinKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		910EEA001FB8A3D000610D06 /* SendTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */; };
 		910EEA041FB8A60C00610D06 /* HelperExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA031FB8A60C00610D06 /* HelperExtensions.swift */; };
 		910EEA061FB8A8DC00610D06 /* SendTransactionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */; };
@@ -74,7 +72,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				825BD927200E1BFD00AF981A /* StellarKinKit.framework in Embed Frameworks */,
 				91ED61131FB212D5006D9FCC /* KinSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -83,8 +80,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		825BD8D9200B4E0700AF981A /* StellarKinKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = StellarKinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		825BD8DC200B504E00AF981A /* Sodium.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Sodium.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		910EE9FF1FB8A3D000610D06 /* SendTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionViewController.swift; sourceTree = "<group>"; };
 		910EEA031FB8A60C00610D06 /* HelperExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperExtensions.swift; sourceTree = "<group>"; };
 		910EEA051FB8A8DC00610D06 /* SendTransactionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTransactionTableViewCell.swift; sourceTree = "<group>"; };
@@ -111,7 +106,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				825BD926200E1BFD00AF981A /* StellarKinKit.framework in Frameworks */,
 				91ED610F1FB1CE6E006D9FCC /* KinSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,8 +116,6 @@
 		919238671FB09E9000390BE5 = {
 			isa = PBXGroup;
 			children = (
-				825BD8DC200B504E00AF981A /* Sodium.framework */,
-				825BD8D9200B4E0700AF981A /* StellarKinKit.framework */,
 				9192388C1FB1C40500390BE5 /* KinSDK.xcodeproj */,
 				919238721FB09E9000390BE5 /* KinSampleApp */,
 				919238711FB09E9000390BE5 /* Products */,
