@@ -8,7 +8,7 @@
 
 import XCTest
 @testable import KinSDK
-@testable import StellarKinKit
+@testable import StellarKit
 
 class KinAccountTests: XCTestCase {
 

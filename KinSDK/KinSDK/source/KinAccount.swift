@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 /**
  `KinAccount` represents an account which holds Kin. It allows checking balance and sending Kin to

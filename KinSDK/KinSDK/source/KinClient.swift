@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 /**
  `KinClient` is a factory class for managing an instance of `KinAccount`.

@@ -8,7 +8,7 @@
 
 import UIKit
 import KinSDK
-import StellarKinKit
+import StellarKit
 
 class KinSampleViewController: UITableViewController {
     private var kinClient: KinClient!

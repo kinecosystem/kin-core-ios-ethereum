@@ -1,3 +1,3 @@
-[submodule "KinSDK/StellarKinKit"]
-	path = KinSDK/StellarKinKit
-	url = git@github.com:kinfoundation/StellarKinKit.git
+[submodule "KinSDK/StellarKit"]
+	path = KinSDK/StellarKit
+	url = git@github.com:kinfoundation/StellarKit.git

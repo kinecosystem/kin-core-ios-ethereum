@@ -1,13 +1,13 @@
 //
 //  KeyStore.swift
-//  StellarKinKit
+//  StellarKit
 //
 //  Created by Kin Foundation
 //  Copyright © 2018 Kin Foundation. All rights reserved.
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 enum KeyStoreErrors: Error {
     case storeFailed

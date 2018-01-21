@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import StellarKinKit
+import StellarKit
 
 public final class KinAccounts {
     private var cache = [Int: KinAccount]()
