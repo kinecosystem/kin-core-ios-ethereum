@@ -4,10 +4,9 @@
 
 A library responsible for creating a new Kin account and managing balance and transactions in Kin.
 
-## Disclaimer
+## End-of-Life
 
-The SDK is not yet ready for third-party use by digital services in the Kin ecosystem.
-It is still tested internally by Kik as part of [initial product launch, version 2](https://medium.com/kinfoundation/context-around-iplv2-4b4ec3734417).
+This SDK is no longer supported for new users.  Please see [kin-core-ios](https://github.com/kinfoundation/kin-core-ios) for the current SDK.
 
 ## Installation
 
